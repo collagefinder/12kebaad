@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Colleges — 12kebaad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">12kebaad</a>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="courses.html">Courses</a>
+        <a href="colleges.html">Colleges</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container content">
+    <section class="card">
+      <h2 id="colleges-heading">Colleges & Universities</h2>
+      <p id="colleges-intro" class="muted"></p>
+
+      <div class="filter-row">
+        <label for="filter-course">Course</label>
+        <select id="filter-course"><option value="">All</option></select>
+
+        <label for="filter-fee">Max Fees (₹)</label>
+        <input id="filter-fee" type="number" placeholder="e.g. 50000">
+
+        <label for="filter-admission">Admission basis</label>
+        <select id="filter-admission"><option value="">All</option><option>12th Marks</option><option>CUET</option><option>JEE Main</option><option>NEET</option><option>College Test</option></select>
+
+        <button id="apply-filter" class="btn-ghost">Apply</button>
+        <button id="reset-filter" class="btn-ghost">Reset</button>
+      </div>
+
+      <div id="colleges-list" class="cards-grid mt-12"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year"></span> 12kebaad</small>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
