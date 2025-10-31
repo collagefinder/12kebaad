@@ -1,12 +1,25 @@
-<link rel="stylesheet" href="styles.css">
-<script src="script.js" defer></script>doctype html>
-<!<html lang="en">
+<!doctype html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Colleges — 12kebaad</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <title>Colleges & Universities — 12kebaad</title>
+  <meta name="description" content="Find colleges by state and course — name, fees, location, admission basis, cutoff trend, website." />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* page-scoped UI tweaks */
+    .controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:14px 0; }
+    .controls input[type="search"], .controls select { padding:8px 10px; border-radius:8px; border:1px solid #e6eefc; }
+    .controls button { padding:9px 12px; border-radius:8px; border:0; cursor:pointer; background:linear-gradient(90deg,#2563eb,#6d28d9); color:#fff; }
+    #collegeGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; margin-top:12px; }
+    .college-card { background:#fff; padding:14px; border-radius:10px; box-shadow:0 8px 24px rgba(12,18,30,0.06); border:1px solid #eef6ff; }
+    .college-card.highlight { border:2px solid #2563eb; background:#f2f8ff; }
+    .meta { color:#6b7280; font-size:0.92rem; margin-top:6px; }
+    .actions { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+    .small-muted { font-size:0.9rem; color:#6b7280; }
+    .empty { padding:18px; background:#fff7f5; border-radius:10px; border:1px solid #ffe4d6; color:#7a2b12; }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -15,41 +28,235 @@
       <nav class="main-nav">
         <a href="index.html">Home</a>
         <a href="courses.html">Courses</a>
-        <a href="colleges.html">Colleges</a>
+        <a href="colleges.html" class="active">Colleges</a>
         <a href="about.html">About</a>
       </nav>
     </div>
   </header>
 
-  <main class="container content">
+  <main class="container">
     <section class="card">
-      <h2 id="colleges-heading">Colleges & Universities</h2>
-      <p id="colleges-intro" class="muted"></p>
+      <h1 id="heading">Colleges & Universities</h1>
+      <p id="sub" class="small-muted">Filtered by your selected state and course (if provided).</p>
 
-      <div class="filter-row">
-        <label for="filter-course">Course</label>
-        <select id="filter-course"><option value="">All</option></select>
+      <div class="controls" aria-hidden="false">
+        <label class="small-muted">State:</label>
+        <select id="stateFilter"></select>
 
-        <label for="filter-fee">Max Fees (₹)</label>
-        <input id="filter-fee" type="number" placeholder="e.g. 50000">
+        <label class="small-muted">Course:</label>
+        <select id="courseFilter"><option value="">All</option></select>
 
-        <label for="filter-admission">Admission basis</label>
-        <select id="filter-admission"><option value="">All</option><option>12th Marks</option><option>CUET</option><option>JEE Main</option><option>NEET</option><option>College Test</option></select>
+        <label class="small-muted">Search:</label>
+        <input id="txtSearch" type="search" placeholder="Search college name or city">
 
-        <button id="apply-filter" class="btn-ghost">Apply</button>
-        <button id="reset-filter" class="btn-ghost">Reset</button>
+        <label class="small-muted">Sort by:</label>
+        <select id="sortBy">
+          <option value="relevance">Relevance</option>
+          <option value="fees-asc">Fees (low → high)</option>
+          <option value="fees-desc">Fees (high → low)</option>
+          <option value="name-asc">Name (A → Z)</option>
+        </select>
+
+        <button id="btnExport">Export displayed (CSV)</button>
       </div>
 
-      <div id="colleges-list" class="cards-grid mt-12"></div>
+      <div id="collegeGrid" aria-live="polite"></div>
+      <div id="noResults" class="empty" style="display:none">No colleges found for the selected state & course.</div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <small>© <span id="year"></span> 12kebaad</small>
+      <small>© <span id="year"></span> 12kebaad • Helps you to decide your future</small>
     </div>
   </footer>
 
-  <script src="script.js" defer></script>
+  <script>
+    // colleges.html — dynamic filtering by state & course
+    // expects a file 'colleges.json' in same folder (array of college objects)
+    // college object fields: name, state, city, courses (array), fees (number annual), admission (string), cutoff (string), website (string)
+
+    const params = new URLSearchParams(window.location.search);
+    const selectedStateParam = (params.get('state') || '').trim();
+    const selectedCourseParam = (params.get('course') || '').trim();
+
+    const stateSelect = document.getElementById('stateFilter');
+    const courseSelect = document.getElementById('courseFilter');
+    const grid = document.getElementById('collegeGrid');
+    const txtSearch = document.getElementById('txtSearch');
+    const sortBy = document.getElementById('sortBy');
+    const btnExport = document.getElementById('btnExport');
+    const noResults = document.getElementById('noResults');
+    const heading = document.getElementById('heading');
+    const sub = document.getElementById('sub');
+
+    let collegesData = []; // full dataset
+    let allStates = new Set();
+    let allCourses = new Set();
+
+    // load dataset
+    fetch('colleges.json')
+      .then(r => r.json())
+      .then(data => {
+        collegesData = data;
+        buildFilters();
+        applyInitialParams();
+        render();
+      })
+      .catch(err => {
+        console.error('Failed to load colleges.json', err);
+        grid.innerHTML = '<div class="empty">Failed to load college data. Make sure <code>colleges.json</code> is present in the same folder.</div>';
+      });
+
+    function buildFilters() {
+      collegesData.forEach(c => {
+        if (c.state) allStates.add(c.state);
+        (c.courses || []).forEach(course => allCourses.add(course));
+      });
+
+      const states = Array.from(allStates).sort((a,b) => a.localeCompare(b));
+      stateSelect.innerHTML = '<option value="">All states</option>' + states.map(s => `<option value="${escapeHtml(s)}">${s}</option>`).join('');
+      courseSelect.innerHTML = '<option value="">All courses</option>' + Array.from(allCourses).sort().map(c => `<option value="${escapeHtml(c)}">${c}</option>`).join('');
+
+      if (selectedStateParam) {
+        // preselect state if provided in URL (case-insensitive match)
+        const match = states.find(s => s.toLowerCase() === selectedStateParam.toLowerCase());
+        if (match) stateSelect.value = match;
+      }
+      if (selectedCourseParam) {
+        const courses = Array.from(allCourses);
+        const matchC = courses.find(c => c.toLowerCase() === selectedCourseParam.toLowerCase());
+        if (matchC) courseSelect.value = matchC;
+      }
+
+      // wire controls
+      [stateSelect, courseSelect, txtSearch, sortBy].forEach(el => el.addEventListener('change', render));
+      txtSearch.addEventListener('input', debounce(render, 220));
+      btnExport.addEventListener('click', exportDisplayedCSV);
+    }
+
+    function applyInitialParams() {
+      // Update heading/subtext
+      const st = stateSelect.value || (selectedStateParam || '');
+      const course = courseSelect.value || (selectedCourseParam || '');
+      if (st && course) {
+      heading.textContent = `Colleges in ${st} offering "${course}"`;
+      sub.textContent = 'Filtered by your selections from the previous pages.';
+      } else if (st) {
+        heading.textContent = `Colleges in ${st}`;
+        sub.textContent = 'Filtered by your selected state.';
+      } else if (course) {
+        heading.textContent = `Colleges offering "${course}"`;
+        sub.textContent = 'Filtered by selected course.';
+      } else {
+        heading.textContent = 'Colleges & Universities';
+        sub.textContent = 'Use filters to narrow results.';
+      }
+    }
+
+    function render() {
+      const st = stateSelect.value.trim();
+      const course = courseSelect.value.trim();
+      const q = txtSearch.value.trim().toLowerCase();
+      const sort = sortBy.value;
+
+      // filter by state first
+      let list = collegesData.filter(c => {
+        if (st && c.state !== st) return false;
+        if (course && !(c.courses || []).some(cc => cc.toLowerCase() === course.toLowerCase())) return false;
+        if (q) {
+          const hay = (c.name + ' ' + (c.city||'') + ' ' + (c.state||'')).toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      // sort
+      if (sort === 'fees-asc') list.sort((a,b) => (a.fees||Infinity) - (b.fees||Infinity));
+      else if (sort === 'fees-desc') list.sort((a,b) => (b.fees||0) - (a.fees||0));
+      else if (sort === 'name-asc') list.sort((a,b) => a.name.localeCompare(b.name));
+      // else relevance: leave natural order
+
+      grid.innerHTML = '';
+      if (!list.length) {
+        noResults.style.display = 'block';
+        return;
+      } else noResults.style.display = 'none';
+
+      list.forEach(c => {
+        const card = document.createElement('article');
+        card.className = 'college-card';
+        const offers = (c.courses||[]).join(', ');
+        const feesText = (typeof c.fees === 'number') ? `₹${numberWithCommas(c.fees)} / year` : (c.fees || 'Varies');
+        const websiteLink = c.website ? `<a href="${escapeHtml(c.website)}" target="_blank" rel="noopener">Website</a>` : '';
+        const admission = escapeHtml(c.admission || 'Varies');
+        const cutoff = escapeHtml(c.cutoff || 'Varies');
+
+        card.innerHTML = `
+          <h3>${escapeHtml(c.name)}</h3>
+          <div class="meta"><strong>Location:</strong> ${escapeHtml(c.city || c.state || '')}, ${escapeHtml(c.state || '')}</div>
+          <div class="meta"><strong>Fees:</strong> ${feesText} • <strong>Admission:</strong> ${admission}</div>
+          <div class="meta"><strong>Cutoff trend:</strong> ${cutoff}</div>
+          <div class="meta"><strong>Courses:</strong> ${escapeHtml(offers)}</div>
+          <div class="actions">
+            ${websiteLink}
+            <button class="btn-ghost details">Details</button>
+            <button class="btn-ghost apply">Apply Info</button>
+          </div>
+        `;
+
+        // highlight if course param exactly matched one of its courses
+        if (selectedCourseParam) {
+          if ((c.courses || []).some(cc => cc.toLowerCase() === selectedCourseParam.toLowerCase())) {
+            card.classList.add('highlight');
+          }
+        }
+        // details popup (simple)
+        card.querySelector('.details').addEventListener('click', () => {
+          alert(`${c.name}\n\nLocation: ${c.city || c.state}\nFees: ${feesText}\nAdmission: ${admission}\nCutoff trend: ${cutoff}\n\nCourses: ${offers}\nWebsite: ${c.website || 'N/A'}`);
+        });
+
+        // apply info — shows what is required (demo)
+        card.querySelector('.apply').addEventListener('click', () => {
+          alert(`To apply: Visit ${c.website || 'the college website'} and follow admission instructions. Admission basis: ${admission}`);
+        });
+
+        grid.appendChild(card);
+      });
+    }
+
+    // small helpers
+    function numberWithCommas(x){ return String(x).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+    function escapeHtml(str=''){ return String(str || '').replace(/[&<>"']/g, (m)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+    function exportDisplayedCSV() {
+      // get visible cards data
+      const rows = [];
+      const cards = Array.from(document.querySelectorAll('.college-card'));
+      if (!cards.length) { alert('Nothing to export'); return; }
+      cards.forEach(card => {
+        const name = card.querySelector('h3')?.textContent || '';
+        const meta = Array.from(card.querySelectorAll('.meta')).map(m=>m.textContent).join(' | ');
+        rows.push({ name, meta });
+      });
+      const csv = toCSV(rows, ['name','meta']);
+      downloadCSV('colleges_displayed.csv', csv);
+    }
+    function toCSV(rows, headers){
+      const esc = v => `"${String(v ?? '').replace(/"/g,'""')}"`;
+      return headers.join(',') + '\n' + rows.map(r => headers.map(h => esc(r[h])).join(',')).join('\n');
+    }
+    function downloadCSV(filename, content){
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
+    }
+
+    // debounce util
+    function debounce(fn, wait=150){ let t; return (...args)=>{ clearTimeout(t); t = setTimeout(()=>fn(...args), wait); }; }
+
+    // set year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
-</html>
+</html></html>
