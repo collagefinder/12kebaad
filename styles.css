@@ -1,0 +1,55 @@
+:root{
+  --bg: #fffbf7;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --accent1: #ff7aa2;
+  --accent2: #7b61ff;
+  --accent3: #00c2a8;
+  --radius: 14px;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:linear-gradient(135deg,#fffaf0,#f0fbff);-webkit-font-smoothing:antialiased}
+.container{max-width:1100px;margin:0 auto;padding:18px}
+.topbar{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;padding:12px 0;border-radius:0 0 16px 16px;box-shadow:0 6px 20px rgba(100,100,120,0.08)}
+.top-inner{display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:700;font-size:18px;display:flex;align-items:center;gap:8px}
+.tools{display:flex;gap:8px;align-items:center}
+.btn{padding:8px 12px;border-radius:10px;border:0;background:rgba(255,255,255,0.12);color:white;cursor:pointer;font-weight:600}
+.btn.big{padding:12px 16px}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.18)}
+.btn.primary{background:white;color:#111}
+.btn.accent{background:rgba(255,255,255,0.95);color:#111}
+.main{margin-top:18px}
+.hero{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+.hero-left h1{font-size:28px;margin:0 0 8px}
+.muted{color:var(--muted)}
+.controls{margin-top:12px;display:flex;flex-direction:column;gap:10px}
+.select,input{padding:10px;border-radius:10px;border:1px solid #e6e9ef;background:var(--card);outline:none}
+.row{display:flex;gap:10px}
+.card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 20px rgba(50,60,80,0.06);margin-bottom:12px}
+.summary{background:linear-gradient(180deg,#fff,#fff);}
+
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:12px}
+.college-card{padding:12px;border-radius:12px;background:linear-gradient(180deg,#ffffff,#fffbff);box-shadow:0 8px 24px rgba(100,80,120,0.06);border:1px solid rgba(125,90,200,0.06)}
+.college-card h3{margin:0 0 8px;font-size:16px}
+.badge{display:inline-block;padding:6px 8px;border-radius:999px;font-weight:600;font-size:12px;margin-right:6px}
+.badge.state{background:linear-gradient(90deg,var(--accent2),var(--accent3));color:white}
+.badge.course{background:linear-gradient(90deg,var(--accent1),#ffb86b);color:white}
+
+.results h2{margin-top:28px}
+
+.howto{margin-top:28px;padding:12px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfbff);border:1px dashed rgba(120,120,160,0.06)}
+
+.footer{margin-top:28px;padding:20px;text-align:center;color:var(--muted)}
+
+/* Modal */
+.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,rgba(10,10,10,0.28),rgba(10,10,10,0.15));backdrop-filter:blur(3px)}
+.modal-panel{width:420px;background:white;padding:18px;border-radius:14px;box-shadow:0 18px 60px rgba(20,20,40,0.12)}
+.modal-panel h2{margin-top:0}
+.modal-panel form{display:flex;flex-direction:column;gap:10px}
+.modal-panel input,.modal-panel select{padding:10px;border-radius:10px;border:1px solid #eaeef6}
+
+.small{font-size:13px}
+.muted.small{color:#7b7f89}
