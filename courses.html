@@ -1,11 +1,34 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Courses — 12kebaad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Courses & Diplomas | 12kebaad</title>
+  <meta name="description" content="Comprehensive list of courses and diplomas across Science, Commerce, Arts and Vocational streams." />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Minor page-scoped styles to match your theme while keeping styles.css authoritative */
+    .hero-header {
+      background: linear-gradient(135deg, #2563eb, #6d28d9);
+      color: #fff;
+      padding: 44px 18px;
+      border-radius: 12px;
+      text-align: left;
+      margin-top: 18px;
+    }
+    .hero-header h1 { margin: 0 0 8px; font-size: 2rem; }
+    .hero-header p { margin: 0; color: rgba(255,255,255,0.95); }
+    .section { margin-top: 28px; }
+    .section h2 { color: #2563eb; margin-bottom: 10px; }
+    .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 14px; }
+    .course-card { background: #fff; border-radius: 12px; padding: 14px; box-shadow: 0 6px 22px rgba(12,18,30,0.04); }
+    .course-card h3 { margin: 0 0 6px; font-size: 1rem; color: #0b2b5a; font-weight:600; }
+    .course-card p { margin:0; font-size:0.92rem; color: #374151; }
+    .note { color: var(--muted); margin-top:10px; font-size:0.95rem; }
+    .back-row { display:flex; gap:10px; align-items:center; margin-top:12px; }
+    @media (max-width:720px){ .hero-header{text-align:center} }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -20,25 +43,197 @@
     </div>
   </header>
 
-  <main class="container content">
-    <section class="card">
-      <h2 id="welcome-msg">Courses & Diplomas</h2>
-      <p id="intro-text" class="muted"></p>
+  <main class="container">
+    <section class="hero-header">
+      <h1>Courses & Diplomas — Complete List</h1>
+      <p>All major and niche undergraduate courses, professional programs and diploma options available across India. Use this as a reference and click through to Colleges to find institutions offering these programs.</p>
+    </section>
 
-      <div id="courses-grid" class="cards-grid"></div>
+    <!-- SCIENCE -->
+    <section class="section" id="science">
+      <h2>Science Stream — Bachelor's & Diplomas</h2>
+      <p class="note">Includes pure sciences, applied sciences, engineering foundation courses and allied health programs.</p>
+      <div class="courses-grid">
+        <div class="course-card"><h3>B.Sc (General)</h3><p>Multi-subject undergraduate degree (Physics/Chemistry/Maths/Biology combinations)</p></div>
+        <div class="course-card"><h3>B.Sc (Hons) — Physics</h3><p>Specialized physics honours program</p></div>
+        <div class="course-card"><h3>B.Sc (Hons) — Chemistry</h3><p>Chemistry-focused honours program</p></div>
+        <div class="course-card"><h3>B.Sc (Hons) — Mathematics</h3><p>Pure & applied mathematics honours</p></div>
+        <div class="course-card"><h3>B.Sc (Hons) — Biology / Life Sciences</h3><p>Molecular biology, zoology, botany streams</p></div>
+        <div class="course-card"><h3>B.Sc (Hons) — Computer Science</h3><p>Programming, algorithms and theoretical CS</p></div>
+        <div class="course-card"><h3>B.Tech / B.E. (All branches)</h3><p>Computer Science, IT, Mechanical, Civil, ECE, EEE, Chemical, Aerospace, Metallurgy, etc.</p></div>
+        <div class="course-card"><h3>B.Arch (Bachelor of Architecture)</h3><p>Five-year professional architecture degree</p></div>
+        <div class="course-card"><h3>B.Sc — Biotechnology</h3><p>Biotech labs, research and industry roles</p></div>
+        <div class="course-card"><h3>B.Pharm (Bachelor of Pharmacy)</h3><p>Pharmacy practice and pharmaceutical sciences</p></div>
+        <div class="course-card"><h3>B.Sc Nursing</h3><p>Clinical nursing and healthcare</p></div>
+        <div class="course-card"><h3>MBBS (Bachelor of Medicine, B.M.B.S.)</h3><p>Medical degree (entry via NEET)</p></div>
+        <div class="course-card"><h3>BDS (Bachelor of Dental Surgery)</h3><p>Dental surgery degree (NEET)</p></div>
+        <div class="course-card"><h3>B.Sc — Agriculture / B.Sc (Hons) Agriculture</h3><p>Agricultural sciences, agronomy, horticulture</p></div>
+        <div class="course-card"><h3>B.Sc — Forestry / Horticulture</h3><p>Specialized applied agriculture fields</p></div>
+        <div class="course-card"><h3>B.Sc — Fisheries / Marine Biology</h3><p>Marine science & fisheries management</p></div>
+        <div class="course-card"><h3>B.Sc — Environmental Science / Ecology</h3><p>Environmental studies and sustainability</p></div>
+        <div class="course-card"><h3>B.Sc — Forensic Science</h3><p>Crime lab science & investigative techniques</p></div>
+        <div class="course-card"><h3>B.Sc — Radiology / Medical Imaging</h3><p>Medical imaging technologies</p></div>
+        <div class="course-card"><h3>BPT (Physiotherapy)</h3><p>Physiotherapy and rehabilitation sciences</p></div>
+        <div class="course-card"><h3>B.Sc — Occupational Therapy</h3><p>Allied health rehabilitation</p></div>
+        <div class="course-card"><h3>B.Sc — Biotechnology (Industrial / Research)</h3><p>Industrial biotech and research training</p></div>
+        <div class="course-card"><h3>BCA (Bachelor of Computer Applications)</h3><p>Software development and IT fundamentals</p></div>
+        <div class="course-card"><h3>B.Sc — Data Science / Statistics</h3><p>Statistics, analytics and data engineering</p></div>
+        <div class="course-card"><h3>B.Sc — Artificial Intelligence / Machine Learning</h3><p>Foundations of AI and ML (UG level)</p></div>
+        <div class="course-card"><h3>B.Sc — Cybersecurity (UG level)</h3><p>Foundational cybersecurity topics</p></div>
+        <div class="course-card"><h3>B.Sc — Computer Science & Engineering (Integrated)</h3><p>Joint programs covering CS fundamentals</p></div>
+        <div class="course-card"><h3>B.Sc — Microbiology</h3><p>Microbial sciences and lab techniques</p></div>
+        <div class="course-card"><h3>B.Sc — Food Technology / Nutrition Science</h3><p>Food sciences, dietetics and nutrition</p></div>
+        <div class="course-card"><h3>B.Sc — Sports Science / Exercise Physiology</h3><p>Sports, fitness and exercise research</p></div>
+        <div class="course-card"><h3>B.Sc — Geology / Earth Sciences</h3><p>Geoscience and natural resources</p></div>
+        <div class="course-card"><h3>B.Sc — Psychology (Scientific focus)</h3><p>Experimental psychology and neuroscience</p></div>
 
-      <div class="mt-12">
-        <a id="to-colleges" href="#" class="btn-primary">View Colleges for selected course</a>
+        <!-- Diplomas / Short-term in science -->
+        <div class="course-card"><h3>Diploma — Polytechnic (Engineering)</h3><p>Core engineering trade diplomas</p></div>
+        <div class="course-card"><h3>Diploma — Medical Lab Technology (MLT)</h3><p>Clinical lab technician training</p></div>
+        <div class="course-card"><h3>Diploma — Radiography & Imaging</h3><p>X-ray, CT, MRI technician training</p></div>
+        <div class="course-card"><h3>Diploma — Pharmacy (D.Pharm)</h3><p>Pharmacy diploma pathway</p></div>
+        <div class="course-card"><h3>Diploma — Nursing (GNM / ANM)</h3><p>General nursing and midwifery programs</p></div>
+        <div class="course-card"><h3>Certificate — Clinical Research</h3><p>Clinical trials & regulatory basics</p></div>
+        <div class="course-card"><h3>Certificate — Laboratory Techniques</h3><p>Hands-on lab skill training</p></div>
+        <div class="course-card"><h3>Certificate — Biotechnology Techniques</h3><p>Short practical biotech modules</p></div>
+        <div class="course-card"><h3>Diploma — Food Technology</h3><p>Food processing & safety diploma</p></div>
+        <div class="course-card"><h3>Diploma — Agricultural Technology</h3><p>Applied agri-technology skills</p></div>
       </div>
     </section>
+
+    <!-- COMMERCE -->
+    <section class="section" id="commerce">
+      <h2>Commerce Stream — Bachelor's & Diplomas</h2>
+      <p class="note">Including finance, accounting, management, professional commerce certifications and vocational commerce courses.</p>
+      <div class="courses-grid">
+        <div class="course-card"><h3>B.Com (General)</h3><p>Broad commerce degree</p></div>
+        <div class="course-card"><h3>B.Com (Honours) — Accounting & Finance</h3><p>Specialized commerce honours</p></div>
+        <div class="course-card"><h3>BBA / BBM / BMS</h3><p>Business administration and management</p></div>
+        <div class="course-card"><h3>B.Voc — Banking & Finance / Retail / Logistics</h3><p>Vocational bachelor programs with industry focus</p></div>
+        <div class="course-card"><h3>B.A. (Economics) — Honours</h3><p>Economics theory and applied economics</p></div>
+        <div class="course-card"><h3>B.Sc (Economics / Statistics)</h3><p>Quantitative economics and stats</p></div>
+        <div class="course-card"><h3>CA — Chartered Accountancy (Articles / ICAI route)</h3><p>Professional accounting certification</p></div>
+        <div class="course-card"><h3>CS — Company Secretary</h3><p>Corporate governance and compliance</p></div>
+        <div class="course-card"><h3>CMA / ICMA — Cost & Management Accounting</h3><p>Cost accounting and management accounting</p></div>
+        <div class="course-card"><h3>CFP / Financial Planning (UG certificates)</h3><p>Personal financial planning modules</p></div>
+        <div class="course-card"><h3>B.Sc — Financial Mathematics / Actuarial Science</h3><p>Actuarial sciences and risk modeling</p></div>
+        <div class="course-card"><h3>Integrated BBA+MBA (where available)</h3><p>Long-course management track</p></div>
+        <div class="course-card"><h3>B.Com — e-Commerce / Digital Business specialisations</h3><p>Digital commerce practice</p></div>
+        <div class="course-card"><h3>Diploma — Accounting & Taxation</h3><p>Practical accounting and GST modules</p></div>
+        <div class="course-card"><h3>Diploma — Banking Operations & Insurance</h3><p>Retail banking and insurance operations</p></div>
+        <div class="course-card"><h3>Diploma — Financial Markets & Investment</h3><p>Stock markets, trading and research</p></div>
+        <div class="course-card"><h3>Diploma — Digital Marketing & E-commerce</h3><p>Online marketing and e-business skills</p></div>
+        <div class="course-card"><h3>Certificate — Tally / QuickBooks / Accounting Software</h3><p>Practical bookkeeping tools</p></div>
+        <div class="course-card"><h3>Professional Certifications (UG integrated prep): ACCA, CFA basics</h3><p>International accounting & finance pathways</p></div>
+        <div class="course-card"><h3>Diploma — Supply Chain & Logistics Management</h3><p>Operations and logistics</p></div>
+        <div class="course-card"><h3>Diploma — Retail Management</h3><p>Retail operations and merchandising</p></div>
+        <div class="course-card"><h3>Certificate — Entrepreneurship & Startups</h3><p>Small business fundamentals</p></div>
+      </div>
+    </section>
+
+    <!-- ARTS / HUMANITIES -->
+    <section class="section" id="arts">
+      <h2>Arts & Humanities — Bachelor's & Diplomas</h2>
+      <p class="note">Traditional arts degrees and creative / professional humanities programs.</p>
+      <div class="courses-grid">
+        <div class="course-card"><h3>BA (General / Honours)</h3><p>Majors: English, History, Political Science, Sociology, Psychology, Geography, Philosophy</p></div>
+        <div class="course-card"><h3>BJMC / BA (Journalism & Mass Communication)</h3><p>Media, reporting and broadcasting</p></div>
+        <div class="course-card"><h3>BFA (Bachelor of Fine Arts)</h3><p>Painting, sculpture, applied arts</p></div>
+        <div class="course-card"><h3>BA (Psychology) — Honours / Applied Psychology</h3><p>Clinical & counselling foundations</p></div>
+        <div class="course-card"><h3>BA (Sociology / Anthropology)</h3><p>Social research & cultural studies</p></div>
+        <div class="course-card"><h3>BA (English / Literature)</h3><p>Language, literature and criticism</p></div>
+        <div class="course-card"><h3>BA (Political Science / International Relations)</h3><p>Polity, diplomacy and governance</p></div>
+        <div class="course-card"><h3>BA (Philosophy / Ethics)</h3><p>Philosophical traditions & logic</p></div>
+        <div class="course-card"><h3>BA (Fine Arts / Performing Arts / Music)</h3><p>Dance, music, theatre & performance</p></div>
+        <div class="course-card"><h3>B.Ed (Bachelor of Education) — after graduation</h3><p>Teacher training (post-UG)</p></div>
+        <div class="course-card"><h3>BA LLB / BBA LLB (Integrated Law, 5-year)</h3><p>Legal studies with integrated UG degree</p></div>
+        <div class="course-card"><h3>LLB (3-year after graduation)</h3><p>Professional law degree</p></div>
+        <div class="course-card"><h3>BHM (Hotel Management)</h3><p>Hospitality & hotel operations</p></div>
+        <div class="course-card"><h3>BA (Fashion Design / Textile Design)</h3><p>Apparel design and textiles</p></div>
+        <div class="course-card"><h3>B.Des / B.Design (Product / Fashion / UI)</h3><p>Design specializations</p></div>
+        <div class="course-card"><h3>BA (Film, TV & Media Production)</h3><p>Direction, cinematography and editing</p></div>
+        <div class="course-card"><h3>Diploma — Journalism & Mass Communication</h3><p>Reporting, PR & media skills</p></div>
+        <div class="course-card"><h3>Diploma — Graphic Design / UI-UX</h3><p>Visual design fundamentals</p></div>
+        <div class="course-card"><h3>Diploma — Photography / Film Editing</h3><p>Practical creative media skills</p></div>
+        <div class="course-card"><h3>Diploma — Event Management / Tourism</h3><p>Event planning and travel industry</p></div>
+        <div class="course-card"><h3>Diploma — Foreign Languages</h3><p>Language certificates (French, German, Japanese, Chinese)</p></div>
+        <div class="course-card"><h3>Certificate — Creative Writing / Content Creation</h3><p>Short practical workshops</p></div>
+        <div class="course-card"><h3>Certificate — Applied Psychology / Counselling Basics</h3><p>Foundation counselling skills</p></div>
+      </div>
+    </section>
+
+    <!-- VOCATIONAL & INTERDISCIPLINARY -->
+    <section class="section" id="vocational">
+      <h2>Vocational, Design & Emerging Fields</h2>
+      <p class="note">Practical, skill-oriented and modern interdisciplinary programs that map to industry needs.</p>
+      <div class="courses-grid">
+        <div class="course-card"><h3>B.Voc (Various streams: IT, Retail, Healthcare)</h3><p>Industry-focused vocational bachelor's</p></div>
+        <div class="course-card"><h3>B.Des (Industrial / Product / Fashion / Interaction)</h3><p>Professional design degree</p></div>
+        <div class="course-card"><h3>B.Sc (Aviation) / BBA in Aviation Management</h3><p>Aviation operations & management</p></div>
+        <div class="course-card"><h3>BFTech / B.Tech in AI & Data Science (where available)</h3><p>Modern engineering specialization</p></div>
+        <div class="course-card"><h3>B.Sc (Game Design / Animation)</h3><p>Game art, design & development</p></div>
+        <div class="course-card"><h3>B.A. (Animation & Multimedia)</h3><p>Animation, VFX & multimedia pipelines</p></div>
+        <div class="course-card"><h3>B.Sc (Hospitality & Hotel Administration)</h3><p>Hospitality industry management</p></div>
+        <div class="course-card"><h3>B.Sc (Culinary Arts)</h3><p>Professional chef training & culinary science</p></div>
+        <div class="course-card"><h3>B.Sc (Marine Studies / Oceanography)</h3><p>Marine science, ocean engineering basics</p></div>
+        <div class="course-card"><h3>B.Sc (Sports Science & Management)</h3><p>Sports coaching, management & science</p></div>
+        <div class="course-card"><h3>B.Sc (Aerospace / Aeronautical Foundations)</h3><p>Entry-level aerospace studies</p></div>
+        <div class="course-card"><h3>Diploma — Web Development / Full Stack</h3><p>Frontend, backend & deployment skills</p></div>
+        <div class="course-card"><h3>Diploma — Mobile App Development</h3><p>Android / iOS app stacks</p></div>
+        <div class="course-card"><h3>Diploma — UX/UI Design</h3><p>User experience and interface design</p></div>
+        <div class="course-card"><h3>Diploma — Cybersecurity / Ethical Hacking</h3><p>Security fundamentals & practical labs</p></div>
+        <div class="course-card"><h3>Diploma — Cloud Computing / DevOps</h3><p>Cloud platforms and CI/CD skills</p></div>
+        <div class="course-card"><h3>Diploma — AI / ML Foundation</h3><p>Machine learning practical modules</p></div>
+        <div class="course-card"><h3>Diploma — Digital Content & Social Media Management</h3><p>Content strategy & platform management</p></div>
+        <div class="course-card"><h3>ITI — Trades (Electrician, Fitter, Turner, Welder)</h3><p>Industrial training trades</p></div>
+        <div class="course-card"><h3>Diploma — Automotive Technology / EV Technology</h3><p>Automobile engineering & electric vehicles</p></div>
+        <div class="course-card"><h3>Diploma — Renewable Energy Technology (Solar / Wind)</h3><p>Green energy installation & maintenance</p></div>
+        <div class="course-card"><h3>Certificate — Entrepreneurship & Startups (Short)</h3><p>Lean startups and business fundamentals</p></div>
+        <div class="course-card"><h3>Certificate — UX Research / Product Management</h3><p>Product discovery & research skills</p></div>
+        <div class="course-card"><h3>Diploma — Logistics & Supply Chain Technology</h3><p>Warehouse, distribution and tech ops</p></div>
+        <div class="course-card"><h3>Diploma — Medical Coding & Health Informatics</h3><p>Healthcare data & coding systems</p></div>
+      </div>
+    </section>
+
+    <!-- INTERDISCIPLINARY & NICHE -->
+    <section class="section" id="niche">
+      <h2>Interdisciplinary & Niche Programs</h2>
+      <p class="note">Cross-stream programs and newer niche degree/diploma offerings that students increasingly choose.</p>
+      <div class="courses-grid">
+        <div class="course-card"><h3>Integrated B.Sc+M.Sc (Research tracks)</h3><p>Five-year integrated research degrees</p></div>
+        <div class="course-card"><h3>Integrated B.Tech + M.Tech (Dual degree)</h3><p>Extended engineering degree programs</p></div>
+        <div class="course-card"><h3>Integrated BBA + MBA</h3><p>Long-format management pathway</p></div>
+        <div class="course-card"><h3>Bachelor (Data Analytics / Business Analytics)</h3><p>Cross-discipline analytics for business</p></div>
+        <div class="course-card"><h3>Bachelor in Renewable Energy Engineering</h3><p>Engineering focus on green tech</p></div>
+        <div class="course-card"><h3>Bachelor in Bioinformatics / Computational Biology</h3><p>Intersection of biology & computing</p></div>
+        <div class="course-card"><h3>Bachelor in Maritime Studies / Nautical Science</h3><p>Merchant navy & maritime operations</p></div>
+        <div class="course-card"><h3>Bachelor in Food Science & Technology</h3><p>Advanced food R&D and quality</p></div>
+        <div class="course-card"><h3>Bachelor in Occupational Safety & Health</h3><p>Industrial safety & compliance</p></div>
+        <div class="course-card"><h3>Bachelor in Forensic Psychology</h3><p>Applied psychology in legal context</p></div>
+        <div class="course-card"><h3>Bachelor in UX / Product Design (UG track)</h3><p>Product & service design foundations</p></div>
+        <div class="course-card"><h3>Diploma — Blockchain Development</h3><p>Distributed ledger basics & dev</p></div>
+        <div class="course-card"><h3>Diploma — Fintech & Digital Payments</h3><p>Fintech stacks and digital payment systems</p></div>
+        <div class="course-card"><h3>Certificate — Game Development Foundations</h3><p>Game engines and level design basics</p></div>
+        <div class="course-card"><h3>Certificate — Sports Coaching & Management</h3><p>Practical coaching certifications</p></div>
+      </div>
+    </section>
+
+    <div class="back-row">
+      <a href="index.html" class="btn-ghost">← Back to Home</a>
+      <a href="colleges.html" class="btn-primary">View Colleges →</a>
+    </div>
+
+    <footer class="site-footer" style="margin-top:28px;">
+      <div class="container">
+        <small>© <span id="year">2025</span> 12kebaad • Helps you to decide your future</small>
+      </div>
+    </footer>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <small>© <span id="year"></span> 12kebaad</small>
-    </div>
-  </footer>
-
-  <script src="script.js" defer></script>
+  <script>
+    // keep footer year dynamic if desired
+    const ySpan = document.getElementById('year');
+    if (ySpan) ySpan.textContent = new Date().getFullYear();
+  </script>
 </body>
-</html>
+</html></html>
