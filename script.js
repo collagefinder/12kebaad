@@ -1,309 +1,207 @@
-/* Collagefinder — demo + upload
-   - First-visit modal collects user info and stores it in localStorage
-   - Sample colleges array included for immediate demo
-   - Upload CSV/JSON to add more colleges (replaces dataset in localStorage)
-   - Filters by state & course (case-insensitive substring match)
+/* script.js — client side behavior for index, courses, colleges, about pages
+   NOTE: This site intentionally does NOT persist student data.
+   Data is passed between pages using URL query parameters (no localStorage).
 */
 
-(() => {
-  const qs = s => document.querySelector(s);
-  const id = s => document.getElementById(s);
+/* ---------- Utility helpers ---------- */
+function qsel(s, root = document) { return root.querySelector(s); }
+function qall(s, root = document) { return Array.from((root||document).querySelectorAll(s)); }
+function setYear() { const y = new Date().getFullYear(); qall('#year').forEach(e => e.textContent = y); }
+function encodeParams(obj) {
+  return Object.keys(obj).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&');
+}
+function parseQuery() {
+  const s = location.search.replace(/^\?/,'');
+  if (!s) return {};
+  return s.split('&').reduce((acc, pair) => {
+    const [k,v] = pair.split('=').map(decodeURIComponent);
+    acc[k] = v; return acc;
+  }, {});
+}
 
-  // All Indian states + UTs
-  const STATES = [
-    "Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana",
-    "Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur",
-    "Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana",
-    "Tripura","Uttar Pradesh","Uttarakhand","West Bengal",
-    "Andaman and Nicobar Islands","Chandigarh","Dadra and Nagar Haveli and Daman and Diu","Delhi",
-    "Jammu and Kashmir","Ladakh","Lakshadweep","Puducherry"
-  ];
+/* ---------- Shared dataset (sample) ---------- */
+const streamCourses = {
+  science: ['BSc (General)', 'BSc (Hons) — Physics', 'BSc (Hons) — Chemistry', 'BTech / BE', 'BPharm', 'BSc Nursing', 'Diploma — Lab Tech'],
+  commerce: ['BCom', 'BCom (Hons)', 'BBA', 'BA Economics', 'Diploma — Accounting & Taxation'],
+  arts: ['BA (Honours)', 'BA (General)', 'BFA', 'BJMC', 'Diploma — Journalism'],
+  engineering: ['BTech / BE', 'Diploma — Polytechnic (Engg)'],
+  medical: ['MBBS', 'BDS', 'BPharm', 'BSc Nursing'],
+  vocational: ['ITI courses', 'Diploma — Hospitality', 'Skill-based short courses']
+};
 
-  // Course suggestions
-  const COURSES = ["B.Com","B.A","B.Sc","B.Tech","BBA","BCA","MBA","M.Com","B.Ed","LLB","MBBS","BDS"];
+const colleges = [
+  { name: 'National Institute of Technology, Example', streams:['engineering'], courses:['BTech / BE'], fees:120000, location:'City A, State X', cutoff:'High (rising)', admission:'JEE Main' },
+  { name: 'Example Government Medical College', streams:['medical','science'], courses:['MBBS','BSc Nursing'], fees:150000, location:'City B, State Y', cutoff:'Very High', admission:'NEET' },
+  { name: 'City Arts & Science College', streams:['arts','science'], courses:['BA (Honours)','BSc (General)'], fees:20000, location:'City C, State Z', cutoff:'Moderate', admission:'12th Marks' },
+  { name: 'Commerce College of India', streams:['commerce'], courses:['BCom','BBA'], fees:30000, location:'City D, State X', cutoff:'Moderate', admission:'12th Marks' },
+  { name: 'Private Engineering Institute', streams:['engineering'], courses:['BTech / BE'], fees:220000, location:'City E, State Y', cutoff:'Stable', admission:'JEE Main / College Test' },
+  { name: 'Polytechnic Institute', streams:['engineering','vocational'], courses:['Diploma — Polytechnic (Engineering)','ITI courses'], fees:15000, location:'Town F, State Z', cutoff:'Low', admission:'10th / Diploma entry' },
+  { name: 'National University Example', streams:['arts','commerce','science'], courses:['BA (Honours)','BCom (Hons)','BSc (Hons) — Physics'], fees:45000, location:'Metro G, State X', cutoff:'Rising', admission:'CUET / 12th Marks' }
+];
 
-  // Sample dataset (small): add or replace by uploading CSV/JSON
-  let colleges = [
-    { name: "Hansraj College", city: "Delhi", state: "Delhi", courses: "B.Com,B.A", fees: "₹50,000/year", cutoff: "88%", website: "https://hansraj.du.ac.in", contact: "011-2766-1234" },
-    { name: "SRCC", city: "Delhi", state: "Delhi", courses: "B.Com,M.Com", fees: "₹85,000/year", cutoff: "95%", website: "https://srcc.edu", contact: "011-2766-9999" },
-    { name: "St. Xavier's College", city: "Mumbai", state: "Maharashtra", courses: "B.Com,B.A", fees: "₹60,000/year", cutoff: "86%", website: "https://xaviers.edu", contact: "022-1234-5678" },
-    { name: "Christ University", city: "Bengaluru", state: "Karnataka", courses: "B.Com,BBA,BCA", fees: "₹90,000/year", cutoff: "83%", website: "https://christuniversity.in", contact: "080-2248-1234" },
-    { name: "Loyola College", city: "Chennai", state: "Tamil Nadu", courses: "B.Com,B.Sc", fees: "₹45,000/year", cutoff: "84%", website: "https://loyolacollege.edu", contact: "044-1234-5678" },
-    { name: "Hansraj Commerce Campus", city: "Jaipur", state: "Rajasthan", courses: "B.Com", fees: "₹30,000/year", cutoff: "75%", website: "", contact: "" }
-  ];
+/* ---------- Page-specific behavior ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  setYear();
+  const page = document.body.dataset.page || document.location.pathname.split('/').pop().split('.').shift();
 
-  // DOM refs
-  const welcomeModal = id('welcomeModal');
-  const welcomeForm = id('welcomeForm');
-  const skipBtn = id('skipBtn');
-  const userName = id('userName');
-  const userState = id('userState');
-  const userMobile = id('userMobile');
-  const userCourse = id('userCourse');
+  // Common: show query params if present
+  const params = parseQuery();
 
-  const stateSelect = id('stateSelect');
-  const courseInput = id('courseInput');
-  const courseList = id('courseList');
-  const searchBtn = id('searchBtn');
-  const showAllBtn = id('showAllBtn');
-  const cards = id('cards');
-  const resultsTitle = id('resultsTitle');
-  const greeting = id('greeting');
-  const savedInfo = id('savedInfo');
-  const editInfo = id('editInfo');
-  const uploadBtn = id('uploadBtn');
-  const fileInput = id('fileInput');
-  const noResults = id('noResults');
-  const downloadUser = id('downloadUser');
-  const resetBtn = id('resetBtn');
+  // INDEX (welcome) page
+  if (document.getElementById('welcome-form')) {
+    const form = qsel('#welcome-form');
+    const err = qsel('#form-error');
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      err.textContent = '';
 
-  const USER_KEY = 'collagefinder_user';
-  const COL_KEY = 'collagefinder_colleges';
+      const name = qsel('#name').value.trim();
+      const mobile = qsel('#mobile').value.trim();
+      const stream = qsel('#stream').value;
+      const state = qsel('#state').value;
 
-  // populate selects
-  function populateStateSelects() {
-    const frag = document.createDocumentFragment();
-    STATES.forEach(s => {
-      const opt = document.createElement('option'); opt.value = s; opt.textContent = s;
-      frag.appendChild(opt);
-    });
-    userState.appendChild(frag.cloneNode(true));
-    stateSelect.appendChild(frag);
-  }
-  function populateCourses() {
-    COURSES.forEach(c => {
-      const opt = document.createElement('option'); opt.value = c; opt.textContent = c;
-      courseList.appendChild(opt);
+      if (!name || name.length < 2) { err.textContent = 'Please enter your full name (2+ characters).'; return; }
+      if (!/^\d{10,15}$/.test(mobile)) { err.textContent = 'Please enter a valid mobile number (10-15 digits).'; return; }
+      if (!stream) { err.textContent = 'Select a stream.'; return; }
+      if (!state) { err.textContent = 'Select a state/UT.'; return; }
+
+      // pass inputs via URL to courses page (no storage)
+      const qs = encodeParams({ name, mobile, stream, state });
+      location.href = `courses.html?${qs}`;
     });
   }
 
-  // load/store
-  function saveUser(u) { localStorage.setItem(USER_KEY, JSON.stringify(u)); }
-  function loadUser() { try { return JSON.parse(localStorage.getItem(USER_KEY)); } catch(e){return null} }
-  function saveColleges(data){ localStorage.setItem(COL_KEY, JSON.stringify(data)); }
-  function loadColleges(){ try { return JSON.parse(localStorage.getItem(COL_KEY)); } catch(e){ return null } }
+  // COURSES page
+  if (document.getElementById('courses-grid')) {
+    const grid = qsel('#courses-grid');
+    const intro = qsel('#intro-text');
+    const welcome = qsel('#welcome-msg');
+    const toColleges = qsel('#to-colleges');
 
-  // rendering
-  function renderSavedInfo(user) {
-    if (!user) {
-      savedInfo.innerHTML = `<div class="muted small">No saved user info.</div>`;
-      greeting.textContent = 'Welcome to Collagefinder! 🎉';
-      return;
+    const name = params.name ? decodeURIComponent(params.name) : '';
+    const stream = params.stream || '';
+    const state = params.state || '';
+
+    welcome.textContent = stream ? `${capitalize(stream)} — Recommended Courses` : 'Courses & Diplomas';
+    intro.textContent = name ? `Hello ${name}${state ? ' from ' + state : ''}. Choose a course to see colleges offering it.` : 'Choose a stream on the Home page to get personalized results.';
+
+    // populate courses
+    grid.innerHTML = '';
+    const list = streamCourses[stream] || [];
+    if (!list.length) {
+      grid.innerHTML = '<p class="muted">No courses available for the selected stream. Try another stream from Home.</p>';
+    } else {
+      list.forEach(course => {
+        const card = document.createElement('div');
+        card.className = 'course-card';
+        card.innerHTML = `<h4>${course}</h4><p class="muted">Learn more about ${course} — click to view colleges.</p><div class="mt-12"><button class="btn-ghost select-course" data-course="${encodeURIComponent(course)}">View Colleges</button></div>`;
+        grid.appendChild(card);
+      });
+
+      // wire buttons
+      qall('.select-course', grid).forEach(btn => {
+        btn.addEventListener('click', () => {
+          const course = decodeURIComponent(btn.dataset.course);
+          // forward params + selected course to colleges page
+          const qs = encodeParams(Object.assign({}, params, { course }));
+          location.href = `colleges.html?${qs}`;
+        });
+      });
     }
-    savedInfo.innerHTML = `<strong>${escapeHtml(user.name)}</strong><div class="muted small">${escapeHtml(user.state)} • ${escapeHtml(user.course)}</div><div class="muted small">📱 ${escapeHtml(user.mobile)}</div>`;
-    greeting.textContent = `Hi ${user.name.split(' ')[0] || user.name} 👋`;
-  }
 
-  function escapeHtml(s){ return (s||'').toString().replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-  function renderCards(list) {
-    cards.innerHTML = '';
-    if (!list || list.length === 0) {
-      noResults.style.display = 'block';
-      resultsTitle.textContent = 'Colleges';
-      return;
-    }
-    noResults.style.display = 'none';
-    resultsTitle.textContent = `Colleges (${list.length})`;
-    const frag = document.createDocumentFragment();
-    list.forEach(c => {
-      const div = document.createElement('article');
-      div.className = 'college-card';
-      const courses = (c.courses||'').split(',').map(s=>s.trim()).filter(Boolean).slice(0,6).join(', ');
-      div.innerHTML = `
-        <h3>${escapeHtml(c.name)}</h3>
-        <div class="muted small">${escapeHtml(c.city || '')}, ${escapeHtml(c.state || '')}</div>
-        <p style="margin:8px 0" title="${escapeHtml(courses)}"><span class="badge course">${escapeHtml(courses || 'Courses')}</span> <span class="badge state">${escapeHtml(c.state || '')}</span></p>
-        <p class="small"><strong>Fees:</strong> ${escapeHtml(c.fees || 'N/A')} · <strong>Cutoff:</strong> ${escapeHtml(c.cutoff || 'N/A')}</p>
-        <p class="muted small">${escapeHtml(c.contact || '')} ${c.website ? ' · ' + `<a href="${escapeHtml(c.website)}" target="_blank">Website</a>` : ''}</p>
-      `;
-      frag.appendChild(div);
-    });
-    cards.appendChild(frag);
-  }
-
-  // filtering
-  function filterCollegesBy(state, course) {
-    const data = loadColleges() || colleges;
-    const stateNorm = (state||'').trim().toLowerCase();
-    const courseNorm = (course||'').trim().toLowerCase();
-    return data.filter(c => {
-      const cstate = (c.state||'').toLowerCase();
-      const ccourses = (c.courses||'').toLowerCase();
-      const matchState = !stateNorm || cstate === stateNorm || cstate.includes(stateNorm);
-      const matchCourse = !courseNorm || ccourses.includes(courseNorm);
-      return matchState && matchCourse;
+    // when user clicks the top "View Colleges" (without selecting a specific course)
+    toColleges.addEventListener('click', (e) => {
+      e.preventDefault();
+      const qs = encodeParams(params);
+      location.href = `colleges.html?${qs}`;
     });
   }
 
-  // CSV parsing (simple)
-  function parseCSV(text) {
-    const rows = [];
-    const lines = text.split(/\r?\n/).filter(l=>l.trim() !== '');
-    if (lines.length === 0) return [];
-    const headers = splitCSVLine(lines[0]).map(h=>h.trim().toLowerCase());
-    for (let i=1;i<lines.length;i++){
-      const row = splitCSVLine(lines[i]);
-      if (row.length === 0) continue;
-      const obj = {};
-      headers.forEach((h, idx) => obj[h] = (row[idx] || '').trim());
-      rows.push(obj);
-    }
-    return rows;
-  }
-  function splitCSVLine(line) {
-    const res = [];
-    let cur = '', inQuotes = false;
-    for (let i=0;i<line.length;i++){
-      const ch = line[i];
-      if (ch === '"' ) {
-        if (inQuotes && line[i+1] === '"') { cur += '"'; i++; continue; }
-        inQuotes = !inQuotes; continue;
+  // COLLEGES page
+  if (document.getElementById('colleges-list')) {
+    const listEl = qsel('#colleges-list');
+    const intro = qsel('#colleges-intro');
+    const filterCourse = qsel('#filter-course');
+    const filterFee = qsel('#filter-fee');
+    const filterAdmission = qsel('#filter-admission');
+    const apply = qsel('#apply-filter');
+    const reset = qsel('#reset-filter');
+
+    const name = params.name ? decodeURIComponent(params.name) : '';
+    const stream = params.stream || '';
+    const selectedCourse = params.course ? decodeURIComponent(params.course) : '';
+
+    intro.textContent = name ? `Hi ${name}. Showing colleges for ${stream ? capitalize(stream) : 'your chosen stream'}${selectedCourse ? ' — ' + selectedCourse : ''}.` : 'Browse colleges by course, fees, and admission basis.';
+
+    // populate course filter based on available courses in dataset and selected stream
+    const possibleCourses = new Set();
+    colleges.forEach(c => {
+      if (!stream || c.streams.includes(stream)) {
+        c.courses.forEach(cc => possibleCourses.add(cc));
       }
-      if (ch === ',' && !inQuotes) { res.push(cur); cur = ''; continue; }
-      cur += ch;
-    }
-    res.push(cur);
-    return res;
-  }
+    });
+    filterCourse.innerHTML = '<option value="">All</option>';
+    Array.from(possibleCourses).forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c;
+      opt.textContent = c;
+      if (c === selectedCourse) opt.selected = true;
+      filterCourse.appendChild(opt);
+    });
 
-  // normalize keys
-  function normalizeObj(r){
-    const low = {};
-    for (const k in r) low[k.trim().toLowerCase()] = r[k];
-    return {
-      name: low.name || low.college || '',
-      city: low.city || '',
-      state: low.state || '',
-      courses: low.courses || low.course || '',
-      fees: low.fees || '',
-      cutoff: low.cutoff || '',
-      website: low.website || '',
-      contact: low.contact || ''
-    };
-  }
+    function renderColleges() {
+      const courseFilter = filterCourse.value || '';
+      const feeMax = Number(filterFee.value) || Infinity;
+      const admFilter = filterAdmission.value || '';
 
-  // file handling
-  function handleFile(file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const text = e.target.result;
-      let parsed = null;
-      if (file.name.toLowerCase().endsWith('.json')) {
-        try { parsed = JSON.parse(text); }
-        catch(err){ alert('Invalid JSON file.'); return; }
-      } else {
-        parsed = parseCSV(text);
+      let filtered = colleges.filter(c => !stream || c.streams.includes(stream));
+      if (courseFilter) {
+        filtered = filtered.filter(c => c.courses.some(cc => cc.toLowerCase().includes(courseFilter.toLowerCase())));
       }
-      const normalized = parsed.map(r => normalizeObj(r));
-      if (normalized.length === 0) {
-        alert('No records found in file.');
+      if (isFinite(feeMax)) filtered = filtered.filter(c => c.fees <= feeMax);
+      if (admFilter) filtered = filtered.filter(c => c.admission === admFilter);
+
+      listEl.innerHTML = '';
+      if (!filtered.length) {
+        listEl.innerHTML = '<p class="muted">No colleges match your filters. Try widening the filters or go back to Courses.</p>';
         return;
       }
-      saveColleges(normalized);
-      alert('Dataset loaded: ' + normalized.length + ' records. Use filters to find colleges.');
-      renderCards(normalized.slice(0,200));
+
+      filtered.forEach(col => {
+        const card = document.createElement('div');
+        card.className = 'college-card';
+        card.innerHTML = `
+          <h4>${col.name}</h4>
+          <div class="college-meta"><strong>Location:</strong> ${col.location} • <strong>Fees:</strong> ₹${num(col.fees)}</div>
+          <div class="college-meta"><strong>Admission:</strong> ${col.admission} • <strong>Cutoff:</strong> ${col.cutoff}</div>
+          <div class="muted small"><strong>Courses:</strong> ${col.courses.join(', ')}</div>
+          <div class="mt-12"><button class="btn-ghost view-detail">View Details</button></div>
+        `;
+        // on view detail: show quick modal using alert (simple)
+        card.querySelector('.view-detail').addEventListener('click', () => {
+          alert(`${col.name}\n\nLocation: ${col.location}\nFees (annual): ₹${num(col.fees)}\nAdmission: ${col.admission}\nCutoff trend: ${col.cutoff}\nCourses: ${col.courses.join(', ')}`);
+        });
+        listEl.appendChild(card);
+      });
     }
-    reader.readAsText(file);
+
+    apply.addEventListener('click', renderColleges);
+    reset.addEventListener('click', () => { filterCourse.value=''; filterFee.value=''; filterAdmission.value=''; renderColleges(); });
+
+    // preapply selected course from URL
+    if (selectedCourse) {
+      // if selectedCourse matches an option, keep it; else add to filter dropdown
+      if (![...filterCourse.options].some(o => o.value === selectedCourse)) {
+        const o = document.createElement('option'); o.value = selectedCourse; o.textContent = selectedCourse; o.selected = true;
+        filterCourse.appendChild(o);
+      }
+    }
+
+    renderColleges();
   }
 
-  // events
-  welcomeForm.addEventListener('submit', (ev)=> {
-    ev.preventDefault();
-    const u = { name: userName.value.trim(), state: userState.value, mobile: userMobile.value.trim(), course: userCourse.value.trim() };
-    saveUser(u);
-    renderSavedInfo(u);
-    welcomeModal.style.display = 'none';
-  });
-  skipBtn.addEventListener('click', ()=> welcomeModal.style.display = 'none');
+}); // DOMContentLoaded
 
-  editInfo && editInfo.addEventListener('click', ()=> {
-    const u = loadUser();
-    if (u) {
-      userName.value = u.name || '';
-      userState.value = u.state || STATES[0];
-      userMobile.value = u.mobile || '';
-      userCourse.value = u.course || '';
-    }
-    welcomeModal.style.display = 'flex';
-  });
-
-  searchBtn.addEventListener('click', ()=> {
-    const s = stateSelect.value;
-    const c = courseInput.value;
-    const res = filterCollegesBy(s, c);
-    if (res.length === 0) {
-      noResults.style.display = 'block';
-    } else {
-      renderCards(res);
-    }
-  });
-
-  showAllBtn.addEventListener('click', ()=> {
-    const data = loadColleges() || colleges;
-    renderCards(data.slice(0,200));
-  });
-
-  uploadBtn.addEventListener('click', ()=> fileInput.click());
-  fileInput.addEventListener('change', (ev)=> {
-    const f = ev.target.files[0];
-    if (!f) return;
-    handleFile(f);
-    fileInput.value = '';
-  });
-
-  downloadUser.addEventListener('click', ()=> {
-    const u = loadUser();
-    const data = u ? [u] : [];
-    const csv = arrayToCSV(data);
-    downloadBlob(csv, 'users.csv', 'text/csv');
-  });
-
-  resetBtn.addEventListener('click', ()=> {
-    if (!confirm('This will clear saved user info and uploaded dataset from this browser. Continue?')) return;
-    localStorage.removeItem(USER_KEY);
-    localStorage.removeItem(COL_KEY);
-    alert('Cleared. Reloading...');
-    location.reload();
-  });
-
-  // utilities
-  function arrayToCSV(arr){
-    if (!arr || arr.length === 0) return '';
-    const keys = Object.keys(arr[0]);
-    const rows = [keys.join(',')];
-    arr.forEach(obj=>{
-      rows.push(keys.map(k => `"${(obj[k]||'').replace(/"/g,'""')}"`).join(','));
-    });
-    return rows.join('\n');
-  }
-  function downloadBlob(text, filename, mime){
-    const blob = new Blob([text], {type: mime});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = filename; document.body.appendChild(a); a.click();
-    setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 500);
-  }
-
-  // init
-  function init() {
-    populateStateSelects();
-    populateCourses();
-    const stored = loadColleges();
-    if (stored && stored.length > 0) colleges = stored;
-    const user = loadUser();
-    if (!user) {
-      welcomeModal.style.display = 'flex';
-      userState.value = STATES[0];
-    } else {
-      welcomeModal.style.display = 'none';
-      renderSavedInfo(user);
-      stateSelect.value = user.state || '';
-      courseInput.value = user.course || '';
-    }
-    renderCards(colleges.slice(0, 50));
-  }
-
-  init();
-
-})();
+/* ---------- small helpers ---------- */
+function capitalize(s=''){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function num(x){ return String(x).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
