@@ -3,105 +3,161 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Collagefinder — Personalized College Info</title>
-  <meta name="description" content="Collagefinder: find colleges by state & course. Personalized welcome and sample dataset.">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <title>Your Project — Modern Starter Site</title>
+  <meta name="description" content="A clean responsive one-page starter site (hero, about, services, portfolio, contact)." />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Quick, free font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="topbar">
-    <div class="container top-inner">
-      <div class="brand">🎓 <strong>Collagefinder</strong></div>
-      <div class="tools">
-        <button id="uploadBtn" class="btn accent">Upload Colleges CSV/JSON</button>
-        <input id="fileInput" type="file" accept=".csv,application/json" style="display:none" />
-        <button id="downloadUser" class="btn">Export Users</button>
-        <button id="resetBtn" class="btn ghost">Reset</button>
-      </div>
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="#home" aria-label="Homepage">MySite</a>
+
+      <button id="nav-toggle" aria-expanded="false" aria-controls="main-navigation" aria-label="Toggle navigation">
+        <span class="hamburger"></span>
+      </button>
+
+      <nav id="main-navigation" class="nav" role="navigation">
+        <ul class="nav-list">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
-  <main class="container main">
-    <section class="hero">
-      <div class="hero-left">
-        <h1 id="greeting">Welcome to Collagefinder! 🎉</h1>
-        <p class="muted">Find colleges in your state offering the course you're interested in. Upload a dataset (CSV/JSON) to include more colleges.</p>
+  <main>
+    <!-- HERO -->
+    <section id="home" class="hero" aria-labelledby="hero-heading">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h1 id="hero-heading">Beautiful websites made simple.</h1>
+          <p>Fast, accessible, and responsive starter template — customize it and ship.</p>
+          <p class="cta-row">
+            <a class="btn-primary" href="#contact">Get in touch</a>
+            <a class="btn-ghost" href="#portfolio">See work</a>
+          </p>
+        </div>
 
-        <div class="controls">
-          <label for="stateSelect">State</label>
-          <select id="stateSelect" class="select"></select>
+        <div class="hero-media" aria-hidden="true">
+          <!-- Decorative illustration (inline SVG) -->
+          <svg width="320" height="220" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <rect rx="16" width="320" height="220" fill="#E9F2FF"></rect>
+            <circle cx="80" cy="80" r="40" fill="#CDE5FF"></circle>
+            <rect x="140" y="40" width="150" height="100" rx="10" fill="#A7D0FF"></rect>
+            <text x="22" y="200" font-family="Inter, sans-serif" font-size="12" fill="#3a3a3a">Illustration</text>
+          </svg>
+        </div>
+      </div>
+    </section>
 
-          <label for="courseInput">Course (type or pick)</label>
-          <input id="courseInput" list="courseList" placeholder="e.g., B.Com, B.Tech, MBA" />
-          <datalist id="courseList"></datalist>
+    <!-- ABOUT -->
+    <section id="about" class="section" aria-labelledby="about-heading">
+      <div class="container">
+        <h2 id="about-heading">About</h2>
+        <p class="prose">I build simple, fast websites and web apps that are accessible and easy to maintain. This starter contains the usual sections, a responsive layout, and a small JS file for interactions.</p>
+      </div>
+    </section>
 
-          <div class="row">
-            <button id="searchBtn" class="btn big primary">Show Colleges</button>
-            <button id="showAllBtn" class="btn big">Show Sample</button>
+    <!-- SERVICES -->
+    <section id="services" class="section alt" aria-labelledby="services-heading">
+      <div class="container">
+        <h2 id="services-heading">Services</h2>
+        <div class="cards">
+          <article class="card" aria-labelledby="s1">
+            <h3 id="s1">Design</h3>
+            <p>Clean UI, design systems, prototypes and Figma-ready assets.</p>
+          </article>
+
+          <article class="card" aria-labelledby="s2">
+            <h3 id="s2">Development</h3>
+            <p>Responsive HTML/CSS/JS, single-page apps, and static site builds.</p>
+          </article>
+
+          <article class="card" aria-labelledby="s3">
+            <h3 id="s3">Optimization</h3>
+            <p>Performance auditing, accessibility improvements, and SEO basics.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="section" aria-labelledby="portfolio-heading">
+      <div class="container">
+        <h2 id="portfolio-heading">Portfolio</h2>
+        <p class="prose">Sample projects — replace images and descriptions with your content.</p>
+
+        <div class="portfolio-grid" role="list">
+          <figure class="portfolio-item" role="listitem">
+            <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=800&auto=format&fit=crop" alt="Project 1 screenshot">
+            <figcaption>Project One — Landing page redesign</figcaption>
+          </figure>
+
+          <figure class="portfolio-item" role="listitem">
+            <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=800&auto=format&fit=crop" alt="Project 2 screenshot">
+            <figcaption>Project Two — E-commerce prototype</figcaption>
+          </figure>
+
+          <figure class="portfolio-item" role="listitem">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" alt="Project 3 screenshot">
+            <figcaption>Project Three — App UI kit</figcaption>
+          </figure>
+
+          <figure class="portfolio-item" role="listitem">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" alt="Project 4 screenshot">
+            <figcaption>Project Four — CMS integration</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section alt" aria-labelledby="contact-heading">
+      <div class="container">
+        <h2 id="contact-heading">Contact</h2>
+        <p class="prose">Send a message — this form is client-side only. Hook it up to your backend or services (Formspree, Netlify Forms, etc.) to receive messages.</p>
+
+        <form id="contact-form" class="contact-form" novalidate>
+          <div class="form-row">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required minlength="2" />
+            <span class="error" aria-live="polite"></span>
           </div>
-        </div>
+
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required />
+            <span class="error" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required minlength="10"></textarea>
+            <span class="error" aria-live="polite"></span>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Send message</button>
+            <button type="reset" class="btn-ghost">Reset</button>
+          </div>
+
+          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+        </form>
       </div>
-
-      <div class="hero-right">
-        <div class="card summary">
-          <h3>Your saved info</h3>
-          <div id="savedInfo">— not set —</div>
-          <button id="editInfo" class="btn ghost">Edit info</button>
-        </div>
-
-        <div class="card upload">
-          <h3>Dataset</h3>
-          <p class="muted small">Upload a CSV with columns: <code>name,city,state,courses,fees,cutoff,website,contact</code> or a JSON array with those keys.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="results" aria-live="polite">
-      <h2 id="resultsTitle">Colleges</h2>
-      <div id="cards" class="cards-grid"></div>
-      <div id="noResults" class="muted" style="display:none">No colleges found — try another filter or upload more data.</div>
-    </section>
-
-    <section class="howto">
-      <h3>How to use</h3>
-      <ol>
-        <li>On first visit you'll see a modal asking your name, state, mobile and course — save it to personalize results.</li>
-        <li>Use State + Course to find colleges. Click "Show Sample" to view included sample colleges.</li>
-        <li>Upload a CSV/JSON to add more colleges to the site (stored in your browser via localStorage).</li>
-        <li>Export users or reset stored data with the top-right buttons.</li>
-      </ol>
     </section>
   </main>
 
-  <!-- Welcome Modal -->
-  <div id="welcomeModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-panel">
-      <h2>Tell us a bit about you 👋</h2>
-      <form id="welcomeForm">
-        <label for="userName">Name</label>
-        <input id="userName" name="name" required placeholder="Your name">
-
-        <label for="userState">State</label>
-        <select id="userState" name="state" required></select>
-
-        <label for="userMobile">Mobile Number</label>
-        <input id="userMobile" name="mobile" required placeholder="Mobile number">
-
-        <label for="userCourse">Course interested in</label>
-        <input id="userCourse" name="course" list="courseList" required placeholder="e.g., B.Com">
-
-        <div class="row">
-          <button type="submit" class="btn primary">Save & Continue</button>
-          <button id="skipBtn" type="button" class="btn ghost">Skip</button>
-        </div>
-      </form>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>© <span id="year"></span> MySite • Built with ❤️ • <a href="#top">Back to top</a></p>
     </div>
-  </div>
-
-  <footer class="footer">
-    <div class="container">Made with ❤️ • Works in your browser. Upload a dataset to include more colleges.</div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
