@@ -53,5 +53,5 @@ document.getElementById("collegeList").innerHTML =
     </div>
   `).join('');
 </script>
-</body>
+</body> 
 </html></html>]
