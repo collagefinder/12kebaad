@@ -1,32 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Courses & Diplomas | 12kebaad</title>
-  <meta name="description" content="Explore detailed courses and diplomas after Class 12 in Science, Commerce, Arts, and Vocational streams.">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Available Courses — 12kebaad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
-    body {font-family: 'Poppins', sans-serif; margin:0; background:#f9fafb;}
-    header {background:#2563eb;color:white;padding:16px 0;}
-    header .brand {font-weight:700;font-size:1.4rem;text-decoration:none;color:white;}
-    nav a {color:white;margin-left:18px;text-decoration:none;}
-    .container {max-width:1100px;margin:auto;padding:20px;}
-    .hero-header {background: linear-gradient(135deg,#2563eb,#6d28d9);color:#fff;padding:38px;border-radius:12px;margin-bottom:25px;}
-    h2 {color:#0b2b5a;}
-    .courses-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
-    .course-card {background:#fff;border-radius:10px;padding:14px;box-shadow:0 5px 18px rgba(0,0,0,0.05);cursor:pointer;}
-    .course-card:hover {transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,0.1);}
-    .hidden {display:none;}
-    .btn-primary {display:inline-block;background:#2563eb;color:white;padding:10px 18px;border-radius:8px;text-decoration:none;margin-top:20px;}
+    main { padding: 2rem 1rem; }
+    .course-grid { 
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .course-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+      padding: 1rem;
+      transition: transform 0.2s;
+    }
+    .course-card:hover {
+      transform: translateY(-5px);
+    }
+    .course-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #1e3a8a;
+    }
+    .course-card p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .course-card button {
+      margin-top: 10px;
+      background: linear-gradient(90deg,#2563eb,#6d28d9);
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <div class="container">
+  <header class="site-header">
+    <div class="container header-inner">
       <a class="brand" href="index.html">12kebaad</a>
-      <nav>
+      <nav class="main-nav">
         <a href="index.html">Home</a>
         <a href="courses.html" class="active">Courses</a>
         <a href="colleges.html">Colleges</a>
@@ -36,88 +57,221 @@
   </header>
 
   <main class="container">
-    <section class="hero-header">
-      <h1>Explore Courses & Diplomas</h1>
-      <p id="streamTitle"></p>
+    <section class="card">
+      <h1 id="title">Courses & Diplomas</h1>
+      <p id="subtitle">Choose your ideal program based on your stream.</p>
+      <div class="course-grid" id="courseGrid"></div>
     </section>
-
-    <!-- Science -->
-    <section id="science" class="stream-section hidden">
-      <h2>Science Stream</h2>
-      <div class="courses-grid">
-        <div class="course-card" onclick="goToCollege('B.Sc Physics')"><h3>B.Sc (Hons) Physics</h3><p>Specialized in Physics</p></div>
-        <div class="course-card" onclick="goToCollege('B.Tech Computer Science')"><h3>B.Tech — Computer Science</h3><p>Engineering & IT</p></div>
-        <div class="course-card" onclick="goToCollege('BCA')"><h3>BCA</h3><p>Computer Applications</p></div>
-        <div class="course-card" onclick="goToCollege('MBBS')"><h3>MBBS</h3><p>Medical Sciences</p></div>
-        <div class="course-card" onclick="goToCollege('B.Sc Nursing')"><h3>B.Sc Nursing</h3><p>Healthcare & Medicine</p></div>
-      </div>
-    </section>
-
-    <!-- Commerce -->
-    <section id="commerce" class="stream-section hidden">
-      <h2>Commerce Stream</h2>
-      <div class="courses-grid">
-        <div class="course-card" onclick="goToCollege('B.Com')"><h3>B.Com (General)</h3><p>Accounting and finance</p></div>
-        <div class="course-card" onclick="goToCollege('BBA')"><h3>BBA</h3><p>Business Administration</p></div>
-        <div class="course-card" onclick="goToCollege('CA')"><h3>CA</h3><p>Chartered Accountancy</p></div>
-        <div class="course-card" onclick="goToCollege('CS')"><h3>CS</h3><p>Company Secretary</p></div>
-        <div class="course-card" onclick="goToCollege('CFA')"><h3>CFA</h3><p>Financial Analysis</p></div>
-        <div class="course-card" onclick="goToCollege('Diploma in Banking')"><h3>Diploma — Banking & Finance</h3><p>1–2 years</p></div>
-      </div>
-    </section>
-
-    <!-- Arts -->
-    <section id="arts" class="stream-section hidden">
-      <h2>Arts & Humanities</h2>
-      <div class="courses-grid">
-        <div class="course-card" onclick="goToCollege('BA English')"><h3>BA English</h3><p>Literature and Language</p></div>
-        <div class="course-card" onclick="goToCollege('BA Psychology')"><h3>BA Psychology</h3><p>Mental Health Studies</p></div>
-        <div class="course-card" onclick="goToCollege('BA History')"><h3>BA History</h3><p>Historical Research</p></div>
-        <div class="course-card" onclick="goToCollege('BFA')"><h3>BFA</h3><p>Fine Arts & Design</p></div>
-        <div class="course-card" onclick="goToCollege('Diploma in Journalism')"><h3>Diploma — Journalism & Mass Comm.</h3><p>1–2 years</p></div>
-      </div>
-    </section>
-
-    <!-- Vocational -->
-    <section id="vocational" class="stream-section hidden">
-      <h2>Vocational & Skill-Based</h2>
-      <div class="courses-grid">
-        <div class="course-card" onclick="goToCollege('Diploma in Fashion Designing')"><h3>Diploma — Fashion Designing</h3><p>Creative industry course</p></div>
-        <div class="course-card" onclick="goToCollege('Diploma in Photography')"><h3>Diploma — Photography</h3><p>Media & creativity</p></div>
-        <div class="course-card" onclick="goToCollege('Diploma in Hotel Management')"><h3>Diploma — Hotel Management</h3><p>Hospitality & tourism</p></div>
-        <div class="course-card" onclick="goToCollege('ITI Electrician')"><h3>ITI — Electrician</h3><p>Technical training</p></div>
-        <div class="course-card" onclick="goToCollege('ITI Fitter')"><h3>ITI — Fitter</h3><p>Mechanical skills</p></div>
-      </div>
-    </section>
-
-    <a href="colleges.html" class="btn-primary">Explore Colleges →</a>
   </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year"></span> 12kebaad • Helps you to decide your future</small>
+    </div>
+  </footer>
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    const stream = params.get('stream');
-    const title = document.getElementById('streamTitle');
-    const allSections = document.querySelectorAll('.stream-section');
+    const stream = (params.get('stream') || '').toLowerCase();
+    const state = params.get('state') || '';
 
-    if (stream) {
-      allSections.forEach(s => s.classList.add('hidden'));
-      const selected = document.getElementById(stream);
-      if (selected) {
-        selected.classList.remove('hidden');
-        title.textContent = `Showing ${stream.charAt(0).toUpperCase() + stream.slice(1)} Stream Courses`;
-      } else {
-        title.textContent = 'Showing All Courses';
-        allSections.forEach(s => s.classList.remove('hidden'));
+    const courseGrid = document.getElementById('courseGrid');
+    const title = document.getElementById('title');
+    const subtitle = document.getElementById('subtitle');
+
+    const courses = {
+      science: [
+        // Degrees
+        "B.Sc (Physics, Chemistry, Maths, Biology, Computer Science, Biotechnology, Microbiology, Zoology, Botany)",
+        "B.Tech (Computer Science, Mechanical, Electrical, Civil, Electronics, Chemical, AI & ML, Data Science, Mechatronics, Robotics)",
+        "MBBS (Bachelor of Medicine & Bachelor of Surgery)",
+        "BDS (Dental Surgery)",
+        "B.Pharm (Pharmacy)",
+        "B.Sc Nursing",
+        "BPT (Physiotherapy)",
+        "B.Sc Agriculture",
+        "B.Sc Environmental Science",
+        "B.Sc Forensic Science",
+        "B.Sc Aviation",
+        "B.Sc Marine Science",
+        "B.Sc Psychology",
+        "BCA (Bachelor of Computer Applications)",
+        "B.Sc Statistics",
+        "B.Sc Geology",
+        "B.Sc Biotechnology",
+        "B.Sc Nutrition and Dietetics",
+        "B.Sc Biomedical Science",
+        "B.Sc Home Science",
+        "Integrated M.Sc Programs",
+        // Diplomas
+        "Diploma in Medical Lab Technology",
+        "Diploma in Radiology",
+        "Diploma in Nursing Assistant",
+        "Diploma in Agriculture",
+        "Diploma in Engineering (Polytechnic)",
+        "Diploma in Computer Science",
+        "Diploma in Data Science",
+        "Diploma in Artificial Intelligence",
+        "Diploma in Pharmacy",
+        "Diploma in Food Technology",
+        "Diploma in Environmental Studies",
+        "Diploma in Forensic Science"
+      ],
+      commerce: [
+        // Degrees
+        "B.Com (General, Accounting & Finance, Taxation, Marketing, Banking, Insurance)",
+        "B.Com (Hons)",
+        "BBA (Bachelor of Business Administration)",
+        "BBM (Bachelor of Business Management)",
+        "BMS (Bachelor of Management Studies)",
+        "BA (Economics)",
+        "B.A. (Business Economics)",
+        "B.A. (Statistics)",
+        "BCA (for commerce students with Maths)",
+        "B.Sc Finance",
+        "B.A. (Marketing & Advertising)",
+        "B.Sc in Entrepreneurship",
+        "B.A. (International Business)",
+        "Integrated MBA",
+        // Diplomas
+        "Diploma in Accounting & Taxation",
+        "Diploma in Financial Management",
+        "Diploma in Banking & Insurance",
+        "Diploma in Business Analytics",
+        "Diploma in Digital Marketing",
+        "Diploma in E-Commerce",
+        "Diploma in Entrepreneurship Development",
+        "Diploma in HR Management",
+        "Diploma in Logistics & Supply Chain",
+        "Diploma in Stock Market Analysis",
+        "Diploma in Event Management",
+        "Diploma in Office Management",
+        "Diploma in International Business"
+      ],
+      arts: [
+        // Degrees
+        "BA English",
+        "BA Political Science",
+        "BA History",
+        "BA Sociology",
+        "BA Psychology",
+        "BA Geography",
+        "BA Economics",
+        "BA Journalism & Mass Communication",
+        "BA Philosophy",
+        "BA Public Administration",
+        "BA Foreign Languages (French, German, Spanish, etc.)",
+        "BA Fine Arts",
+        "BA Music / Dance / Theatre",
+        "BA Social Work",
+        "BA Archaeology",
+        "BA Education",
+        "BA Linguistics",
+        "BA International Relations",
+        "BA Film Studies",
+        "BA Criminology",
+        "BFA (Bachelor of Fine Arts)",
+        "BJMC (Journalism & Mass Communication)",
+        "BSW (Social Work)",
+        "B.Ed (Education)",
+        // Diplomas
+        "Diploma in Photography",
+        "Diploma in Acting & Theatre",
+        "Diploma in Animation & Multimedia",
+        "Diploma in Interior Design",
+        "Diploma in Graphic Design",
+        "Diploma in Fashion Design",
+        "Diploma in Journalism",
+        "Diploma in Travel & Tourism",
+        "Diploma in Language Studies",
+        "Diploma in Hotel Management",
+        "Diploma in Political Studies"
+      ],
+      vocational: [
+        "Bachelor of Vocational Studies (B.Voc)",
+        "Diploma in Electrician",
+        "Diploma in Fitter / Mechanical",
+        "Diploma in Automotive Technology",
+        "Diploma in Beauty & Wellness",
+        "Diploma in Cosmetology",
+        "Diploma in Fashion Technology",
+        "Diploma in Event Management",
+        "Diploma in Retail Management",
+        "Diploma in Food Production",
+        "Diploma in Culinary Arts",
+        "Diploma in Travel & Tourism",
+        "Diploma in Early Childhood Education",
+        "Diploma in Sports Coaching",
+        "Diploma in Fitness Training",
+        "Diploma in Digital Media Production",
+        "Diploma in Mobile App Development",
+        "Diploma in UI/UX Design"
+      ],
+      interdisciplinary: [
+        "Bachelor in Design (B.Des)",
+        "Bachelor in Architecture (B.Arch)",
+        "Bachelor in Hotel Management (BHM)",
+        "Bachelor in Tourism Management (BTM)",
+        "Bachelor in Social Work (BSW)",
+        "Bachelor in Fine Arts (BFA)",
+        "Bachelor in Journalism & Communication (BJMC)",
+        "Bachelor in Law (BA LLB / BBA LLB / BCom LLB)",
+        "Bachelor in Performing Arts",
+        "Bachelor in Sports Science",
+        "Bachelor in Liberal Studies",
+        "Bachelor in Data Science",
+        "Bachelor in Artificial Intelligence",
+        "Bachelor in Cybersecurity",
+        "Bachelor in Game Design",
+        "Bachelor in Animation & VFX",
+        "Bachelor in Film Making",
+        "Bachelor in Public Policy",
+        "Bachelor in Environmental Management",
+        // Diplomas
+        "Diploma in AI & ML",
+        "Diploma in Cybersecurity",
+        "Diploma in Game Design",
+        "Diploma in Film Editing",
+        "Diploma in Animation & VFX",
+        "Diploma in Hospitality Management",
+        "Diploma in Architecture Drafting",
+        "Diploma in Fashion Styling",
+        "Diploma in Sports Analytics",
+        "Diploma in Web Development",
+        "Diploma in Cloud Computing"
+      ]
+    };
+
+    function renderCourses(streamKey) {
+      const list = courses[streamKey] || [];
+      if (!list.length) {
+        title.textContent = "Courses & Diplomas";
+        subtitle.textContent = "Please go back and select your stream again.";
+        return;
       }
-    } else {
-      title.textContent = 'Showing All Streams';
-      allSections.forEach(s => s.classList.remove('hidden'));
+
+      title.textContent = stream.charAt(0).toUpperCase() + stream.slice(1) + " Stream Courses & Diplomas";
+      subtitle.textContent = `Explore available degree and diploma programs in the ${stream} stream.`;
+
+      courseGrid.innerHTML = "";
+      list.forEach(course => {
+        const div = document.createElement("div");
+        div.className = "course-card";
+        div.innerHTML = `
+          <h3>${course}</h3>
+          <p>Explore top colleges offering ${course} in your selected state.</p>
+          <button onclick="viewColleges('${course}')">View Colleges</button>
+        `;
+        courseGrid.appendChild(div);
+      });
     }
 
-    function goToCollege(course) {
-      const encoded = encodeURIComponent(course);
-      window.location.href = `colleges.html?course=${encoded}`;
+    function viewColleges(course) {
+      window.location.href = `colleges.html?state=${encodeURIComponent(state)}&course=${encodeURIComponent(course)}`;
     }
+
+    renderCourses(stream);
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
-</html></html></html>
+</html></html></html></html>
