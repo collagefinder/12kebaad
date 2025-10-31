@@ -1,60 +1,379 @@
-:root{
-  --bg:#ffffff;
-  --muted:#6b7280;
-  --accent:#2563eb;
-  --accent-dark:#1e40af;
-  --card:#f8fafc;
-  --radius:12px;
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
-  color-scheme:light;
-}
+// FuturePath main JS
+// - Saves start entries to localStorage and optionally posts to webhook
+// - Filters courses and colleges by stream/course
+// - Exports CSVs of entries or displayed colleges
+// NOTE: To forward submissions to Google Sheets, create a Google Apps Script web app or any endpoint that accepts POST JSON,
+// then paste its URL into the Admin → Webhook field and set Auto-post to 'Yes'.
 
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#0f172a;line-height:1.5;font-size:16px}
-.container{max-width:1100px;margin:0 auto;padding:18px}
-.site-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid #eef2ff;background:#fff;position:sticky;top:0;z-index:20}
-.brand{font-weight:700;color:var(--accent-dark);text-decoration:none}
-.tagline{font-size:0.95rem;color:var(--muted);margin-left:12px}
-.top-nav a{margin-left:14px;text-decoration:none;color:#0f172a}
+document.addEventListener('DOMContentLoaded', () => {
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-.card{background:#fff;padding:18px;border-radius:12px;margin-top:18px;box-shadow:0 6px 18px rgba(12,18,30,0.04)}
-.hero .lead{color:var(--muted)}
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;align-items:end}
-.form-grid label{display:block;font-size:0.95rem;margin-bottom:6px}
-input, select, textarea{width:100%;padding:10px;border:1px solid #e6eefc;border-radius:8px;font:inherit}
-.form-actions{grid-column:1/-1;display:flex;gap:8px;align-items:center}
-.btn-primary{background:var(--accent);color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer}
-.btn-ghost{background:transparent;border:1px solid #e6eefc;padding:9px 12px;border-radius:8px;cursor:pointer}
-.error{color:#b91c1c;margin-top:6px}
+  // Elements
+  const startForm = document.getElementById('start-form');
+  const startError = document.getElementById('start-error');
+  const resultsSection = document.getElementById('results');
+  const resultsIntro = document.getElementById('results-intro');
+  const coursesList = document.getElementById('courses-list');
+  const collegesGrid = document.getElementById('colleges-grid');
+  const courseFilter = document.getElementById('course-filter');
+  const feeFilter = document.getElementById('fee-filter');
+  const applyFilter = document.getElementById('apply-filter');
+  const resetFilter = document.getElementById('reset-filter');
+  const collegeFilters = document.getElementById('college-filters');
+  const exportDisplayed = document.getElementById('export-displayed');
+  const downloadEntriesBtn = document.getElementById('download-entries');
+  const downloadEntriesBtn2 = document.getElementById('download-entries-2');
+  const entriesTableBody = document.querySelector('#entries-table tbody');
+  const clearEntriesBtn = document.getElementById('clear-entries');
+  const webhookInput = document.getElementById('webhook-url');
+  const autoPostSelect = document.getElementById('auto-post');
 
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.chips .chip{background:#f1f5f9;padding:8px 10px;border-radius:999px;font-size:0.95rem}
+  // Sample data: courses by stream
+  const streamCourses = {
+    science: [
+      'BSc (General)',
+      'BSc (Hons) — Physics',
+      'BSc (Hons) — Chemistry',
+      'BSc (Hons) — Biology',
+      'BTech / BE',
+      'BPharm',
+      'BSc Nursing',
+      'Diploma — Lab Technician',
+      'Diploma — Polytechnic (Engineering)'
+    ],
+    commerce: [
+      'BCom',
+      'BCom (Hons)',
+      'BBA',
+      'BA Economics',
+      'Diploma — Accounting & Taxation',
+      'Diploma — Banking & Finance'
+    ],
+    arts: [
+      'BA (Honours)',
+      'BA (General)',
+      'BFA',
+      'BA Social Work',
+      'Diploma — Journalism',
+      'Diploma — Fine Arts'
+    ],
+    engineering: [
+      'BTech / BE',
+      'Diploma — Polytechnic (Engineering)',
+      'BSc (Engg related)'
+    ],
+    medical: [
+      'MBBS',
+      'BDS',
+      'BPharm',
+      'BSc Nursing',
+      'Diploma — Allied Health (OT, Lab)'
+    ],
+    vocational: [
+      'ITI courses',
+      'Diploma — Computer Applications',
+      'Diploma — Hospitality',
+      'Skill-based short-term courses'
+    ]
+  };
 
-.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
-.college-card{border-radius:10px;overflow:hidden;border:1px solid #eef2ff;padding:12px;background:#fff}
-.college-card h4{margin:0 0 8px}
-.college-meta{font-size:0.95rem;color:var(--muted);margin-bottom:8px}
-.small{font-size:0.9rem}
-.muted{color:var(--muted)}
+  // Sample colleges data — extend this list or replace with real data later
+  // Each item: {name, streams:[], courses:[], fees:number (annual), location, cutoffTrend (string), admissionBasis (string)}
+  const colleges = [
+    { name: 'National Institute of Technology, Example', streams: ['engineering'], courses: ['BTech / BE'], fees: 120000, location: 'City A, State X', cutoffTrend: 'High (Cutoff rising)', admissionBasis: 'JEE Main' },
+    { name: 'Example Government Medical College', streams: ['medical','science'], courses: ['MBBS','BSc Nursing'], fees: 150000, location: 'City B, State Y', cutoffTrend: 'Very High (NEET)', admissionBasis: 'NEET' },
+    { name: 'City Arts & Science College', streams: ['arts','science'], courses: ['BA (Honours)','BSc (General)'], fees: 20000, location: 'City C, State Z', cutoffTrend: 'Moderate (12th Marks)', admissionBasis: '12th Marks' },
+    { name: 'Commerce College of India', streams: ['commerce'], courses: ['BCom','BBA'], fees: 30000, location: 'City D, State X', cutoffTrend: 'Moderate', admissionBasis: '12th Marks' },
+    { name: 'Private Engineering Institute', streams: ['engineering'], courses: ['BTech / BE'], fees: 220000, location: 'City E, State Y', cutoffTrend: 'Stable', admissionBasis: 'JEE Main / College Test' },
+    { name: 'Polytechnic Institute', streams: ['engineering','vocational'], courses: ['Diploma — Polytechnic (Engineering)','ITI courses'], fees: 15000, location: 'Town F, State Z', cutoffTrend: 'Low', admissionBasis: '10th/ Diploma entry' },
+    { name: 'National University Example', streams: ['arts','commerce','science'], courses: ['BA (Honours)','BCom (Hons)','BSc (Hons) — Physics'], fees: 45000, location: 'Metro G, State X', cutoffTrend: 'Rising', admissionBasis: 'CUET / 12th Marks' },
+    { name: 'Allied Health College', streams: ['medical','science'], courses: ['BSc Nursing','Diploma — Allied Health (OT, Lab)'], fees: 60000, location: 'City H, State Y', cutoffTrend: 'Moderate', admissionBasis: '12th Marks / Entrance' }
+  ];
 
-.filter-row{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
-.filter-row label{margin-right:6px}
-.actions-row{display:flex;gap:10px;align-items:center}
+  // Utility: read/write entries from localStorage
+  const STORAGE_KEY = 'futurepath_entries_v1';
+  function loadEntries(){
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch(e) { return []; }
+  }
+  function saveEntries(entries){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries || []));
+  }
 
-.mt-12{margin-top:12px}
-.mt-8{margin-top:8px}
+  // Initialize admin UI from storage
+  function renderEntriesTable(){
+    const entries = loadEntries();
+    entriesTableBody.innerHTML = '';
+    entries.forEach((e, idx) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${idx+1}</td><td>${escapeHtml(e.name)}</td><td>${escapeHtml(e.mobile)}</td><td>${escapeHtml(e.stream)}</td><td>${escapeHtml(e.state)}</td><td>${new Date(e.time).toLocaleString()}</td>`;
+      entriesTableBody.appendChild(tr);
+    });
+  }
 
-.admin-grid{display:grid;grid-template-columns:1fr 200px;gap:12px;align-items:end}
-#entries-table{width:100%;border-collapse:collapse;margin-top:8px}
-#entries-table th,#entries-table td{padding:8px;border:1px solid #f1f5f9;text-align:left}
-.striped tbody tr:nth-child(odd){background:#fbfdff}
+  function escapeHtml(str = '') {
+    return String(str).replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
 
-.modal{position:fixed;inset:0;background:rgba(7,10,22,0.5);display:flex;align-items:center;justify-content:center;z-index:60}
-.modal-inner{background:#fff;padding:18px;border-radius:12px;max-width:720px;width:94%;position:relative}
-.modal-close{position:absolute;right:12px;top:8px;background:none;border:0;font-size:22px;cursor:pointer}
+  // Populate courses chips and course filter based on stream
+  function showStreamOptions(stream, name, mobile, state){
+    const courses = streamCourses[stream] || [];
+    resultsSection.hidden = false;
+    resultsIntro.textContent = `${name}, from ${state} — stream: ${streamDisplayName(stream)}. Below are recommended courses and colleges.`;
+    coursesList.innerHTML = '';
+    courseFilter.innerHTML = '<option value="">-- All courses --</option>';
 
-footer.site-footer{text-align:center;padding:14px;margin-top:18px;border-top:1px solid #eef2ff}
-@media (max-width:720px){
-  .admin-grid{grid-template-columns:1fr;align-items:stretch}
-  .form-grid{grid-template-columns:1fr}
+    if (courses.length === 0) {
+      coursesList.innerHTML = '<p class="muted">No predefined courses for this stream. Please explore colleges below.</p>';
+    } else {
+      courses.forEach(c => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chip';
+        btn.textContent = c;
+        btn.addEventListener('click', () => {
+          courseFilter.value = c;
+          applyCollegeFilter();
+        });
+        coursesList.appendChild(btn);
+
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = c;
+        courseFilter.appendChild(opt);
+      });
+      collegeFilters.hidden = false;
+      courseFilter.value = '';
+      feeFilter.value = '';
+    }
+
+    // render colleges matching stream initially
+    renderColleges({stream});
+  }
+
+  function streamDisplayName(key){
+    const map = {
+      science: 'Science',
+      commerce: 'Commerce',
+      arts: 'Arts/Humanities',
+      engineering: 'Engineering',
+      medical: 'Medical',
+      vocational: 'Vocational'
+    };
+    return map[key] || key;
+  }
+
+  // Filter and display colleges
+  function renderColleges({stream, course, maxFee} = {}){
+    collegesGrid.innerHTML = '';
+    // filter by stream first
+    let list = colleges.filter(c => c.streams.includes(stream));
+    if (course) {
+      list = list.filter(c => c.courses.some(cc => cc.toLowerCase().includes(course.toLowerCase())));
+    }
+    if (typeof maxFee === 'number' && !isNaN(maxFee) && maxFee > 0) {
+      list = list.filter(c => c.fees <= maxFee);
+    }
+
+    if (list.length === 0) {
+      collegesGrid.innerHTML = '<p class="muted">No colleges found for selected filters.</p>';
+      return;
+    }
+
+    list.forEach(col => {
+      const el = document.createElement('article');
+      el.className = 'college-card';
+      el.innerHTML = `
+        <h4>${escapeHtml(col.name)}</h4>
+        <div class="college-meta"><strong>Location:</strong> ${escapeHtml(col.location)} • <strong>Fees:</strong> ₹${numberWithCommas(col.fees)}</div>
+        <div class="college-meta"><strong>Admission:</strong> ${escapeHtml(col.admissionBasis)} • <strong>Cutoff trend:</strong> ${escapeHtml(col.cutoffTrend)}</div>
+        <div class="muted small"><strong>Courses:</strong> ${col.courses.map(c=>escapeHtml(c)).join(', ')}</div>
+        <div style="margin-top:8px"><button class="btn-ghost details-btn">View details</button></div>
+      `;
+      // details modal
+      el.querySelector('.details-btn').addEventListener('click', () => {
+        openModal(col);
+      });
+      collegesGrid.appendChild(el);
+    });
+  }
+
+  function numberWithCommas(x){
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  // Apply filter from UI
+  function applyCollegeFilter(){
+    const stream = currentSubmission?.stream;
+    if (!stream) return;
+    const c = courseFilter.value || null;
+    const maxFee = feeFilter.value ? Number(feeFilter.value) : null;
+    renderColleges({stream, course: c, maxFee});
+  }
+
+  // Modal
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalBody = document.getElementById('modal-body');
+  const modalClose = document.getElementById('modal-close');
+  function openModal(col){
+    modalTitle.textContent = col.name;
+    modalBody.innerHTML = `
+      <p><strong>Location:</strong> ${escapeHtml(col.location)}</p>
+      <p><strong>Fees (annual):</strong> ₹${numberWithCommas(col.fees)}</p>
+      <p><strong>Admission basis:</strong> ${escapeHtml(col.admissionBasis)}</p>
+      <p><strong>Cutoff trend:</strong> ${escapeHtml(col.cutoffTrend)}</p>
+      <p><strong>Courses available:</strong> ${col.courses.map(c=>escapeHtml(c)).join(', ')}</p>
+    `;
+    modal.hidden = false;
+  }
+  modalClose.addEventListener('click', ()=> modal.hidden = true);
+  modal.addEventListener('click', (e)=> { if (e.target === modal) modal.hidden = true; });
+
+  // CSV export utilities
+  function objectsToCSV rowsToCSV(rows, headers) {
+    // rows: array of objects with same keys as headers
+    const esc = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+    const head = headers.join(',');
+    const body = rows.map(r => headers.map(h => esc(r[h])).join(',')).join('\n');
+    return head + '\n' + body;
+  }
+
+  function downloadCSV(filename, content){
+    const blob = new Blob([content], {type: 'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  // Export displayed colleges
+  exportDisplayed.addEventListener('click', () => {
+    const nodes = Array.from(collegesGrid.querySelectorAll('.college-card'));
+    if (!nodes.length) {
+      alert('No colleges displayed to export.');
+      return;
+    }
+    const rows = nodes.map(n => {
+      const name = n.querySelector('h4').textContent;
+      const metas = n.querySelectorAll('.college-meta');
+      const locFees = metas[0]?.textContent || '';
+      const admCut = metas[1]?.textContent || '';
+      const coursesText = n.querySelector('.muted.small')?.textContent || '';
+      return {name, locFees, admCut, courses: coursesText};
+    });
+    const csv = objectsToCSV(rows, ['name','locFees','admCut','courses']);
+    downloadCSV('displayed_colleges.csv', csv);
+  });
+
+  // Download saved entries CSV
+  function entriesToCSV(entries){
+    const headers = ['name','mobile','stream','state','time'];
+    const rows = entries.map(e => {
+      return { name: e.name, mobile: e.mobile, stream: e.stream, state: e.state, time: new Date(e.time).toLocaleString() };
+    });
+    return objectsToCSV(rows, headers);
+  }
+  downloadEntriesBtn.addEventListener('click', () => {
+    const entries = loadEntries();
+    if (!entries.length) { alert('No saved entries'); return; }
+    const csv = entriesToCSV(entries);
+    downloadCSV('futurepath_entries.csv', csv);
+  });
+  downloadEntriesBtn2.addEventListener('click', () => downloadEntriesBtn.click());
+
+  // Clear entries
+  clearEntriesBtn.addEventListener('click', () => {
+    if (!confirm('Clear all saved entries from local storage?')) return;
+    saveEntries([]);
+    renderEntriesTable();
+    alert('Cleared local saved entries.');
+  });
+
+  // Start form submission
+  let currentSubmission = null;
+  startForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    startError.textContent = '';
+    const name = document.getElementById('student-name').value.trim();
+    const mobile = document.getElementById('student-mobile').value.trim();
+    const stream = document.getElementById('student-stream').value;
+    const state = document.getElementById('student-state').value;
+
+    // simple validation
+    if (!name || name.length < 2) { startError.textContent = 'Please enter a valid name.'; return; }
+    if (!/^\d{10,15}$/.test(mobile)) { startError.textContent = 'Please enter a valid mobile number (10-15 digits).'; return; }
+    if (!stream) { startError.textContent = 'Please select your stream.'; return; }
+    if (!state) { startError.textContent = 'Please select your state / union territory.'; return; }
+
+    const entry = { name, mobile, stream, state, time: new Date().toISOString() };
+    // save to local storage list
+    const entries = loadEntries();
+    entries.unshift(entry); // newest first
+    saveEntries(entries);
+    renderEntriesTable();
+
+    // store current for UI filters
+    currentSubmission = entry;
+
+    // show results and populate options
+    showStreamOptions(stream, name, mobile, state);
+
+    // If auto-post and webhook set, POST JSON to webhook
+    const webhookUrl = webhookInput.value && webhookInput.value.trim();
+    const autoPost = (autoPostSelect.value === 'yes');
+    if (webhookUrl && autoPost) {
+      postToWebhook(webhookUrl, entry)
+        .then(ok => { if (!ok) console.warn('Webhook post may have failed'); })
+        .catch(err => console.error('Webhook error', err));
+    }
+
+    // Show success and scroll to results
+    alert('Saved! Now showing recommended courses and colleges. You can export results or download saved entries.');
+    resultsSection.scrollIntoView({behavior:'smooth'});
+  });
+
+  // Post entry to webhook URL (JSON)
+  async function postToWebhook(url, entry){
+    try {
+      const resp = await fetch(url, {
+        method:'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(entry)
+      });
+      return resp.ok;
+    } catch(e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+  // UI filter actions
+  applyFilter.addEventListener('click', applyCollegeFilter);
+  resetFilter.addEventListener('click', () => { courseFilter.value = ''; feeFilter.value = ''; applyCollegeFilter(); });
+
+  // Modal is wired above
+
+  // initial render
+  renderEntriesTable();
+
+  // Provide a quick demo: if entries are empty, show hint
+  if (!loadEntries().length) {
+    entriesTableBody.innerHTML = '<tr><td colspan="6" class="muted">No saved entries yet — when a student submits the start form their info will appear here.</td></tr>';
+  }
+});
+
+// small helper: build CSV header + rows
+function objectsToCSV(rows, headers){
+  const esc = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const head = headers.join(',');
+  const body = rows.map(r => headers.map(h => esc(r[h])).join(',')).join('\n');
+  return head + '\n' + body;
 }
