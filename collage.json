@@ -1,0 +1,215 @@
+[
+  {
+    "name": "University of Delhi - Hindu College",
+    "state": "Delhi",
+    "city": "New Delhi",
+    "courses": ["BA English", "BA Political Science", "B.Com", "B.Sc Chemistry"],
+    "fees": 45000,
+    "admission": "CUET / 12th Marks",
+    "cutoff": "High (95%+ for popular honours)",
+    "website": "https://www.hinducollege.ac.in"
+  },
+  {
+    "name": "Miranda House, University of Delhi",
+    "state": "Delhi",
+    "city": "New Delhi",
+    "courses": ["BA English", "B.Sc Maths", "B.Sc Chemistry"],
+    "fees": 42000,
+    "admission": "CUET / 12th Marks",
+    "cutoff": "High (94–96%)",
+    "website": "https://www.mirandahouse.ac.in"
+  },
+  {
+    "name": "Sri Ram College of Commerce (SRCC)",
+    "state": "Delhi",
+    "city": "New Delhi",
+    "courses": ["B.Com", "B.Com (Hons)"],
+    "fees": 48000,
+    "admission": "CUET / 12th Marks",
+    "cutoff": "Very High (98%+)",
+    "website": "https://www.srcc.edu"
+  },
+  {
+    "name": "All India Institute of Medical Sciences (AIIMS)",
+    "state": "Delhi",
+    "city": "New Delhi",
+    "courses": ["MBBS","B.Sc Nursing"],
+    "fees": 7500,
+    "admission": "NEET",
+    "cutoff": "Very High (near-max NEET scores)",
+    "website": "https://aiims.edu"
+  },
+  {
+    "name": "Indian Institute of Technology Bombay (IIT Bombay)",
+    "state": "Maharashtra",
+    "city": "Mumbai",
+    "courses": ["B.Tech Computer Science", "B.Tech Electrical"],
+    "fees": 150000,
+    "admission": "JEE Advanced",
+    "cutoff": "Extremely High (top ranks)",
+    "website": "https://www.iitb.ac.in"
+  },
+  {
+    "name": "University of Mumbai - St. Xavier's College",
+    "state": "Maharashtra",
+    "city": "Mumbai",
+    "courses": ["B.Com", "BA English", "B.Sc"],
+    "fees": 50000,
+    "admission": "12th Marks / College test",
+    "cutoff": "High (varies by program)",
+    "website": "https://xaviers.edu"
+  },
+  {
+    "name": "Indian Institute of Science (IISc)",
+    "state": "Karnataka",
+    "city": "Bengaluru",
+    "courses": ["B.Sc Research", "Integrated M.Sc"],
+    "fees": 120000,
+    "admission": "Institute entrance / JEE",
+    "cutoff": "High",
+    "website": "https://iisc.ac.in"
+  },
+  {
+    "name": "Christ University",
+    "state": "Karnataka",
+    "city": "Bengaluru",
+    "courses": ["BBA", "B.Com", "B.Sc"],
+    "fees": 160000,
+    "admission": "Entrance / CUET",
+    "cutoff": "Moderate to High",
+    "website": "https://christuniversity.in"
+  },
+  {
+    "name": "Anna University",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "courses": ["B.Tech Computer Science","B.Tech Mechanical"],
+    "fees": 80000,
+    "admission": "TNEA / Entrance",
+    "cutoff": "High",
+    "website": "https://www.annauniv.edu"
+  },
+  {
+    "name": "Madras Christian College (MCC)",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "courses": ["BA", "BSc", "B.Com"],
+    "fees": 45000,
+    "admission": "12th Marks / College test",
+    "cutoff": "Moderate",
+    "website": "https://www.mcc.edu.in"
+  },
+  {
+    "name": "Banaras Hindu University (BHU)",
+    "state": "Uttar Pradesh",
+    "city": "Varanasi",
+    "courses": ["B.Sc", "BA", "B.Tech (on campus)"],
+    "fees": 30000,
+    "admission": "Uni entrance / 12th Marks",
+    "cutoff": "Moderate to High",
+    "website": "https://www.bhu.ac.in"
+  },
+  {
+    "name": "Aligarh Muslim University (AMU)",
+    "state": "Uttar Pradesh",
+    "city": "Aligarh",
+    "courses": ["BA", "BSc", "B.Tech"],
+    "fees": 35000,
+    "admission": "University entrance",
+    "cutoff": "Moderate",
+    "website": "https://www.amu.ac.in"
+  },
+  {
+    "name": "Jadavpur University",
+    "state": "West Bengal",
+    "city": "Kolkata",
+    "courses": ["B.Tech", "B.Sc", "BFA"],
+    "fees": 45000,
+    "admission": "WBJEE / Uni entrance",
+    "cutoff": "High",
+    "website": "http://www.jaduniv.edu.in"
+  },
+  {
+    "name": "Presidency University",
+    "state": "West Bengal",
+    "city": "Kolkata",
+    "courses": ["BA", "B.Sc"],
+    "fees": 30000,
+    "admission": "CUET / 12th Marks",
+    "cutoff": "High",
+    "website": "http://www.presiuniv.ac.in"
+  },
+  {
+    "name": "Ahmedabad University",
+    "state": "Gujarat",
+    "city": "Ahmedabad",
+    "courses": ["BBA", "B.Sc"],
+    "fees": 160000,
+    "admission": "Entrance / 12th Marks",
+    "cutoff": "Moderate to High",
+    "website": "https://www.ahduni.edu.in"
+  },
+  {
+    "name": "M. S. University (Baroda)",
+    "state": "Gujarat",
+    "city": "Vadodara",
+    "courses": ["B.Com", "BA", "B.Sc"],
+    "fees": 25000,
+    "admission": "12th Marks",
+    "cutoff": "Moderate",
+    "website": "https://msubaroda.ac.in"
+  },
+
+  /* ---------- Additional sample entries (use these as templates) ---------- */
+
+  {
+    "name": "Institute of Chemical Technology (ICT), Mumbai",
+    "state": "Maharashtra",
+    "city": "Mumbai",
+    "courses": ["B.Tech Chemical Engineering", "B.Sc Pharmacy"],
+    "fees": 120000,
+    "admission": "Entrance / JEE",
+    "cutoff": "High",
+    "website": "https://www.ictmumbai.edu.in"
+  },
+  {
+    "name": "Gujarat National Law University (GNLU)",
+    "state": "Gujarat",
+    "city": "Gandhinagar",
+    "courses": ["BA LLB", "B.Com LLB"],
+    "fees": 135000,
+    "admission": "Entrance",
+    "cutoff": "High",
+    "website": "https://www.gnlu.ac.in"
+  },
+  {
+    "name": "Savitribai Phule Pune University",
+    "state": "Maharashtra",
+    "city": "Pune",
+    "courses": ["B.Sc", "B.A", "B.Com"],
+    "fees": 30000,
+    "admission": "12th Marks",
+    "cutoff": "Moderate",
+    "website": "http://www.unipune.ac.in"
+  },
+  {
+    "name": "Manipal Academy of Higher Education (MAHE)",
+    "state": "Karnataka",
+    "city": "Manipal",
+    "courses": ["B.Tech", "B.Sc", "BBA"],
+    "fees": 160000,
+    "admission": "Entrance",
+    "cutoff": "Moderate to High",
+    "website": "https://manipal.edu"
+  },
+  {
+    "name": "Annamalai University",
+    "state": "Tamil Nadu",
+    "city": "Chidambaram",
+    "courses": ["B.Sc", "BA", "B.Com"],
+    "fees": 22000,
+    "admission": "12th Marks",
+    "cutoff": "Moderate",
+    "website": "https://annamalaiuniversity.ac.in"
+  }
+]
