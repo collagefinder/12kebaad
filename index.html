@@ -1,98 +1,62 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>12kebaad — Helps you to decide your future</title>
-  <meta name="description" content="12kebaad - Student career path selector" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>12kebaad | Choose Your Stream</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #2563eb, #6d28d9);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    h1 { font-size: 2.2rem; margin-bottom: 12px; }
+    p { margin-bottom: 22px; font-size: 1.1rem; }
+    .btn-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+    button {
+      background: white;
+      color: #2563eb;
+      font-weight: 600;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 1rem;
+    }
+    button:hover {
+      background: #f3f4f6;
+      transform: translateY(-2px);
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html">12kebaad</a>
-      <nav class="main-nav">
-        <a href="index.html">Home</a>
-        <a href="courses.html">Courses</a>
-        <a href="colleges.html">Colleges</a>
-        <a href="about.html">About</a>
-      </nav>
-    </div>
-  </header>
+  <h1>Welcome to <strong>12kebaad</strong></h1>
+  <p>Select your stream to explore courses and colleges</p>
 
-  <main class="container hero-grid">
-    <section class="hero-card">
-      <h1>Helps you to decide your future</h1>
-      <p class="lead">Tell us a little about yourself and explore courses & colleges tailored to your stream.</p>
+  <div class="btn-container">
+    <button onclick="selectStream('science')">Science</button>
+    <button onclick="selectStream('commerce')">Commerce</button>
+    <button onclick="selectStream('arts')">Arts</button>
+    <button onclick="selectStream('vocational')">Vocational</button>
+  </div>
 
-      <form id="welcome-form" class="form-grid" autocomplete="on" novalidate>
-        <div class="form-field">
-          <label for="name">Full name</label>
-          <input id="name" name="name" type="text" required minlength="2" placeholder="Your name">
-        </div>
-
-        <div class="form-field">
-          <label for="mobile">Mobile number</label>
-          <input id="mobile" name="mobile" type="tel" required pattern="^\d{10,15}$" placeholder="10-15 digits">
-        </div>
-
-        <div class="form-field">
-          <label for="stream">Stream</label>
-          <select id="stream" name="stream" required>
-            <option value="">-- Select stream --</option>
-            <option value="science">Science (PCB/PCM)</option>
-            <option value="commerce">Commerce</option>
-            <option value="arts">Arts / Humanities</option>
-            <option value="engineering">Engineering</option>
-            <option value="medical">Medical</option>
-            <option value="vocational">Vocational / Skill</option>
-          </select>
-        </div>
-
-        <div class="form-field">
-          <label for="state">State / Union Territory</label>
-          <select id="state" name="state" required>
-            <option value="">-- Select State / UT --</option>
-            <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option>
-            <option>Chhattisgarh</option><option>Goa</option><option>Gujarat</option><option>Haryana</option>
-            <option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
-            <option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option>
-            <option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Punjab</option>
-            <option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
-            <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option>
-            <option>Andaman & Nicobar</option><option>Chandigarh</option><option>Delhi</option><option>Jammu & Kashmir</option>
-            <option>Ladakh</option><option>Puducherry</option><option>Dadra & Nagar Haveli and Daman & Diu</option>
-          </select>
-        </div>
-
-        <div class="form-actions">
-          <button id="start-btn" type="submit" class="btn-primary">Start Exploring</button>
-          <button type="reset" class="btn-ghost">Reset</button>
-        </div>
-
-        <p id="form-error" class="error" aria-live="polite"></p>
-        <p class="privacy-note">We do not store your data on this site. Your inputs are used only to show relevant pages for this session.</p>
-      </form>
-    </section>
-
-    <aside class="promo-card">
-      <h3>Why 12kebaad?</h3>
-      <ul>
-        <li>Clear course suggestions by stream</li>
-        <li>College filters: fees, admission basis, cutoff trend</li>
-        <li>Beautiful, easy-to-use multi-page layout</li>
-      </ul>
-      <a href="about.html" class="btn-ghost">Learn more</a>
-    </aside>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <small>© <span id="year"></span> 12kebaad • Helps you to decide your future • <a href="mailto:12kebaad@gmail.com">12kebaad@gmail.com</a></small>
-    </div>
-  </footer>
-
-  <script src="script.js" defer></script>
+  <script>
+    function selectStream(stream) {
+      window.location.href = `courses.html?stream=${stream}`;
+    }
+  </script>
 </body>
-</html>
+</html></html>
