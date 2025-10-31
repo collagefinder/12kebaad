@@ -3,44 +3,43 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>FuturePath — Helps you to decide your future</title>
-  <meta name="description" content="Tool to help students select future study paths, courses and colleges." />
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <title>12kebaad — Helps you to decide your future</title>
+  <meta name="description" content="12kebaad - Student career path selector" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#home">FuturePath</a>
-      <p class="tagline">Helps you to decide your future</p>
-      <nav class="top-nav">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#admin">Admin</a>
+      <a class="brand" href="index.html">12kebaad</a>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="courses.html">Courses</a>
+        <a href="colleges.html">Colleges</a>
+        <a href="about.html">About</a>
       </nav>
     </div>
   </header>
 
-  <main class="container">
-    <!-- Welcome / Start form -->
-    <section id="home" class="card hero">
-      <h1>Welcome — choose your future path</h1>
-      <p class="lead">Tell us a little about yourself and we'll show suitable courses, diplomas and colleges.</p>
+  <main class="container hero-grid">
+    <section class="hero-card">
+      <h1>Helps you to decide your future</h1>
+      <p class="lead">Tell us a little about yourself and explore courses & colleges tailored to your stream.</p>
 
-      <form id="start-form" class="form-grid" autocomplete="on" novalidate>
-        <div>
-          <label for="student-name">Full name</label>
-          <input id="student-name" name="name" type="text" required minlength="2" placeholder="Your name" />
+      <form id="welcome-form" class="form-grid" autocomplete="on" novalidate>
+        <div class="form-field">
+          <label for="name">Full name</label>
+          <input id="name" name="name" type="text" required minlength="2" placeholder="Your name">
         </div>
 
-        <div>
-          <label for="student-mobile">Mobile number</label>
-          <input id="student-mobile" name="mobile" type="tel" required pattern="^\d{10,15}$" placeholder="10-15 digits" />
+        <div class="form-field">
+          <label for="mobile">Mobile number</label>
+          <input id="mobile" name="mobile" type="tel" required pattern="^\d{10,15}$" placeholder="10-15 digits">
         </div>
 
-        <div>
-          <label for="student-stream">Stream</label>
-          <select id="student-stream" required>
+        <div class="form-field">
+          <label for="stream">Stream</label>
+          <select id="stream" name="stream" required>
             <option value="">-- Select stream --</option>
             <option value="science">Science (PCB/PCM)</option>
             <option value="commerce">Commerce</option>
@@ -51,151 +50,46 @@
           </select>
         </div>
 
-        <div>
-          <label for="student-state">State / Union Territory</label>
-          <select id="student-state" required>
-            <option value="">-- Select state / UT --</option>
-            <option>Andhra Pradesh</option>
-            <option>Arunachal Pradesh</option>
-            <option>Assam</option>
-            <option>Bihar</option>
-            <option>Chhattisgarh</option>
-            <option>Goa</option>
-            <option>Gujarat</option>
-            <option>Haryana</option>
-            <option>Himachal Pradesh</option>
-            <option>Jharkhand</option>
-            <option>Karnataka</option>
-            <option>Kerala</option>
-            <option>Madhya Pradesh</option>
-            <option>Maharashtra</option>
-            <option>Manipur</option>
-            <option>Meghalaya</option>
-            <option>Mizoram</option>
-            <option>Nagaland</option>
-            <option>Odisha</option>
-            <option>Punjab</option>
-            <option>Rajasthan</option>
-            <option>Sikkim</option>
-            <option>Tamil Nadu</option>
-            <option>Telangana</option>
-            <option>Tripura</option>
-            <option>Uttar Pradesh</option>
-            <option>Uttarakhand</option>
-            <option>West Bengal</option>
-            <option>Andaman & Nicobar</option>
-            <option>Chandigarh</option>
-            <option>Dadra & Nagar Haveli and Daman & Diu</option>
-            <option>Delhi</option>
-            <option>Jammu & Kashmir</option>
-            <option>Ladakh</option>
-            <option>Puducherry</option>
+        <div class="form-field">
+          <label for="state">State / Union Territory</label>
+          <select id="state" name="state" required>
+            <option value="">-- Select State / UT --</option>
+            <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option>
+            <option>Chhattisgarh</option><option>Goa</option><option>Gujarat</option><option>Haryana</option>
+            <option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
+            <option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option>
+            <option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Punjab</option>
+            <option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
+            <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option>
+            <option>Andaman & Nicobar</option><option>Chandigarh</option><option>Delhi</option><option>Jammu & Kashmir</option>
+            <option>Ladakh</option><option>Puducherry</option><option>Dadra & Nagar Haveli and Daman & Diu</option>
           </select>
         </div>
 
         <div class="form-actions">
-          <button id="start-btn" type="submit" class="btn-primary">Show my options</button>
-          <button id="start-reset" type="reset" class="btn-ghost">Reset</button>
+          <button id="start-btn" type="submit" class="btn-primary">Start Exploring</button>
+          <button type="reset" class="btn-ghost">Reset</button>
         </div>
-        <p id="start-error" class="error" aria-live="polite"></p>
+
+        <p id="form-error" class="error" aria-live="polite"></p>
+        <p class="privacy-note">We do not store your data on this site. Your inputs are used only to show relevant pages for this session.</p>
       </form>
     </section>
 
-    <!-- Results: Courses and Colleges -->
-    <section id="results" class="card" hidden>
-      <h2>Available Courses & Diplomas</h2>
-      <p id="results-intro" class="muted"></p>
-
-      <div id="courses-list" class="chips" aria-live="polite"></div>
-
-      <div id="college-filters" class="filter-row" hidden>
-        <label for="course-filter">Filter by course/diploma:</label>
-        <select id="course-filter">
-          <option value="">-- All courses --</option>
-        </select>
-
-        <label for="fee-filter">Max fees (₹):</label>
-        <input id="fee-filter" type="number" min="0" placeholder="e.g. 50000" />
-
-        <button id="apply-filter" class="btn-ghost">Apply</button>
-        <button id="reset-filter" class="btn-ghost">Reset</button>
-      </div>
-
-      <h3 class="mt-12">Colleges & Universities</h3>
-      <p class="muted small">Click a college for more details. Use the export button to download displayed colleges or all saved student entries.</p>
-
-      <div id="colleges-grid" class="portfolio-grid"></div>
-
-      <div class="actions-row mt-12">
-        <button id="export-displayed" class="btn-primary">Export displayed colleges (CSV)</button>
-        <button id="download-entries" class="btn-ghost">Download saved student entries (CSV)</button>
-      </div>
-    </section>
-
-    <!-- About -->
-    <section id="about" class="card">
-      <h2>About</h2>
-      <p>FuturePath helps students choose courses and find colleges/universities that match their stream and preferences.</p>
-
-      <h3>Contact</h3>
+    <aside class="promo-card">
+      <h3>Why 12kebaad?</h3>
       <ul>
-        <li>Email: <a href="mailto:12kebaad@gmail.com">12kebaad@gmail.com</a></li>
-        <li>Owner: Pushkar Verma</li>
+        <li>Clear course suggestions by stream</li>
+        <li>College filters: fees, admission basis, cutoff trend</li>
+        <li>Beautiful, easy-to-use multi-page layout</li>
       </ul>
-
-      <p class="muted small">More info: This is a demo static site. To receive form submissions centrally, configure a webhook URL (see Admin → Settings).</p>
-    </section>
-
-    <!-- Admin / Storage and Settings -->
-    <section id="admin" class="card">
-      <h2>Admin — Saved entries & settings</h2>
-      <p class="muted">Saved student entries are stored locally by default. You can configure a webhook URL to forward each entry to your Google Sheets / server.</p>
-
-      <div class="admin-grid">
-        <div>
-          <label for="webhook-url">Webhook / endpoint URL (optional)</label>
-          <input id="webhook-url" placeholder="https://script.google.com/... or your endpoint" />
-          <small class="muted small">If set, entries are POSTed as JSON to this URL automatically after submission.</small>
-        </div>
-
-        <div>
-          <label for="auto-post">Auto-post on submission</label>
-          <select id="auto-post">
-            <option value="yes">Yes</option>
-            <option value="no" selected>No</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="mt-12">
-        <h3>Saved student entries</h3>
-        <table id="entries-table" class="striped" role="table" aria-live="polite">
-          <thead>
-            <tr><th>#</th><th>Name</th><th>Mobile</th><th>Stream</th><th>State/UT</th><th>Time</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-
-        <div class="actions-row mt-8">
-          <button id="clear-entries" class="btn-ghost">Clear all saved entries</button>
-          <button id="download-entries-2" class="btn-primary">Download entries (CSV)</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Modal for college details -->
-    <div id="modal" class="modal" hidden>
-      <div class="modal-inner" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <button id="modal-close" class="modal-close" aria-label="Close">&times;</button>
-        <h3 id="modal-title"></h3>
-        <div id="modal-body"></div>
-      </div>
-    </div>
+      <a href="about.html" class="btn-ghost">Learn more</a>
+    </aside>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>© <span id="year"></span> FuturePath • Helps you to decide your future</p>
+      <small>© <span id="year"></span> 12kebaad • Helps you to decide your future • <a href="mailto:12kebaad@gmail.com">12kebaad@gmail.com</a></small>
     </div>
   </footer>
 
