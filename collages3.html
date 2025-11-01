@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Arts Colleges - 12kebaad</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header><h1>Top Arts Colleges</h1></header>
+
+<main class="container" id="collegeList"></main>
+
+<footer>© 2025 12kebaad</footer>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const state = params.get("state");
+const course = params.get("course");
+
+const colleges = [
+  {name:"Lady Shri Ram College for Women", state:"Delhi", fees:"₹25,000", admission:"CUET", cutoff:"97%", location:"Delhi"},
+  {name:"Miranda House", state:"Delhi", fees:"₹24,000", admission:"CUET", cutoff:"96%", location:"Delhi"},
+  {name:"St. Stephen’s College", state:"Delhi", fees:"₹28,000", admission:"Merit + Interview", cutoff:"98%", location:"Delhi"},
+  {name:"St. Xavier’s College", state:"Maharashtra", fees:"₹60,000", admission:"CUET", cutoff:"94%", location:"Mumbai"},
+  {name:"Fergusson College", state:"Maharashtra", fees:"₹32,000", admission:"Merit", cutoff:"92%", location:"Pune"},
+  {name:"Presidency College", state:"Tamil Nadu", fees:"₹40,000", admission:"Merit", cutoff:"88%", location:"Chennai"},
+  {name:"Loyola College", state:"Tamil Nadu", fees:"₹50,000", admission:"Merit", cutoff:"89%", location:"Chennai"},
+  {name:"Christ University", state:"Karnataka", fees:"₹85,000", admission:"Merit", cutoff:"87%", location:"Bangalore"},
+  {name:"Mount Carmel College", state:"Karnataka", fees:"₹70,000", admission:"Merit", cutoff:"85%", location:"Bangalore"},
+  {name:"Jadavpur University", state:"West Bengal", fees:"₹20,000", admission:"Merit", cutoff:"91%", location:"Kolkata"},
+  {name:"Banaras Hindu University", state:"Uttar Pradesh", fees:"₹35,000", admission:"CUET", cutoff:"90%", location:"Varanasi"},
+  {name:"Allahabad University", state:"Uttar Pradesh", fees:"₹25,000", admission:"CUET", cutoff:"88%", location:"Prayagraj"},
+  {name:"Amity University", state:"Uttar Pradesh", fees:"₹1,00,000", admission:"Merit", cutoff:"80%", location:"Noida"},
+  {name:"Panjab University", state:"Punjab", fees:"₹28,000", admission:"Merit", cutoff:"85%", location:"Chandigarh"},
+  {name:"Lovely Professional University", state:"Punjab", fees:"₹1,00,000", admission:"LPUNEST", cutoff:"75%", location:"Phagwara"},
+  {name:"Ravenshaw University", state:"Odisha", fees:"₹30,000", admission:"Merit", cutoff:"78%", location:"Cuttack"},
+  {name:"University of Rajasthan", state:"Rajasthan", fees:"₹22,000", admission:"Merit", cutoff:"80%", location:"Jaipur"},
+  {name:"Maharaja Sayajirao University", state:"Gujarat", fees:"₹30,000", admission:"Merit", cutoff:"82%", location:"Vadodara"},
+  {name:"Kerala University", state:"Kerala", fees:"₹35,000", admission:"Merit", cutoff:"78%", location:"Thiruvananthapuram"},
+  {name:"Goa University", state:"Goa", fees:"₹25,000", admission:"Merit", cutoff:"76%", location:"Panaji"}
+];
+
+const filtered = colleges.filter(c => c.state === state);
+document.getElementById("collegeList").innerHTML = 
+  `<h2>${state} Colleges offering ${course}</h2>` +
+  (filtered.length ? filtered.map(c => `
+    <div class='card'>
+      <h3>${c.name}</h3>
+      <p><b>Location:</b> ${c.location}</p>
+      <p><b>Fees:</b> ${c.fees}</p>
+      <p><b>Admission:</b> ${c.admission}</p>
+      <p><b>Cut-off:</b> ${c.cutoff}</p>
+    </div>
+  `).join('') : `<p>No colleges found in ${state}</p>`);
+</script>
+</body>
+</html>
