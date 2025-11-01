@@ -4,175 +4,217 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Welcome | 12kebaad</title>
-
   <link rel="icon" type="image/png" href="Favicon.PNG" />
   <link rel="apple-touch-icon" href="Favicon.PNG" />
-  <link rel="stylesheet" href="style.css" />
-
   <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
     body {
-      background: #f8f9fb;
-      color: #222;
-      font-family: "Poppins", sans-serif;
-    }
-
-    .welcome-container {
-      max-width: 600px;
-      margin: 60px auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 3px 20px rgba(0, 0, 0, 0.08);
-      padding: 40px;
+      margin: 0;
+      background: linear-gradient(135deg, #004aad, #007bff);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
       text-align: center;
-      animation: fadeIn 1s ease;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+      animation: fadeDown 1s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .welcome-container h1 {
-      color: #004aad;
-      font-size: 2rem;
-      margin-bottom: 10px;
-    }
-
-    .welcome-container p {
-      color: #555;
+    p {
+      font-size: 1rem;
       margin-bottom: 30px;
+      opacity: 0.9;
     }
 
     form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      background: white;
+      color: #222;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      text-align: left;
+      animation: slideUp 1s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #004aad;
     }
 
     input, select {
-      padding: 12px;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
       border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-      transition: 0.3s;
+      border: 1.5px solid #ccc;
+      outline: none;
+      font-size: 15px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     input:focus, select:focus {
       border-color: #004aad;
-      outline: none;
-      box-shadow: 0 0 5px rgba(0, 74, 173, 0.2);
+      box-shadow: 0 0 6px rgba(0, 74, 173, 0.3);
     }
 
     button {
+      width: 100%;
+      padding: 12px;
       background: #004aad;
       color: white;
-      padding: 12px;
       border: none;
       border-radius: 8px;
-      font-size: 1.1rem;
+      font-size: 16px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: background 0.3s ease;
     }
 
     button:hover {
-      background: #005ef7;
-      transform: scale(1.03);
+      background: #003c8a;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
+    .logo {
+      width: 55px;
+      height: 55px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      animation: pop 1.2s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <header class="navbar">
-    <div class="logo-container">
-      <img src="Favicon.PNG" alt="12kebaad Logo" class="site-logo" />
-      <h1>12kebaad</h1>
-    </div>
-    <p class="tagline">Helps you decide your future</p>
-  </header>
+  <img src="Favicon.PNG" alt="12kebaad Logo" class="logo" />
+  <h1>Welcome to 12kebaad 🎓</h1>
+  <p>Helps you to decide your future</p>
 
-  <div class="welcome-container">
-    <h1>Welcome 👋</h1>
-    <p>Let's get started with your career journey after Class 12!</p>
+  <form id="welcomeForm">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" placeholder="Enter your name" required />
 
-    <form id="welcomeForm" onsubmit="handleSubmit(event)">
-      <input type="text" id="name" placeholder="Enter your full name" required />
-      <input type="tel" id="mobile" placeholder="Enter your mobile number" pattern="[0-9]{10}" required />
+    <label for="mobile">Mobile Number</label>
+    <input type="tel" id="mobile" placeholder="Enter your mobile number" required pattern="[0-9]{10}" />
 
-      <select id="stream" required>
-        <option value="" disabled selected>Select your stream</option>
-        <option value="Science">Science</option>
-        <option value="Commerce">Commerce</option>
-        <option value="Arts">Arts / Humanities</option>
-        <option value="Vocational">Vocational</option>
-        <option value="Other">Other</option>
-      </select>
+    <label for="stream">Select Stream</label>
+    <select id="stream" required>
+      <option value="">-- Choose Stream --</option>
+      <option value="Science">Science</option>
+      <option value="Commerce">Commerce</option>
+      <option value="Arts">Arts / Humanities</option>
+      <option value="Vocational">Vocational</option>
+      <option value="Other">Other (e.g., Law, Design, etc.)</option>
+    </select>
 
-      <select id="state" required>
-        <option value="" disabled selected>Select your State or Union Territory</option>
-        <option value="All India">All India</option>
-        <option value="Andhra Pradesh">Andhra Pradesh</option>
-        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-        <option value="Assam">Assam</option>
-        <option value="Bihar">Bihar</option>
-        <option value="Chhattisgarh">Chhattisgarh</option>
-        <option value="Goa">Goa</option>
-        <option value="Gujarat">Gujarat</option>
-        <option value="Haryana">Haryana</option>
-        <option value="Himachal Pradesh">Himachal Pradesh</option>
-        <option value="Jharkhand">Jharkhand</option>
-        <option value="Karnataka">Karnataka</option>
-        <option value="Kerala">Kerala</option>
-        <option value="Madhya Pradesh">Madhya Pradesh</option>
-        <option value="Maharashtra">Maharashtra</option>
-        <option value="Manipur">Manipur</option>
-        <option value="Meghalaya">Meghalaya</option>
-        <option value="Mizoram">Mizoram</option>
-        <option value="Nagaland">Nagaland</option>
-        <option value="Odisha">Odisha</option>
-        <option value="Punjab">Punjab</option>
-        <option value="Rajasthan">Rajasthan</option>
-        <option value="Sikkim">Sikkim</option>
-        <option value="Tamil Nadu">Tamil Nadu</option>
-        <option value="Telangana">Telangana</option>
-        <option value="Tripura">Tripura</option>
-        <option value="Uttar Pradesh">Uttar Pradesh</option>
-        <option value="Uttarakhand">Uttarakhand</option>
-        <option value="West Bengal">West Bengal</option>
-        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-        <option value="Chandigarh">Chandigarh</option>
-        <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
-        <option value="Delhi">Delhi</option>
-        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-        <option value="Ladakh">Ladakh</option>
-        <option value="Lakshadweep">Lakshadweep</option>
-        <option value="Puducherry">Puducherry</option>
-      </select>
+    <label for="state">Select State / Union Territory</label>
+    <select id="state" required>
+      <option value="">-- Choose State / UT --</option>
+      <option value="All India">All India</option>
+      <option value="Andhra Pradesh">Andhra Pradesh</option>
+      <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+      <option value="Assam">Assam</option>
+      <option value="Bihar">Bihar</option>
+      <option value="Chhattisgarh">Chhattisgarh</option>
+      <option value="Delhi">Delhi</option>
+      <option value="Goa">Goa</option>
+      <option value="Gujarat">Gujarat</option>
+      <option value="Haryana">Haryana</option>
+      <option value="Himachal Pradesh">Himachal Pradesh</option>
+      <option value="Jharkhand">Jharkhand</option>
+      <option value="Karnataka">Karnataka</option>
+      <option value="Kerala">Kerala</option>
+      <option value="Madhya Pradesh">Madhya Pradesh</option>
+      <option value="Maharashtra">Maharashtra</option>
+      <option value="Manipur">Manipur</option>
+      <option value="Meghalaya">Meghalaya</option>
+      <option value="Mizoram">Mizoram</option>
+      <option value="Nagaland">Nagaland</option>
+      <option value="Odisha">Odisha</option>
+      <option value="Punjab">Punjab</option>
+      <option value="Rajasthan">Rajasthan</option>
+      <option value="Sikkim">Sikkim</option>
+      <option value="Tamil Nadu">Tamil Nadu</option>
+      <option value="Telangana">Telangana</option>
+      <option value="Tripura">Tripura</option>
+      <option value="Uttar Pradesh">Uttar Pradesh</option>
+      <option value="Uttarakhand">Uttarakhand</option>
+      <option value="West Bengal">West Bengal</option>
+      <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+      <option value="Chandigarh">Chandigarh</option>
+      <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+      <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+      <option value="Ladakh">Ladakh</option>
+      <option value="Lakshadweep">Lakshadweep</option>
+      <option value="Puducherry">Puducherry</option>
+    </select>
 
-      <button type="submit">Continue</button>
-    </form>
-  </div>
+    <button type="submit">Continue</button>
+  </form>
+
+  <footer>© 2025 12kebaad | Founder: Pushkar Verma</footer>
 
   <script>
-    // ✅ Pre-fill if user revisits (data saved in localStorage)
-    window.onload = function() {
-      const name = localStorage.getItem("name");
-      const mobile = localStorage.getItem("mobile");
-      const stream = localStorage.getItem("stream");
-      const state = localStorage.getItem("state");
+    const form = document.getElementById("welcomeForm");
 
-      if (name) document.getElementById("name").value = name;
-      if (mobile) document.getElementById("mobile").value = mobile;
-      if (stream) document.getElementById("stream").value = stream;
-      if (state) document.getElementById("state").value = state;
+    // Pre-fill if user visited before
+    window.onload = () => {
+      const savedName = localStorage.getItem("name");
+      const savedMobile = localStorage.getItem("mobile");
+      const savedStream = localStorage.getItem("stream");
+      const savedState = localStorage.getItem("state");
+
+      if (savedName) document.getElementById("name").value = savedName;
+      if (savedMobile) document.getElementById("mobile").value = savedMobile;
+      if (savedStream) document.getElementById("stream").value = savedStream;
+      if (savedState) document.getElementById("state").value = savedState;
     };
 
-    // ✅ Save details and go to next page
-    function handleSubmit(event) {
-      event.preventDefault();
-
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
       const name = document.getElementById("name").value.trim();
       const mobile = document.getElementById("mobile").value.trim();
       const stream = document.getElementById("stream").value;
       const state = document.getElementById("state").value;
+
+      if (!name || !mobile || !stream || !state) {
+        alert("Please fill in all details.");
+        return;
+      }
 
       localStorage.setItem("name", name);
       localStorage.setItem("mobile", mobile);
@@ -180,7 +222,7 @@
       localStorage.setItem("state", state);
 
       window.location.href = "courses.html";
-    }
+    });
   </script>
 </body>
-</html>
+</html></html>
