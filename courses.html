@@ -18,23 +18,18 @@
     header {
       background: rgba(0, 0, 0, 0.2);
       text-align: center;
-      padding: 30px 0;
+      padding: 40px 0 30px;
       animation: fadeInDown 1s ease;
+      position: relative;
     }
 
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
+    /* 👋 Animated hand */
+    .wave {
       display: inline-block;
-    }
-
-    /* 👋 Hand wave animation */
-    h1::before {
-      content: "👋";
-      display: inline-block;
-      margin-right: 10px;
-      animation: wave 2s infinite;
+      font-size: 2.2rem;
+      animation: wave 2s infinite ease-in-out;
       transform-origin: 70% 70%;
+      margin-right: 10px;
     }
 
     @keyframes wave {
@@ -45,6 +40,12 @@
       40% { transform: rotate(-4deg); }
       50% { transform: rotate(10deg); }
       60%,100% { transform: rotate(0deg); }
+    }
+
+    h1 {
+      font-size: 2rem;
+      display: inline-block;
+      margin: 0;
     }
 
     main {
@@ -158,12 +159,13 @@
 </head>
 <body>
   <header>
-    <h1 id="greeting">Explore Your Courses</h1>
+    <span class="wave">👋</span>
+    <h1 id="greeting">Hey Student!</h1>
     <p>Helps you to decide your future</p>
   </header>
 
   <main id="courseSection">
-    <!-- Content added dynamically -->
+    <!-- Courses will appear here -->
   </main>
 
   <script>
@@ -174,7 +176,7 @@
     const state = urlParams.get('state') || '';
 
     // Personalized greeting
-    document.getElementById('greeting').textContent = `👋 Hey ${name}, explore top ${stream} courses!`;
+    document.getElementById('greeting').textContent = `Hey ${name}, explore top ${stream} courses!`;
 
     // Courses grouped by stream
     const data = {
@@ -241,4 +243,4 @@
     }
   </script>
 </body>
-</html></html></html></html></html></html></html></html></html></html></html></html></html>
+</html></html></html></html></html></html></html></html></html></html></html></html></html></html>
