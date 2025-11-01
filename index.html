@@ -1,68 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>12kebaad | Helps you decide your future</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>12kebaad — Decide Your Future</title>
 
-  <!-- ✅ Favicon -->
-  <link rel="icon" type="image/png" href="Favicon.PNG" />
-  <link rel="apple-touch-icon" href="Favicon.PNG" />
+  <!-- Favicon (case-sensitive file name) -->
+  <link rel="icon" type="image/png" href="Favicon.PNG">
+  <link rel="apple-touch-icon" href="Favicon.PNG">
+  <link rel="icon" sizes="192x192" href="Favicon.PNG">
 
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Reset + base */
+    *,*::before,*::after { box-sizing: border-box; }
+    html,body { height:100%; margin:0; font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Page background */
+    :root {
+      --blue-1: #004aad;
+      --blue-2: #0078ff;
+      --card-bg: #ffffff;
+      --muted: #6b7280;
+    }
+    body {
+      background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+      color:#0b1220;
+      padding:24px;
+    }
+
+    /* Container (center card) */
+    .card {
+      width:100%;
+      max-width:980px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border-radius:16px;
+      box-shadow: 0 12px 40px rgba(2,6,23,0.28);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:0;
+    }
+
+    /* Left content */
+    .left {
+      padding:40px 36px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:18px;
+      color: white;
+    }
+
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    .brand h1 {
+      margin:0;
+      font-size:26px;
+      letter-spacing:0.2px;
+      color:white;
+    }
+    .tag {
+      color: rgba(255,255,255,0.9);
+      margin-top:6px;
+      font-style:italic;
+    }
+    .lead {
+      margin-top:14px;
+      color: rgba(255,255,255,0.95);
+      font-size:1.05rem;
+      line-height:1.45;
+      max-width: 56ch;
+    }
+
+    .actions {
+      margin-top:22px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .btn-primary {
+      display:inline-block;
+      background: #ffffff;
+      color: var(--blue-1);
+      padding:12px 20px;
+      border-radius:10px;
+      font-weight:700;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.18); }
+
+    .btn-secondary {
+      display:inline-block;
+      background: transparent;
+      border:1px solid rgba(255,255,255,0.18);
+      color: white;
+      padding:10px 16px;
+      border-radius:10px;
+      font-weight:600;
+      transition: background .18s ease, transform .18s ease;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.04); transform: translateY(-3px); }
+
+    /* Right panel (feature cards) */
+    .right {
+      background: #ffffff;
+      padding:28px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      justify-content:center;
+    }
+    .feature {
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      background:#ffffff;
+      border-radius:10px;
+      padding:12px;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.04);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .feature:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(2,6,23,0.08); }
+    .feature .icon {
+      width:44px; height:44px; border-radius:8px; background: linear-gradient(135deg,var(--blue-1),var(--blue-2)); color:white; display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;
+    }
+    .feature .body h4 { margin:0; font-size:15px; color: #023a80; }
+    .feature .body p { margin:6px 0 0; font-size:13px; color:var(--muted); }
+
+    /* Footer row inside left */
+    .left-footer {
+      margin-top:28px;
+      font-size:13px;
+      color: rgba(255,255,255,0.85);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+    }
+
+    /* small responsive */
+    @media (max-width:980px) {
+      .card { grid-template-columns: 1fr; }
+      .right { order:2; }
+      .left { order:1; padding:28px; }
+    }
+    @media (max-width:520px) {
+      .left { padding:22px; }
+      .right { padding:20px; }
+      .brand h1 { font-size:20px; }
+    }
+  </style>
 </head>
 <body>
-  <header class="navbar">
-    <div class="logo-container">
-      <img src="Favicon.PNG" alt="12kebaad Logo" class="site-logo" />
-      <h1>12kebaad</h1>
+  <div class="card" role="main">
+    <div class="left" aria-labelledby="main-title">
+      <div class="brand">
+        <!-- favicon is used in tab; do not show logo image in body per your request -->
+        <h1 id="main-title">12kebaad</h1>
+      </div>
+
+      <div class="tag">Helps you to decide your future</div>
+
+      <p class="lead">
+        Discover courses, diplomas and colleges across India. Get tailored suggestions based on your stream — Science, Commerce,
+        Arts, Vocational — and explore both state-wise and all-India options.
+      </p>
+
+      <div class="actions">
+        <a class="btn-primary" href="welcome.html">Get Started →</a>
+        <a class="btn-secondary" href="about.html">About Us</a>
+      </div>
+
+      <div class="left-footer">
+        <div>© 2025 12kebaad</div>
+        <div>Contact: <a href="mailto:12kebaad.team@gmail.com" style="color:inherit; text-decoration:underline;">12kebaad.team@gmail.com</a></div>
+      </div>
     </div>
-    <p class="tagline">Helps you decide your future</p>
-  </header>
 
-  <main>
-    <section class="intro">
-      <h2>Welcome to 12kebaad 👋</h2>
-      <p>
-        Your trusted guide to explore courses, diplomas, and universities across India.  
-        Discover your perfect path after Class 12 — whether in Science, Commerce, Arts, or Vocational streams.
-      </p>
-      <a href="welcome.html" class="explore-btn">Start Exploring</a>
-    </section>
-
-    <section class="about">
-      <h2>About Us</h2>
-      <p>
-        <strong>12kebaad</strong> is a student-centric platform designed to help Class 12 graduates 
-        make informed career decisions. From courses to colleges, we simplify your search for the perfect future.
-      </p>
-      <div class="info-box">
-        <p><strong>Founder:</strong> Pushkar Verma</p>
-        <p><strong>Email:</strong> <a href="mailto:12kebaad.team@gmail.com">12kebaad.team@gmail.com</a></p>
-      </div>
-    </section>
-
-    <section class="features">
-      <h2>What We Offer</h2>
-      <div class="feature-grid">
-        <div class="feature">
-          <h3>🎓 Courses & Diplomas</h3>
-          <p>Explore a wide range of programs across all streams with updated details and eligibility.</p>
-        </div>
-        <div class="feature">
-          <h3>🏫 Colleges & Universities</h3>
-          <p>Get detailed insights about top institutions in India with fees, cutoffs, and admission process.</p>
-        </div>
-        <div class="feature">
-          <h3>💡 Personalized Guidance</h3>
-          <p>Our smart selection process tailors recommendations based on your stream and preferences.</p>
+    <div class="right" aria-hidden="false">
+      <div class="feature" title="Courses & Diplomas">
+        <div class="icon">🎓</div>
+        <div class="body">
+          <h4>Courses & Diplomas</h4>
+          <p>Browse hundreds of courses for every stream — diplomas, UG & professional programs.</p>
         </div>
       </div>
-    </section>
-  </main>
 
-  <footer>
-    <p>© 2025 12kebaad. All rights reserved.</p>
-  </footer>
+      <div class="feature" title="Colleges & Universities">
+        <div class="icon">🏫</div>
+        <div class="body">
+          <h4>Colleges & Universities</h4>
+          <p>Find government, private & online universities across India with admission details.</p>
+        </div>
+      </div>
+
+      <div class="feature" title="Personal Guidance">
+        <div class="icon">💡</div>
+        <div class="body">
+          <h4>Personal Guidance</h4>
+          <p>Get suggestions tailored to your stream, state or choose All India options.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
-</html></html></html></html></html></html></html></html></html></html></html></html></html>
+</html></html></html></html></html></html></html></html></html></html></html></html></html></html>
