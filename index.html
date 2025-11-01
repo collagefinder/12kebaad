@@ -1,130 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome – 12kebaad</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome | 12kebaad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #004aad, #0078ff);
+      color: white;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 5px;
+    }
+    p {
+      margin-bottom: 25px;
+      opacity: 0.9;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+    }
+    button {
+      background: white;
+      color: #004aad;
+      border: none;
+      padding: 12px 25px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.3s;
+      width: 100%;
+    }
+    button:hover {
+      background: #004aad;
+      color: white;
+    }
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+  </style>
 </head>
-
 <body>
-  <!-- Header -->
-  <header>
-    <div class="container header-inner">
-      <a class="brand" href="index.html">12kebaad</a>
-      <nav class="main-nav">
-        <a href="index.html" class="active">Home</a>
-        <a href="courses.html">Courses</a>
-        <a href="about.html">About</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Main Section -->
-  <main class="welcome">
+  <div class="container">
     <h1>Welcome to 12kebaad</h1>
-    <p>Helps you to decide your future — explore courses and colleges that match your interests and stream.</p>
+    <p>Helps you to decide your future</p>
+    <form id="welcomeForm">
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="tel" id="mobile" placeholder="Mobile Number" pattern="[0-9]{10}" required>
 
-    <form id="welcomeForm" class="form-box">
-      <input type="text" id="name" name="name" placeholder="Enter your full name" required>
-      <input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" maxlength="10" required>
-
-      <label for="stream">Select Stream</label>
-      <select id="stream" name="stream" required>
-        <option value="">-- Select Stream --</option>
+      <select id="stream" required>
+        <option value="">Select Your Stream</option>
         <option value="Science">Science</option>
         <option value="Commerce">Commerce</option>
-        <option value="Arts">Arts / Humanities</option>
-        <option value="Vocational">Vocational / Interdisciplinary</option>
+        <option value="Arts">Arts</option>
+        <option value="Other">Other / Interdisciplinary</option>
       </select>
 
-      <label for="state">Select State or Union Territory</label>
-      <select id="state" name="state" required>
-        <option value="">-- Select State / Union Territory --</option>
-        <optgroup label="States">
-          <option value="Andhra Pradesh">Andhra Pradesh</option>
-          <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-          <option value="Assam">Assam</option>
-          <option value="Bihar">Bihar</option>
-          <option value="Chhattisgarh">Chhattisgarh</option>
-          <option value="Goa">Goa</option>
-          <option value="Gujarat">Gujarat</option>
-          <option value="Haryana">Haryana</option>
-          <option value="Himachal Pradesh">Himachal Pradesh</option>
-          <option value="Jharkhand">Jharkhand</option>
-          <option value="Karnataka">Karnataka</option>
-          <option value="Kerala">Kerala</option>
-          <option value="Madhya Pradesh">Madhya Pradesh</option>
-          <option value="Maharashtra">Maharashtra</option>
-          <option value="Manipur">Manipur</option>
-          <option value="Meghalaya">Meghalaya</option>
-          <option value="Mizoram">Mizoram</option>
-          <option value="Nagaland">Nagaland</option>
-          <option value="Odisha">Odisha</option>
-          <option value="Punjab">Punjab</option>
-          <option value="Rajasthan">Rajasthan</option>
-          <option value="Sikkim">Sikkim</option>
-          <option value="Tamil Nadu">Tamil Nadu</option>
-          <option value="Telangana">Telangana</option>
-          <option value="Tripura">Tripura</option>
-          <option value="Uttar Pradesh">Uttar Pradesh</option>
-          <option value="Uttarakhand">Uttarakhand</option>
-          <option value="West Bengal">West Bengal</option>
-        </optgroup>
-
-        <optgroup label="Union Territories">
-          <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-          <option value="Chandigarh">Chandigarh</option>
-          <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra & Nagar Haveli and Daman & Diu</option>
-          <option value="Delhi (NCT)">Delhi (National Capital Territory)</option>
-          <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-          <option value="Ladakh">Ladakh</option>
-          <option value="Lakshadweep">Lakshadweep</option>
-          <option value="Puducherry">Puducherry</option>
-        </optgroup>
+      <select id="state" required>
+        <option value="">Select Your State or Union Territory</option>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+        <option value="Assam">Assam</option>
+        <option value="Bihar">Bihar</option>
+        <option value="Chhattisgarh">Chhattisgarh</option>
+        <option value="Goa">Goa</option>
+        <option value="Gujarat">Gujarat</option>
+        <option value="Haryana">Haryana</option>
+        <option value="Himachal Pradesh">Himachal Pradesh</option>
+        <option value="Jharkhand">Jharkhand</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Kerala">Kerala</option>
+        <option value="Madhya Pradesh">Madhya Pradesh</option>
+        <option value="Maharashtra">Maharashtra</option>
+        <option value="Manipur">Manipur</option>
+        <option value="Meghalaya">Meghalaya</option>
+        <option value="Mizoram">Mizoram</option>
+        <option value="Nagaland">Nagaland</option>
+        <option value="Odisha">Odisha</option>
+        <option value="Punjab">Punjab</option>
+        <option value="Rajasthan">Rajasthan</option>
+        <option value="Sikkim">Sikkim</option>
+        <option value="Tamil Nadu">Tamil Nadu</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Tripura">Tripura</option>
+        <option value="Uttar Pradesh">Uttar Pradesh</option>
+        <option value="Uttarakhand">Uttarakhand</option>
+        <option value="West Bengal">West Bengal</option>
+        <option disabled>──────────────</option>
+        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+        <option value="Chandigarh">Chandigarh</option>
+        <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+        <option value="Ladakh">Ladakh</option>
+        <option value="Lakshadweep">Lakshadweep</option>
+        <option value="Puducherry">Puducherry</option>
       </select>
 
-      <button type="submit">Continue</button>
+      <button type="submit">Next →</button>
     </form>
-  </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <small>© <span id="year"></span> 12kebaad • Helps you to decide your future</small>
-    </div>
-  </footer>
+    <footer>© 2025 12kebaad | Designed by Pushkar Verma</footer>
+  </div>
 
-  <!-- Script -->
   <script>
-    // Update footer year
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Handle form submit
-    document.getElementById("welcomeForm").addEventListener("submit", (e) => {
+    document.getElementById('welcomeForm').addEventListener('submit', (e) => {
       e.preventDefault();
-
-      const name = document.getElementById("name").value.trim();
-      const mobile = document.getElementById("mobile").value.trim();
-      const stream = document.getElementById("stream").value;
-      const state = document.getElementById("state").value;
+      const name = document.getElementById('name').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      const stream = document.getElementById('stream').value;
+      const state = document.getElementById('state').value;
 
       if (!name || !mobile || !stream || !state) {
-        alert("⚠️ Please fill in all fields before continuing.");
+        alert("Please fill all fields correctly.");
         return;
       }
 
-      // Redirect with query data
-      const query = new URLSearchParams({
-        name: name,
-        mobile: mobile,
-        stream: stream,
-        state: state
-      }).toString();
-
-      window.location.href = "courses.html?" + query;
+      const url = `courses.html?name=${encodeURIComponent(name)}&mobile=${encodeURIComponent(mobile)}&stream=${encodeURIComponent(stream)}&state=${encodeURIComponent(state)}`;
+      window.location.href = url;
     });
   </script>
 </body>
-</html></html></html></html></html>
+</html></html></html></html></html></html>
