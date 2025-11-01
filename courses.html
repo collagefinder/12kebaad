@@ -1,44 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Courses - 12kebaad</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Courses – 12kebaad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header><h1>Available Courses</h1></header>
+  <header>
+    <div class="container header-inner">
+      <a class="brand" href="index.html">12kebaad</a>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="courses.html" class="active">Courses</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
 
-<main class="container">
-  <div id="courses"></div>
-</main>
+  <main class="container">
+    <section class="card">
+      <h1>Courses & Diplomas</h1>
+      <p style="text-align:center;color:#555;">Explore your career options based on your selected stream</p>
+      <div id="courseGrid" class="grid"></div>
+    </section>
+  </main>
 
-<footer>© 2025 12kebaad</footer>
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year"></span> 12kebaad • Helps you to decide your future</small>
+    </div>
+  </footer>
 
-<script>
-const params = new URLSearchParams(window.location.search);
-const stream = params.get("stream");
-const state = params.get("state");
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-const coursesByStream = {
-  Science: ["B.Sc Physics", "B.Sc Chemistry", "B.Sc Biology", "B.Tech", "MBBS", "BDS", "Nursing", "Pharmacy", "Biotech", "Agriculture", "Marine Science", "Data Science", "AI & Robotics", "Forensic Science"],
-  Commerce: ["B.Com", "BBA", "BBM", "CA Foundation", "CMA", "CS", "Banking & Insurance", "Financial Markets", "E-Commerce", "Marketing Management", "Entrepreneurship", "Economics", "Digital Business"],
-  Arts: ["BA English", "BA History", "BA Political Science", "BA Psychology", "BA Sociology", "BA Journalism", "Fine Arts", "Social Work", "Performing Arts", "Philosophy", "Liberal Arts", "Geography", "Archaeology"],
-  Vocational: ["Diploma in Web Development", "Diploma in Graphic Design", "Hotel Management", "Tourism Studies", "Fashion Design", "Interior Design", "Photography", "Film & TV Production", "Sports Management", "Culinary Arts"]
-};
+    // Get user data from previous page
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    const stream = params.get('stream');
+    const state = params.get('state');
 
-const coursesDiv = document.getElementById("courses");
-coursesDiv.innerHTML = `<h2>${stream} Stream</h2>` + coursesByStream[stream].map(c =>
-  `<button class='course-btn' onclick="nextPage('${stream}','${state}','${c}')">${c}</button>`
-).join('');
+    // Define courses for each stream
+    const courses = {
+      science: [
+        "B.Sc. Physics", "B.Sc. Chemistry", "B.Sc. Mathematics",
+        "B.Sc. Biotechnology", "B.Sc. Zoology", "B.Sc. Botany",
+        "B.Sc. Environmental Science", "B.Sc. Microbiology",
+        "B.Tech (Engineering)", "MBBS (Medicine)", "BDS (Dentistry)",
+        "B.Pharm (Pharmacy)", "B.Sc. Nursing", "BPT (Physiotherapy)",
+        "B.Sc. Computer Science", "BCA (Computer Applications)",
+        "B.Sc. Data Science", "B.Sc. Artificial Intelligence",
+        "B.Sc. Agriculture", "B.Sc. Forensic Science",
+        "Diploma in Medical Lab Tech", "Diploma in Radiology",
+        "Diploma in Nursing", "Diploma in Web Development",
+        "Diploma in AI & ML", "Diploma in Robotics"
+      ],
+      commerce: [
+        "B.Com (General)", "B.Com (Hons.)", "BBA (Bachelor of Business Administration)",
+        "BBM (Business Management)", "BMS (Management Studies)", "BCA (Commerce with Computers)",
+        "B.Com (Banking & Insurance)", "B.Com (Accounting & Finance)",
+        "B.Com (Marketing)", "B.Com (Taxation)", "B.Com (Economics)",
+        "B.Com (Investment & Financial Analysis)", "BA Economics",
+        "BBA International Business", "BBA Finance", "BBA Marketing",
+        "BBA Human Resource", "BBA Entrepreneurship",
+        "Diploma in Accounting", "Diploma in Banking & Finance",
+        "Diploma in Digital Marketing", "Diploma in Business Analytics",
+        "Diploma in E-Commerce", "Diploma in Taxation",
+        "Diploma in Tally", "Diploma in Management Studies"
+      ],
+      arts: [
+        "BA English", "BA History", "BA Political Science", "BA Sociology",
+        "BA Psychology", "BA Philosophy", "BA Geography", "BA Public Administration",
+        "BA Journalism & Mass Communication", "BA Fine Arts",
+        "BA Economics", "BA Education", "BA Linguistics", "BA Law (BA LLB)",
+        "BA Social Work", "BA Archaeology", "BA International Relations",
+        "BA Performing Arts", "Diploma in Travel & Tourism",
+        "Diploma in Fashion Designing", "Diploma in Interior Design",
+        "Diploma in Journalism", "Diploma in Photography",
+        "Diploma in Music", "Diploma in Event Management"
+      ],
+      vocational: [
+        "B.Voc (Software Development)", "B.Voc (Graphic Design)", "B.Voc (Retail Management)",
+        "B.Voc (Healthcare)", "B.Voc (Tourism)", "B.Voc (Automobile Technology)",
+        "B.Voc (Food Processing)", "B.Voc (Media Production)",
+        "Diploma in Electrician", "Diploma in Plumbing",
+        "Diploma in Computer Applications", "Diploma in Multimedia",
+        "Diploma in Animation", "Diploma in Hotel Management",
+        "Diploma in Culinary Arts", "Diploma in Fashion & Textile",
+        "Diploma in Digital Film Making", "Diploma in Beauty & Wellness",
+        "Diploma in Sports Coaching", "Diploma in Aviation",
+        "Diploma in Fitness & Nutrition", "Diploma in Civil Engineering",
+        "Diploma in Mechanical Engineering", "Diploma in Graphic Design"
+      ]
+    };
 
-function nextPage(stream, state, course) {
-  let page = "";
-  if (stream === "Science") page = "colleges1.html";
-  else if (stream === "Commerce") page = "colleges2.html";
-  else if (stream === "Arts") page = "colleges3.html";
-  else page = "colleges4.html";
-  window.location.href = `${page}?state=${encodeURIComponent(state)}&course=${encodeURIComponent(course)}`;
-}
-</script>
+    const grid = document.getElementById("courseGrid");
+    const list = courses[stream?.toLowerCase()] || [];
+
+    if (list.length === 0) {
+      grid.innerHTML = `<p>No courses found for the selected stream.</p>`;
+    } else {
+      grid.innerHTML = list.map(course => `
+        <div class="course-card" onclick="goToColleges('${course}')">
+          <h3>${course}</h3>
+          <p>Explore colleges offering ${course} programs.</p>
+        </div>
+      `).join('');
+    }
+
+    // Redirect to the right college page based on stream
+    function goToColleges(course) {
+      let collegePage = "";
+      switch(stream?.toLowerCase()) {
+        case "science": collegePage = "colleges1.html"; break;
+        case "commerce": collegePage = "colleges2.html"; break;
+        case "arts": collegePage = "colleges3.html"; break;
+        default: collegePage = "colleges4.html"; break;
+      }
+      window.location.href = `${collegePage}?state=${encodeURIComponent(state)}&course=${encodeURIComponent(course)}`;
+    }
+  </script>
 </body>
-</html></html></html></html></html></html>
+</html></html></html></html></html></html></html>
