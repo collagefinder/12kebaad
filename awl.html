@@ -1,315 +1,143 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>All Colleges (awl) — 12kebaad</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-<!-- Minimal page-specific styling (keeps your theme) -->
-<style>
-  :root{
-    --brand1:#004aad; --brand2:#0078ff; --card-bg:#ffffff; --muted:#667;
-  }
-  body{font-family:'Poppins',sans-serif;margin:0;background:#f7f9fc;color:#111}
-  header{background:linear-gradient(135deg,var(--brand1),var(--brand2));color:#fff;padding:14px 0}
-  .container{width:95%;max-width:1100px;margin:18px auto}
-  .title-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  h1{margin:0;font-size:1.3rem}
-  .sub{color:#eef6ff;opacity:0.95;margin-left:8px;font-weight:500}
-  .controls{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0;align-items:center}
-  select,input,button{padding:10px;border-radius:8px;border:1px solid #e3eefc;font-size:0.95rem}
-  select:focus,input:focus{outline:none;border-color:var(--brand2);box-shadow:0 0 6px rgba(0,120,255,0.12)}
-  button{background:var(--brand1);color:#fff;border:0;cursor:pointer}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:12px}
-  .card{background:var(--card-bg);padding:14px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.06)}
-  .card h3{margin:0 0 6px 0;color:var(--brand1)}
-  .meta{font-size:0.9rem;color:var(--muted);margin:4px 0}
-  .pill{display:inline-block;padding:6px 8px;border-radius:999px;background:#eef6ff;color:var(--brand1);font-weight:600;margin-right:6px;font-size:0.85rem}
-  .pager{display:flex;gap:8px;align-items:center;margin-top:12px}
-  .status{margin-left:auto;color:#444;font-size:0.95rem}
-  .loader{display:inline-block;width:14px;height:14px;border-radius:50%;border:3px solid rgba(255,255,255,0.18);border-top-color:#fff;animation:spin 1s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  a.small-link{color:var(--brand1);text-decoration:none;font-weight:600}
-  @media (max-width:640px){ .controls { gap:8px } }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Colleges — 12kebaad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #004aad, #0078ff);
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      text-align: center;
+      padding: 30px 10px;
+      background: rgba(0,0,0,0.2);
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+    .college {
+      background: #fff;
+      color: #004aad;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+      transition: 0.3s;
+    }
+    .college:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    }
+    h2 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+    }
+    p {
+      margin: 3px 0;
+      line-height: 1.5;
+    }
+    a.back {
+      display: inline-block;
+      background: white;
+      color: #004aad;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 20px auto;
+      display: block;
+      width: fit-content;
+    }
+    a.back:hover {
+      background: #004aad;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <div class="container">
-    <div class="title-row">
-      <h1>12kebaad — All Colleges</h1>
-      <div class="sub">Filtered by selected course & state</div>
-    </div>
-  </div>
-</header>
+  <header>
+    <h1>Colleges & Universities</h1>
+    <p>Find the best options for your chosen course and state</p>
+  </header>
 
-<main class="container">
-  <!-- Filters & search -->
-  <div class="controls">
-    <label>
-      <select id="stateFilter" title="State / UT">
-        <option value="">All States</option>
-      </select>
-    </label>
+  <main id="collegeList">
+    <p>Loading colleges...</p>
+  </main>
 
-    <label>
-      <select id="courseFilter" title="Course">
-        <option value="">All Courses</option>
-      </select>
-    </label>
+  <a href="courses.html" class="back">← Back to Courses</a>
 
-    <label>
-      <select id="ownershipFilter" title="Ownership">
-        <option value="">Any Ownership</option>
-        <option value="Government">Government</option>
-        <option value="Private">Private</option>
-        <option value="Deemed">Deemed</option>
-      </select>
-    </label>
+  <script>
+    // Get selected course, stream, and state
+    const params = new URLSearchParams(window.location.search);
+    const course = params.get('course');
+    const stream = params.get('stream');
+    const state = params.get('state');
 
-    <label>
-      <select id="modeFilter" title="Mode">
-        <option value="">Any Mode</option>
-        <option value="Offline">Offline</option>
-        <option value="Online">Online</option>
-        <option value="Hybrid">Hybrid</option>
-      </select>
-    </label>
+    document.querySelector('header h1').textContent = `Top Colleges for ${course}`;
+    document.querySelector('header p').textContent = `Showing options for ${state} (${stream} stream)`;
 
-    <input id="searchBox" placeholder="Search by college name or city..." style="min-width:220px;flex:1" />
-    <button id="btnReload">Reload</button>
-    <button id="btnExport">Export</button>
-  </div>
+    // Sample data (simplified to avoid JSON file)
+    const colleges = [
+      // Science colleges
+      {name: 'IIT Delhi', state: 'Delhi', stream: 'Science', type: 'Government', fees: '₹2,10,000 / year', admission: 'JEE Advanced'},
+      {name: 'AIIMS Delhi', state: 'Delhi', stream: 'Science', type: 'Government', fees: '₹1,600 / year', admission: 'NEET'},
+      {name: 'BITS Pilani', state: 'Rajasthan', stream: 'Science', type: 'Private', fees: '₹5,00,000 / year', admission: 'BITSAT'},
+      {name: 'VIT Vellore', state: 'Tamil Nadu', stream: 'Science', type: 'Private', fees: '₹2,00,000 / year', admission: 'VITEEE'},
+      {name: 'IISc Bangalore', state: 'Karnataka', stream: 'Science', type: 'Government', fees: '₹40,000 / year', admission: 'JEE / KVPY / NEET'},
 
-  <div style="display:flex;align-items:center;gap:12px">
-    <div id="filterInfo" style="color:#444"></div>
-    <div class="status" id="status">Waiting to load <a class="small-link" href="colleges.csv" id="csvLink" target="_blank">colleges.csv</a></div>
-  </div>
+      // Commerce colleges
+      {name: 'Shri Ram College of Commerce (SRCC)', state: 'Delhi', stream: 'Commerce', type: 'Government', fees: '₹30,000 / year', admission: 'CUET'},
+      {name: 'Hansraj College', state: 'Delhi', stream: 'Commerce', type: 'Government', fees: '₹25,000 / year', admission: 'CUET'},
+      {name: 'Narsee Monjee College of Commerce', state: 'Maharashtra', stream: 'Commerce', type: 'Private', fees: '₹70,000 / year', admission: 'CUET / Merit'},
+      {name: 'Christ University', state: 'Karnataka', stream: 'Commerce', type: 'Private', fees: '₹1,80,000 / year', admission: 'Entrance + Interview'},
+      {name: 'Symbiosis College of Arts & Commerce', state: 'Maharashtra', stream: 'Commerce', type: 'Private', fees: '₹60,000 / year', admission: 'Merit-Based'},
 
-  <div id="grid" class="grid" aria-live="polite"></div>
+      // Arts colleges
+      {name: 'Lady Shri Ram College for Women', state: 'Delhi', stream: 'Arts', type: 'Government', fees: '₹25,000 / year', admission: 'CUET'},
+      {name: 'Miranda House', state: 'Delhi', stream: 'Arts', type: 'Government', fees: '₹27,000 / year', admission: 'CUET'},
+      {name: 'Loyola College', state: 'Tamil Nadu', stream: 'Arts', type: 'Private', fees: '₹60,000 / year', admission: 'Merit-Based'},
+      {name: 'St. Xavier’s College', state: 'Maharashtra', stream: 'Arts', type: 'Private', fees: '₹80,000 / year', admission: 'Entrance / Merit'},
+      {name: 'Presidency University', state: 'West Bengal', stream: 'Arts', type: 'Government', fees: '₹7,000 / year', admission: 'PUBDET / Merit'},
 
-  <div class="pager" style="margin-top:18px">
-    <button id="prevBtn">&larr; Prev</button>
-    <button id="nextBtn">Next &rarr;</button>
-    <div style="margin-left:12px">Page <span id="pageNum">1</span></div>
-    <div class="status" id="stats"></div>
-  </div>
-</main>
+      // Other/Interdisciplinary
+      {name: 'National Law School of India University (NLSIU)', state: 'Karnataka', stream: 'Other', type: 'Government', fees: '₹2,00,000 / year', admission: 'CLAT'},
+      {name: 'NIFT Delhi', state: 'Delhi', stream: 'Other', type: 'Government', fees: '₹1,90,000 / year', admission: 'NIFT Entrance'},
+      {name: 'IHM Mumbai', state: 'Maharashtra', stream: 'Other', type: 'Government', fees: '₹1,00,000 / year', admission: 'NCHMCT JEE'},
+      {name: 'Pearl Academy', state: 'Delhi', stream: 'Other', type: 'Private', fees: '₹5,50,000 / year', admission: 'Design Entrance'},
+      {name: 'Amity University Online', state: 'Delhi', stream: 'Other', type: 'Online', fees: '₹50,000 / year', admission: 'Open Enrollment'}
+    ];
 
-<!-- PapaParse (streaming CSV parse) -->
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    // Filter colleges
+    const filtered = colleges.filter(c => 
+      c.stream.toLowerCase() === stream.toLowerCase() && c.state.toLowerCase() === state.toLowerCase()
+    );
 
-<script>
-/*
-  awl.html
-  - Expects colleges.csv in same folder (or set DATA_URL)
-  - Filters by URL params: course, state (case-insensitive)
-  - Uses PapaParse to stream parse CSV (worker:true)
-  - Minimal mapping in normalizeRow() — edit if your CSV has different headers
-*/
-
-// CONFIG
-const DATA_URL = 'colleges.csv'; // or full raw GitHub URL
-const PAGE_SIZE = 20;
-
-// UI refs
-const stateFilter = document.getElementById('stateFilter');
-const courseFilter = document.getElementById('courseFilter');
-const ownershipFilter = document.getElementById('ownershipFilter');
-const modeFilter = document.getElementById('modeFilter');
-const searchBox = document.getElementById('searchBox');
-const statusEl = document.getElementById('status');
-const csvLink = document.getElementById('csvLink');
-const grid = document.getElementById('grid');
-const filterInfo = document.getElementById('filterInfo');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const pageNum = document.getElementById('pageNum');
-const stats = document.getElementById('stats');
-const btnReload = document.getElementById('btnReload');
-const btnExport = document.getElementById('btnExport');
-
-csvLink.href = DATA_URL;
-
-// STATE
-let rows = [];            // all parsed rows
-let filtered = [];        // current filtered result
-let statesSet = new Set();
-let coursesSet = new Set();
-let page = 1;
-let parsing = false;
-
-// read URL params to pre-filter
-const params = new URLSearchParams(window.location.search);
-const preCourse = params.get('course') || params.get('Course') || '';
-const preState = params.get('state') || params.get('State') || '';
-
-// initialize
-startParsing();
-
-// Start streaming parse
-function startParsing(){
-  parsing = true;
-  rows = [];
-  statesSet.clear();
-  coursesSet.clear();
-  page = 1;
-  statusEl.innerHTML = 'Loading <span class="loader"></span>';
-
-  Papa.parse(DATA_URL, {
-    download: true,
-    header: true,
-    skipEmptyLines: true,
-    worker: true,
-    step: function(results) {
-      const raw = results.data;
-      const r = normalizeRow(raw);
-      if (!r || !r.name) return;
-      rows.push(r);
-
-      if (r.state) statesSet.add(r.state);
-      (r.courses || []).forEach(c => coursesSet.add(c));
-
-      // occasionally update status
-      if (rows.length % 1000 === 0) statusEl.textContent = `Parsed ${rows.length} rows...`;
-    },
-    complete: function() {
-      parsing = false;
-      statusEl.textContent = `Loaded ${rows.length} records.`;
-      buildFilters();
-      applyFilters(); // show results (will include preCourse & preState)
-    },
-    error: function(err) {
-      parsing = false;
-      statusEl.textContent = 'Failed to load CSV: ' + err.message;
-      console.error(err);
+    const container = document.getElementById('collegeList');
+    if (filtered.length === 0) {
+      container.innerHTML = `<p>No colleges found for ${course} in ${state}. Try checking other states.</p>`;
+    } else {
+      container.innerHTML = filtered.map(c => `
+        <div class="college">
+          <h2>${c.name}</h2>
+          <p><strong>Location:</strong> ${c.state}</p>
+          <p><strong>Type:</strong> ${c.type}</p>
+          <p><strong>Approx. Fees:</strong> ${c.fees}</p>
+          <p><strong>Admission Based On:</strong> ${c.admission}</p>
+        </div>
+      `).join('');
     }
-  });
-}
-
-// Normalize CSV row -> object with fields used below
-function normalizeRow(raw){
-  // Edit this mapping if your CSV uses different headers
-  const r = {};
-  r.id = raw.id || raw.ID || '';
-  r.name = (raw.name || raw.Name || raw.institution || '').trim();
-  r.type = (raw.type || raw.Type || raw.institution_type || '').trim(); // College / University
-  r.ownership = (raw.ownership || raw.govt_private || raw.ownership_type || '').trim(); // Government/Private/Deemed
-  r.mode = (raw.mode || raw.online_offline || raw.mode_of_teaching || '').trim(); // Online/Offline/Hybrid
-  r.state = (raw.state || raw.State || raw.State_UT || '').trim();
-  r.city = (raw.city || raw.City || raw.town || '').trim();
-  const coursesRaw = raw.courses || raw.COURSES || raw.courses_offered || '';
-  r.courses = String(coursesRaw).split(/[,|;]+/).map(s => s.trim()).filter(Boolean);
-  r.fees = (raw.fees || raw.Fees || raw.annual_fees || '').toString().trim();
-  r.admission = (raw.admission || raw.Admission || raw.entry || '').trim();
-  r.cutoff = (raw.cutoff || raw.Cutoff || raw.cut_off || '').trim();
-  r.website = (raw.website || raw.Website || raw.url || '').trim();
-  return r;
-}
-
-// Build options for filters
-function buildFilters(){
-  // states
-  const states = Array.from(statesSet).sort((a,b)=>a.localeCompare(b));
-  stateFilter.innerHTML = '<option value="">All States</option>' + states.map(s => `<option value="${escapeHtml(s)}">${s}</option>`).join('');
-
-  // courses
-  const courses = Array.from(coursesSet).sort((a,b)=>a.localeCompare(b));
-  courseFilter.innerHTML = '<option value="">All Courses</option>' + courses.map(c => `<option value="${escapeHtml(c)}">${c}</option>`).join('');
-
-  // apply URL pre-filters
-  if (preState) {
-    const match = states.find(s => s.toLowerCase() === preState.toLowerCase());
-    if (match) stateFilter.value = match;
-  }
-  if (preCourse) {
-    const matchC = courses.find(c => c.toLowerCase() === preCourse.toLowerCase());
-    if (matchC) courseFilter.value = matchC;
-  }
-}
-
-// Apply filters/search
-function applyFilters(){
-  const st = (stateFilter.value || '').toLowerCase();
-  const course = (courseFilter.value || '').toLowerCase();
-  const ownership = (ownershipFilter.value || '').toLowerCase();
-  const mode = (modeFilter.value || '').toLowerCase();
-  const q = (searchBox.value || '').toLowerCase();
-
-  filtered = rows.filter(r => {
-    if (st && (!r.state || r.state.toLowerCase() !== st)) return false;
-    if (ownership && (!r.ownership || r.ownership.toLowerCase() !== ownership)) return false;
-    if (mode && (!r.mode || r.mode.toLowerCase() !== mode)) return false;
-    if (course) {
-      const found = (r.courses || []).some(c => c.toLowerCase() === course || c.toLowerCase().includes(course));
-      if (!found) return false;
-    }
-    if (q) {
-      const hay = ((r.name||'') + ' ' + (r.city||'') + ' ' + (r.state||'') + ' ' + (r.courses||[]).join(' ')).toLowerCase();
-      if (!hay.includes(q)) return false;
-    }
-    return true;
-  });
-
-  page = 1;
-  renderPage();
-  // show filter info
-  filterInfo.textContent = `${filtered.length} matches`;
-}
-
-// Render one page of results
-function renderPage(){
-  const total = filtered.length;
-  const start = (page - 1) * PAGE_SIZE;
-  const end = Math.min(start + PAGE_SIZE, total);
-  const slice = filtered.slice(start, end);
-
-  if (!slice.length) {
-    grid.innerHTML = `<div style="padding:20px;background:#fff;border-radius:10px">No colleges found for selected filters.</div>`;
-  } else {
-    grid.innerHTML = slice.map(r => `
-      <article class="card">
-        <h3>${escapeHtml(r.name)}</h3>
-        <div class="meta"><span class="pill">${escapeHtml(r.type || r.ownership || '')}</span> ${escapeHtml(r.city || '')}, ${escapeHtml(r.state || '')}</div>
-        <div class="meta"><strong>Courses:</strong> ${escapeHtml((r.courses||[]).slice(0,6).join(', '))}${(r.courses && r.courses.length>6)?' …':''}</div>
-        <div class="meta"><strong>Admission:</strong> ${escapeHtml(r.admission || 'Varies')} • <strong>Cutoff:</strong> ${escapeHtml(r.cutoff || 'Varies')}</div>
-        <div class="meta"><strong>Fees:</strong> ${escapeHtml(r.fees || 'Varies')} • <a href="${escapeHtml(r.website||'#')}" target="_blank">Website</a></div>
-      </article>
-    `).join('');
-  }
-
-  pageNum.textContent = page;
-  stats.textContent = `${total} results • showing ${Math.min(total, start+1)} - ${end}`;
-  statusEl.textContent = `Loaded ${rows.length} rows.`;
-}
-
-// helpers
-function escapeHtml(s=''){ return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-function debounce(fn, wait=160){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), wait); }; }
-
-// wire UI
-stateFilter.addEventListener('change', applyFilters);
-courseFilter.addEventListener('change', applyFilters);
-ownershipFilter.addEventListener('change', applyFilters);
-modeFilter.addEventListener('change', applyFilters);
-searchBox.addEventListener('input', debounce(applyFilters, 220));
-prevBtn.addEventListener('click', ()=>{ if (page > 1){ page--; renderPage(); }});
-nextBtn.addEventListener('click', ()=>{ if ((page * PAGE_SIZE) < filtered.length){ page++; renderPage(); }});
-btnReload.addEventListener('click', ()=> startParsing());
-btnExport.addEventListener('click', exportVisibleCSV);
-
-// CSV export of visible page
-function exportVisibleCSV(){
-  const start = (page - 1) * PAGE_SIZE;
-  const slice = filtered.slice(start, start + PAGE_SIZE);
-  if (!slice.length) return alert('No rows to export');
-  const headers = ['name','type','ownership','mode','state','city','courses','fees','admission','cutoff','website'];
-  const csv = [headers.join(',')].concat(slice.map(r => headers.map(h => `"${String(r[h]||'').replace(/"/g,'""')}"`).join(','))).join('\n');
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'colleges_export.csv'; a.click(); URL.revokeObjectURL(url);
-}
-</script>
+  </script>
 </body>
 </html>
