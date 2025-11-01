@@ -12,49 +12,70 @@
       color: #fff;
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
+
     header {
       background: rgba(0, 0, 0, 0.2);
       text-align: center;
       padding: 30px 0;
+      animation: fadeInDown 1s ease;
     }
+
     h1 {
       font-size: 2rem;
       margin-bottom: 10px;
     }
+
     main {
       max-width: 1200px;
       margin: 30px auto;
       padding: 0 20px;
     }
+
     h2 {
       margin-top: 40px;
       font-size: 1.6rem;
       border-bottom: 2px solid #fff;
       display: inline-block;
       padding-bottom: 5px;
+      animation: fadeIn 1s ease;
     }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
       margin-top: 20px;
     }
+
     .course {
       background: #fff;
       color: #004aad;
       border-radius: 10px;
       padding: 20px;
-      transition: 0.3s;
       box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s forwards;
     }
+
+    .course:nth-child(odd) {
+      animation-delay: 0.1s;
+    }
+    .course:nth-child(even) {
+      animation-delay: 0.2s;
+    }
+
     .course:hover {
-      transform: translateY(-5px);
+      transform: scale(1.02);
       box-shadow: 0 8px 25px rgba(0,0,0,0.25);
     }
+
     .course h3 {
       margin: 0 0 10px;
     }
+
     .btn {
       display: inline-block;
       margin-top: 10px;
@@ -66,109 +87,111 @@
       font-weight: 600;
       transition: background 0.2s;
     }
+
     .btn:hover {
       background: #0078ff;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes fadeInDown {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeUp {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>👋 Explore Courses & Diplomas</h1>
+    <h1 id="greeting">👋 Explore Your Courses</h1>
     <p>Helps you to decide your future</p>
   </header>
 
-  <main>
-    <!-- Science Stream -->
-    <h2>Science Stream</h2>
-    <div class="grid" id="science"></div>
-
-    <!-- Commerce Stream -->
-    <h2>Commerce Stream</h2>
-    <div class="grid" id="commerce"></div>
-
-    <!-- Arts/Humanities Stream -->
-    <h2>Arts & Humanities Stream</h2>
-    <div class="grid" id="arts"></div>
-
-    <!-- Other / Interdisciplinary -->
-    <h2>Other & Interdisciplinary Programs</h2>
-    <div class="grid" id="others"></div>
+  <main id="courseSection">
+    <!-- Content will be added by JS -->
   </main>
 
   <script>
-    // Read params from URL (from welcome page)
+    // Get user data from URL
     const urlParams = new URLSearchParams(window.location.search);
-    const name = urlParams.get('name') || '';
-    const state = urlParams.get('state') || '';
+    const name = urlParams.get('name') || 'Student';
     const stream = urlParams.get('stream') || '';
+    const state = urlParams.get('state') || '';
 
-    // Courses data
+    // Personal greeting
+    document.getElementById('greeting').textContent = `👋 Hey ${name}, explore top ${stream} courses!`;
+
+    // Courses grouped by stream
     const data = {
-      science: [
-        'MBBS', 'BDS', 'BSc Physics', 'BSc Chemistry', 'BSc Biology',
-        'BSc Biotechnology', 'BSc Nursing', 'BPT (Physiotherapy)', 'BPharma', 
-        'BE / BTech (Engineering)', 'BSc Computer Science', 'BSc Data Science',
-        'BSc Psychology', 'BSc Environmental Science', 'BSc Agriculture', 
-        'BSc Forestry', 'BSc Microbiology', 'BSc Geology', 'BSc Zoology',
-        'BSc Mathematics', 'BSc Radiology', 'Diploma in Lab Technology',
-        'Diploma in Medical Imaging', 'Diploma in Nursing', 'BSc Forensic Science'
+      Science: [
+        'MBBS', 'BDS', 'BSc Physics', 'BSc Chemistry', 'BSc Biology', 'BTech / BE (Engineering)',
+        'BSc Biotechnology', 'BSc Nursing', 'BPharma', 'BPT (Physiotherapy)',
+        'BSc Computer Science', 'BSc Mathematics', 'BSc Microbiology', 'BSc Psychology',
+        'BSc Data Science', 'BSc Environmental Science', 'BSc Agriculture',
+        'BSc Zoology', 'BSc Forensic Science', 'BSc Radiology', 'Diploma in Lab Technology',
+        'Diploma in Medical Imaging', 'Diploma in Nursing'
       ],
-      commerce: [
-        'BCom (General)', 'BCom (Hons)', 'BBA', 'BMS', 'BBE',
-        'BFIA', 'BCom Accounting & Finance', 'BCom Taxation', 
-        'BCom Banking & Insurance', 'CA Foundation', 'CMA Foundation',
-        'CS Executive', 'BCom Business Analytics', 'BBA Logistics',
-        'BBA International Business', 'BBA Entrepreneurship',
-        'BBA Tourism & Hospitality', 'Diploma in Accounting', 
-        'Diploma in Banking', 'Diploma in E-Commerce', 'Diploma in Finance'
+
+      Commerce: [
+        'BCom (General)', 'BCom (Hons)', 'BBA', 'BMS', 'BCom Accounting & Finance',
+        'BCom Taxation', 'BCom Banking & Insurance', 'BFIA', 'BBA International Business',
+        'BBA Logistics', 'BBA Tourism & Hospitality', 'BBA Entrepreneurship', 'CA Foundation',
+        'CMA Foundation', 'CS Executive', 'BCom Business Analytics', 'Diploma in Finance',
+        'Diploma in E-Commerce', 'Diploma in Accounting', 'Diploma in Banking'
       ],
-      arts: [
-        'BA English', 'BA History', 'BA Political Science', 'BA Sociology',
-        'BA Psychology', 'BA Economics', 'BA Journalism', 'BA Philosophy',
-        'BA Geography', 'BA Public Administration', 'BA International Relations',
-        'BA Fine Arts', 'BA Music', 'BA Performing Arts', 'BA Linguistics',
-        'BA Literature', 'BA Mass Communication', 'BA Film Studies',
+
+      Arts: [
+        'BA English', 'BA History', 'BA Political Science', 'BA Sociology', 'BA Psychology',
+        'BA Economics', 'BA Philosophy', 'BA Journalism', 'BA Geography',
+        'BA Fine Arts', 'BA Literature', 'BA Linguistics', 'BA Public Administration',
+        'BA Mass Communication', 'BA Film Studies', 'BA International Relations',
         'Diploma in Travel & Tourism', 'Diploma in Event Management',
         'Diploma in Photography', 'Diploma in Animation', 'Diploma in Theatre'
       ],
-      others: [
-        'LLB (Bachelor of Law)', 'BA LLB (Integrated Law Program)', 
-        'BDes (Bachelor of Design)', 'BFA (Fine Arts)', 
-        'BHM (Hotel Management)', 'BTTM (Tourism & Travel Management)', 
-        'BSc Aviation', 'BSc Nautical Science', 'BSc Marine Engineering',
-        'BSc Fashion Designing', 'BJMC (Journalism & Mass Comm.)',
-        'BPEd (Physical Education)', 'B.Ed (Education)', 
-        'B.Arch (Architecture)', 'B.Plan (Urban Planning)',
-        'BCA (Computer Applications)', 'BSc IT', 'Diploma in Graphic Design', 
-        'Diploma in Aviation', 'Diploma in Law Practice',
-        'Diploma in Fashion Designing', 'Diploma in Interior Design', 
-        'Diploma in Hotel Management', 'Diploma in Sports Management',
-        'Diploma in Cybersecurity', 'Diploma in Game Design', 'Diploma in AI'
+
+      Other: [
+        'LLB (Bachelor of Law)', 'BA LLB (Integrated Law Program)', 'BDes (Bachelor of Design)',
+        'BFA (Fine Arts)', 'BHM (Hotel Management)', 'BTTM (Tourism & Travel Management)',
+        'BSc Aviation', 'BSc Nautical Science', 'BSc Fashion Designing',
+        'BJMC (Journalism & Mass Comm.)', 'BPEd (Physical Education)',
+        'B.Ed (Education)', 'B.Arch (Architecture)', 'B.Plan (Urban Planning)',
+        'BCA (Computer Applications)', 'BSc IT', 'Diploma in Graphic Design',
+        'Diploma in Aviation', 'Diploma in Law Practice', 'Diploma in Fashion Designing',
+        'Diploma in Interior Design', 'Diploma in Hotel Management',
+        'Diploma in Sports Management', 'Diploma in Cybersecurity',
+        'Diploma in Game Design', 'Diploma in Artificial Intelligence'
       ]
     };
 
-    // Function to create course cards dynamically
-    const createCards = (list, containerId, streamName) => {
-      const container = document.getElementById(containerId);
-      container.innerHTML = list.map(course => `
-        <div class="course">
-          <h3>${course}</h3>
-          <p>Explore colleges offering ${course}.</p>
-          <a href="awl.html?course=${encodeURIComponent(course)}&state=${encodeURIComponent(state)}&stream=${encodeURIComponent(streamName)}" class="btn">View Colleges</a>
+    // Get relevant courses
+    const selectedCourses = data[stream] || [];
+    const courseSection = document.getElementById('courseSection');
+
+    // If no stream found
+    if (selectedCourses.length === 0) {
+      courseSection.innerHTML = `<h2>Oops! No stream selected.</h2><p>Please go back and choose your stream.</p>`;
+    } else {
+      courseSection.innerHTML = `
+        <h2>Courses Available in ${stream} Stream</h2>
+        <div class="grid">
+          ${selectedCourses.map(course => `
+            <div class="course">
+              <h3>${course}</h3>
+              <p>Explore colleges offering ${course} in ${state}.</p>
+              <a href="awl.html?course=${encodeURIComponent(course)}&state=${encodeURIComponent(state)}&stream=${encodeURIComponent(stream)}" class="btn">View Colleges</a>
+            </div>
+          `).join('')}
         </div>
-      `).join('');
-    };
-
-    createCards(data.science, 'science', 'Science');
-    createCards(data.commerce, 'commerce', 'Commerce');
-    createCards(data.arts, 'arts', 'Arts');
-    createCards(data.others, 'others', 'Other');
-
-    // Auto-scroll to selected stream
-    if (stream) {
-      const section = document.getElementById(stream.toLowerCase());
-      if (section) section.scrollIntoView({behavior: 'smooth'});
+      `;
     }
   </script>
 </body>
-</html></html></html></html></html></html></html></html></html></html></html>
+</html></html></html></html></html></html></html></html></html></html></html></html>
