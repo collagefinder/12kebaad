@@ -176,7 +176,7 @@
   </div>
 
   <script>
-    // When revisiting, fill saved info
+    // Pre-fill user data from localStorage
     window.addEventListener('load', () => {
       const saved = JSON.parse(localStorage.getItem('userData') || '{}');
       if(saved.name) document.getElementById('name').value = saved.name;
@@ -192,12 +192,13 @@
       const stream = document.getElementById('stream').value;
       const state = document.getElementById('state').value;
 
-      // Save info locally for returning users
+      // Save locally
       localStorage.setItem('userData', JSON.stringify({ name, mobile, stream, state }));
 
+      // Redirect to courses page
       window.location.href = `courses.html?name=${encodeURIComponent(name)}&stream=${encodeURIComponent(stream)}&state=${encodeURIComponent(state)}`;
     }
   </script>
 
 </body>
-</html></html></html></html></html></html></html></html>
+</html></html></html></html></html></html></html></html></html>
