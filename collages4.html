@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vocational Colleges - 12kebaad</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header><h1>Top Vocational & Interdisciplinary Colleges</h1></header>
+
+<main class="container" id="collegeList"></main>
+
+<footer>© 2025 12kebaad</footer>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const state = params.get("state");
+const course = params.get("course");
+
+const colleges = [
+  {name:"National Institute of Fashion Technology (NIFT)", state:"Delhi", fees:"₹2,00,000", admission:"NIFT Exam", cutoff:"85%", location:"Delhi"},
+  {name:"Film and Television Institute of India", state:"Maharashtra", fees:"₹1,50,000", admission:"Entrance Exam", cutoff:"85%", location:"Pune"},
+  {name:"IHM Delhi", state:"Delhi", fees:"₹1,20,000", admission:"NCHMCT", cutoff:"80%", location:"Delhi"},
+  {name:"Pearl Academy", state:"Delhi", fees:"₹2,50,000", admission:"Pearl Test", cutoff:"80%", location:"Delhi"},
+  {name:"IHM Mumbai", state:"Maharashtra", fees:"₹1,10,000", admission:"NCHMCT", cutoff:"75%", location:"Mumbai"},
+  {name:"Whistling Woods International", state:"Maharashtra", fees:"₹3,00,000", admission:"Aptitude + Interview", cutoff:"70%", location:"Mumbai"},
+  {name:"Amity School of Design", state:"Uttar Pradesh", fees:"₹1,80,000", admission:"Merit", cutoff:"75%", location:"Noida"},
+  {name:"Lovely Professional University", state:"Punjab", fees:"₹1,00,000", admission:"LPUNEST", cutoff:"70%", location:"Phagwara"},
+  {name:"Chandigarh University", state:"Punjab", fees:"₹1,00,000", admission:"CUCET", cutoff:"70%", location:"Chandigarh"},
+  {name:"Vogue Institute of Art & Design", state:"Karnataka", fees:"₹1,50,000", admission:"Merit", cutoff:"72%", location:"Bangalore"},
+  {name:"Mount Carmel College", state:"Karnataka", fees:"₹80,000", admission:"Merit", cutoff:"80%", location:"Bangalore"},
+  {name:"SRM University", state:"Tamil Nadu", fees:"₹1,50,000", admission:"Merit", cutoff:"78%", location:"Chennai"},
+  {name:"IHM Chennai", state:"Tamil Nadu", fees:"₹1,20,000", admission:"NCHMCT", cutoff:"80%", location:"Chennai"},
+  {name:"Institute of Hotel Management", state:"Goa", fees:"₹95,000", admission:"NCHMCT", cutoff:"78%", location:"Goa"},
+  {name:"Banasthali Vidyapith", state:"Rajasthan", fees:"₹1,00,000", admission:"Merit", cutoff:"80%", location:"Tonk"},
+  {name:"National Institute of Design (NID)", state:"Gujarat", fees:"₹2,20,000", admission:"NID DAT", cutoff:"85%", location:"Ahmedabad"},
+  {name:"IHM Hyderabad", state:"Telangana", fees:"₹1,00,000", admission:"NCHMCT", cutoff:"80%", location:"Hyderabad"},
+  {name:"Manipal University", state:"Karnataka", fees:"₹2,00,000", admission:"Merit", cutoff:"82%", location:"Manipal"},
+  {name:"Symbiosis Institute of Media & Communication", state:"Maharashtra", fees:"₹2,10,000", admission:"SET", cutoff:"80%", location:"Pune"},
+  {name:"AAFT University of Media & Arts", state:"Delhi", fees:"₹1,50,000", admission:"Merit", cutoff:"75%", location:"Noida"}
+];
+
+const filtered = colleges.filter(c => c.state === state);
+document.getElementById("collegeList").innerHTML = 
+  `<h2>${state} Colleges offering ${course}</h2>` +
+  (filtered.length ? filtered.map(c => `
+    <div class='card'>
+      <h3>${c.name}</h3>
+      <p><b>Location:</b> ${c.location}</p>
+      <p><b>Fees:</b> ${c.fees}</p>
+      <p><b>Admission:</b> ${c.admission}</p>
+      <p><b>Cut-off Trend:</b> ${c.cutoff}</p>
+    </div>
+  `).join('') : `<p>No colleges found in ${state}</p>`);
+</script>
+</body>
+</html>
