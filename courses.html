@@ -6,6 +6,79 @@
   <title>Courses – 12kebaad</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Extra design layer for this page */
+    .courses-page {
+      text-align: center;
+      padding: 60px 20px;
+      color: #fff;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #004aad, #0078ff);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .courses-page h1 {
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .courses-page p {
+      font-size: 1.1em;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+
+    .courses-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .course-card {
+      background: #ffffff1a;
+      border-radius: 15px;
+      padding: 25px 20px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .course-card:hover {
+      transform: translateY(-6px);
+      background: #ffffff33;
+    }
+
+    .course-card h3 {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    .view-btn {
+      display: inline-block;
+      text-decoration: none;
+      color: #004aad;
+      background: #fff;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 10px 18px;
+      transition: all 0.3s ease;
+    }
+
+    .view-btn:hover {
+      background: #ffcc00;
+      color: #000;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 
 <body>
@@ -25,10 +98,6 @@
     <p id="streamInfo"></p>
 
     <div id="coursesContainer" class="courses-container"></div>
-
-    <div class="navigation-buttons">
-      <a id="nextButton" href="#" class="button">Explore Colleges →</a>
-    </div>
   </main>
 
   <footer class="site-footer">
@@ -43,143 +112,71 @@
     // Get user info from URL
     const params = new URLSearchParams(window.location.search);
     const name = params.get("name");
-    const mobile = params.get("mobile");
     const stream = params.get("stream");
     const state = params.get("state");
 
-    // Personalize header
+    // Personalize greeting
     document.getElementById("greeting").textContent = `Hi ${name || "Student"}, here are courses for ${stream || "your"} stream`;
-    document.getElementById("streamInfo").textContent = `Showing courses available in ${state || "your state"}.`;
+    document.getElementById("streamInfo").textContent = `Showing available courses and diplomas in ${state || "your state"}.`;
 
-    const coursesContainer = document.getElementById("coursesContainer");
+    const container = document.getElementById("coursesContainer");
 
-    // Course data per stream
+    // Courses for each stream
     const courses = {
       Science: [
-        "B.Sc. (Physics)",
-        "B.Sc. (Chemistry)",
-        "B.Sc. (Mathematics)",
-        "B.Sc. (Biotechnology)",
-        "B.Sc. (Zoology)",
-        "B.Sc. (Botany)",
-        "B.Sc. (Environmental Science)",
-        "B.Tech (Computer Science)",
-        "B.Tech (Mechanical Engineering)",
-        "B.Tech (Civil Engineering)",
-        "B.Tech (Electrical Engineering)",
-        "B.Tech (Electronics & Communication)",
-        "MBBS (Medicine)",
-        "BDS (Dentistry)",
-        "B.Pharm (Pharmacy)",
-        "B.Sc. (Nursing)",
-        "B.Sc. (Data Science)",
-        "BCA (Computer Applications)",
-        "B.Sc. (Artificial Intelligence)",
-        "B.Sc. (Cybersecurity)",
-        "B.Sc. (Marine Science)",
-        "B.Sc. (Forensic Science)",
-        "Diploma in Lab Technology",
-        "Diploma in Radiology",
-        "Diploma in Computer Science",
-        "Diploma in Engineering"
+        "B.Sc. (Physics)", "B.Sc. (Chemistry)", "B.Sc. (Mathematics)", "B.Sc. (Zoology)",
+        "B.Sc. (Botany)", "B.Sc. (Biotechnology)", "B.Tech (Computer Science)",
+        "B.Tech (Mechanical Engineering)", "B.Tech (Civil Engineering)", "B.Tech (Electronics)",
+        "MBBS (Medicine)", "BDS (Dentistry)", "B.Pharm (Pharmacy)", "B.Sc. (Nursing)",
+        "B.Sc. (Data Science)", "BCA (Computer Applications)", "B.Sc. (AI & ML)",
+        "B.Sc. (Cybersecurity)", "B.Sc. (Environmental Science)", "B.Sc. (Forensic Science)"
       ],
-
       Commerce: [
-        "B.Com (General)",
-        "B.Com (Honours)",
-        "BBA (Bachelor of Business Administration)",
-        "BMS (Management Studies)",
-        "BBS (Business Studies)",
-        "BBE (Business Economics)",
-        "CA (Chartered Accountancy)",
-        "CMA (Cost Management Accounting)",
-        "CS (Company Secretary)",
-        "B.Com (Banking & Insurance)",
-        "B.Com (Accounting & Finance)",
-        "B.Com (Marketing)",
-        "B.Com (Taxation)",
-        "Bachelor of Economics",
-        "Bachelor of Financial Investment Analysis",
-        "BBA (International Business)",
-        "BBA (Finance)",
-        "BBA (Entrepreneurship)",
-        "BBA (Digital Marketing)",
-        "Diploma in Accounting",
-        "Diploma in Banking & Finance",
-        "Diploma in E-Commerce",
-        "Diploma in Taxation",
+        "B.Com (General)", "B.Com (Honours)", "BBA (Business Administration)",
+        "BMS (Management Studies)", "BBS (Business Studies)", "BBE (Business Economics)",
+        "CA (Chartered Accountancy)", "CMA (Cost Management Accounting)", "CS (Company Secretary)",
+        "B.Com (Finance)", "B.Com (Marketing)", "B.Com (Taxation)", "Bachelor of Economics",
+        "BBA (International Business)", "BBA (Finance)", "BBA (Digital Marketing)",
+        "BBA (Entrepreneurship)", "Diploma in Accounting", "Diploma in Banking & Finance",
         "Diploma in Stock Market Operations"
       ],
-
       Arts: [
-        "B.A. (English Literature)",
-        "B.A. (History)",
-        "B.A. (Political Science)",
-        "B.A. (Sociology)",
-        "B.A. (Psychology)",
-        "B.A. (Philosophy)",
-        "B.A. (Geography)",
-        "B.A. (Economics)",
-        "B.A. (Public Administration)",
-        "B.A. (Education)",
-        "BFA (Fine Arts)",
-        "BPA (Performing Arts)",
-        "B.A. (Journalism & Mass Communication)",
-        "B.A. (Tourism Studies)",
-        "B.A. (Foreign Languages)",
-        "B.A. (Social Work)",
-        "B.A. (Anthropology)",
-        "B.A. (Linguistics)",
-        "B.A. (Cultural Studies)",
-        "B.Ed. (Teacher Training)",
-        "Diploma in Travel & Tourism",
-        "Diploma in Fine Arts",
-        "Diploma in Journalism",
-        "Diploma in Photography",
-        "Diploma in Animation",
-        "Diploma in Graphic Design",
-        "Diploma in Event Management"
+        "B.A. (English Literature)", "B.A. (History)", "B.A. (Political Science)", "B.A. (Psychology)",
+        "B.A. (Sociology)", "B.A. (Economics)", "B.A. (Philosophy)", "B.A. (Geography)",
+        "BFA (Fine Arts)", "BPA (Performing Arts)", "B.A. (Journalism & Mass Communication)",
+        "B.A. (Tourism Studies)", "B.A. (Foreign Languages)", "B.A. (Social Work)",
+        "B.A. (Education)", "B.Ed. (Teacher Training)", "Diploma in Photography",
+        "Diploma in Fine Arts", "Diploma in Event Management", "Diploma in Animation"
       ],
-
       Vocational: [
-        "B.Voc (Retail Management)",
-        "B.Voc (Hospitality & Tourism)",
-        "B.Voc (Food Processing)",
-        "B.Voc (Software Development)",
-        "B.Voc (Automobile Technology)",
-        "B.Voc (Fashion Design)",
-        "B.Voc (Interior Design)",
-        "B.Voc (Healthcare Management)",
-        "B.Voc (Animation & Multimedia)",
-        "B.Voc (Renewable Energy)",
-        "Diploma in Hotel Management",
-        "Diploma in Fashion Technology",
-        "Diploma in Computer Applications",
-        "Diploma in Digital Marketing",
-        "Diploma in Electrical Engineering",
-        "Diploma in Civil Engineering",
-        "Diploma in Mechanical Engineering",
-        "Diploma in Beauty & Wellness",
-        "Diploma in Tourism",
-        "Diploma in Food Technology"
+        "B.Voc (Retail Management)", "B.Voc (Tourism & Hospitality)", "B.Voc (Software Development)",
+        "B.Voc (Automobile Technology)", "B.Voc (Fashion Design)", "B.Voc (Interior Design)",
+        "B.Voc (Healthcare Management)", "B.Voc (Animation & Multimedia)", "B.Voc (Renewable Energy)",
+        "Diploma in Hotel Management", "Diploma in Fashion Technology", "Diploma in Computer Applications",
+        "Diploma in Digital Marketing", "Diploma in Beauty & Wellness", "Diploma in Electrical Engineering",
+        "Diploma in Mechanical Engineering", "Diploma in Tourism", "Diploma in Food Technology",
+        "Diploma in Civil Engineering", "Diploma in Graphic Design"
       ]
     };
 
-    // Display relevant courses
-    if (stream && courses[stream]) {
-      courses[stream].forEach(course => {
-        const div = document.createElement("div");
-        div.className = "course-card";
-        div.innerHTML = `<h3>${course}</h3>`;
-        coursesContainer.appendChild(div);
-      });
-    } else {
-      coursesContainer.innerHTML = `<p>No courses available for the selected stream.</p>`;
-    }
+    const list = courses[stream] || [];
 
-    // Go to colleges page
-    const nextButton = document.getElementById("nextButton");
-    nextButton.href = `colleges1.html?name=${encodeURIComponent(name)}&mobile=${encodeURIComponent(mobile)}&stream=${encodeURIComponent(stream)}&state=${encodeURIComponent(state)}`;
+    // Create cards
+    list.forEach(course => {
+      const div = document.createElement("div");
+      div.className = "course-card";
+      div.innerHTML = `
+        <h3>${course}</h3>
+        <a href="colleges1.html?course=${encodeURIComponent(course)}&stream=${encodeURIComponent(stream)}&state=${encodeURIComponent(state)}" class="view-btn">
+          View Colleges
+        </a>
+      `;
+      container.appendChild(div);
+    });
+
+    if (!list.length) {
+      container.innerHTML = `<p>No courses found for this stream.</p>`;
+    }
   </script>
 </body>
-</html></html></html></html></html></html></html></html>
+</html></html></html></html></html></html></html></html></html>
