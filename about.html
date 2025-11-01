@@ -1,42 +1,138 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>About — 12kebaad</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — 12kebaad</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue1: #004aad;
+      --blue2: #0078ff;
+      --light: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--blue1), var(--blue2));
+      color: var(--light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .about-container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px var(--shadow);
+      backdrop-filter: blur(8px);
+      width: 90%;
+      max-width: 600px;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    p {
+      font-size: 1rem;
+      margin: 15px 0;
+      line-height: 1.6;
+      color: #e0e7ff;
+    }
+
+    .highlight {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .info-box {
+      margin-top: 25px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .info-box p {
+      margin: 8px 0;
+      font-size: 1rem;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: underline;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #cfe3ff;
+    }
+
+    button {
+      margin-top: 25px;
+      background: var(--light);
+      color: var(--blue1);
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      background: #f1f5ff;
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.8rem; }
+      .about-container { padding: 30px; }
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html">12kebaad</a>
-      <nav class="main-nav">
-        <a href="index.html">Home</a>
-        <a href="courses.html">Courses</a>
-        <a href="colleges.html">Colleges</a>
-        <a href="about.html">About</a>
-      </nav>
+
+  <div class="about-container">
+    <h1>About <span class="highlight">12kebaad</span></h1>
+    <p>Welcome to <strong>12kebaad</strong> — a platform built to help students like you discover the right path after Class 12.</p>
+    <p>Our mission is simple: <em>to empower every student to make confident, informed career choices</em> by providing detailed insights about courses, diplomas, and universities across India.</p>
+    
+    <div class="info-box">
+      <p><strong>Founder:</strong> Pushkar Verma</p>
+      <p><strong>Contact Email:</strong> <a href="mailto:12kebaad.team@gmail.com">12kebaad.team@gmail.com</a></p>
+      <p><strong>Tagline:</strong> “Helps you to decide your future.”</p>
     </div>
-  </header>
 
-  <main class="container content">
-    <section class="card">
-      <h2>About 12kebaad</h2>
-      <p class="lead">12kebaad helps students choose an appropriate academic or vocational path by showing courses and colleges based on the student’s stream.</p>
+    <button onclick="window.location.href='index.html'">← Back to Home</button>
+  </div>
 
-      <h3>Owner & Contact</h3>
-      <ul>
-        <li><strong>Owner:</strong> Pushkar Verma</li>
-        <li><strong>Email:</strong> <a href="mailto:12kebaad@gmail.com">12kebaad@gmail.com</a></li>
-      </ul>
-
-      <h3>Mission</h3>
-      <p>Provide clear, easy-to-browse options for students to understand courses and college admission routes — no frills, just helpful guidance.</p>
-    </section>
-  </main>
-
-  <footer class="site-footer">
+</body>
+</html>
     <div class="container">
       <small>© <span id="year"></span> 12kebaad</small>
     </div>
