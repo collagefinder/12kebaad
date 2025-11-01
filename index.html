@@ -4,7 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>12kebaad — Decide Your Future</title>
+
+  <!-- ✅ Favicon / Logo Integration -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="icon" sizes="192x192" href="favicon.png">
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --blue1: #004aad;
@@ -44,6 +51,24 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .site-logo {
+      width: 160px;
+      height: auto;
+      animation: floatLogo 3s ease-in-out infinite;
+    }
+
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
     h1 {
@@ -109,6 +134,11 @@
 <body>
 
   <div class="container">
+    <!-- ✅ Floating Logo -->
+    <div class="logo-section">
+      <img src="favicon.png" alt="12kebaad Logo" class="site-logo">
+    </div>
+
     <h1>Welcome to <span style="color:#fff;">12kebaad</span></h1>
     <p class="tagline">Helps you to decide your future ✨</p>
 
@@ -192,13 +222,11 @@
       const stream = document.getElementById('stream').value;
       const state = document.getElementById('state').value;
 
-      // Save locally
       localStorage.setItem('userData', JSON.stringify({ name, mobile, stream, state }));
 
-      // Redirect to courses page
       window.location.href = `courses.html?name=${encodeURIComponent(name)}&stream=${encodeURIComponent(stream)}&state=${encodeURIComponent(state)}`;
     }
   </script>
 
 </body>
-</html></html></html></html></html></html></html></html></html>
+</html></html></html></html></html></html></html></html></html></html>
