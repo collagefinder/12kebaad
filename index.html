@@ -1,4 +1,115 @@
-<!DOCTYPE html>
+<!<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome – 12kebaad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header>
+    <div class="container header-inner">
+      <a class="brand" href="index.html">12kebaad</a>
+      <nav class="main-nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="courses.html">Courses</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="welcome">
+    <h1>Welcome to 12kebaad</h1>
+    <p>Helps you to decide your future — explore courses and colleges that match your interests and stream.</p>
+
+    <form id="welcomeForm">
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+      <input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" maxlength="10" required>
+
+      <label for="stream" style="display:block;text-align:left;margin-top:10px;font-weight:500;">Select Stream</label>
+      <select id="stream" name="stream" required>
+        <option value="">-- Select Stream --</option>
+        <option value="Science">Science</option>
+        <option value="Commerce">Commerce</option>
+        <option value="Arts">Arts / Humanities</option>
+        <option value="Vocational">Vocational / Interdisciplinary</option>
+      </select>
+
+      <label for="state" style="display:block;text-align:left;margin-top:10px;font-weight:500;">Select State / Union Territory</label>
+      <select id="state" name="state" required>
+        <option value="">-- Select State / UT --</option>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+        <option value="Assam">Assam</option>
+        <option value="Bihar">Bihar</option>
+        <option value="Chhattisgarh">Chhattisgarh</option>
+        <option value="Goa">Goa</option>
+        <option value="Gujarat">Gujarat</option>
+        <option value="Haryana">Haryana</option>
+        <option value="Himachal Pradesh">Himachal Pradesh</option>
+        <option value="Jharkhand">Jharkhand</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Kerala">Kerala</option>
+        <option value="Madhya Pradesh">Madhya Pradesh</option>
+        <option value="Maharashtra">Maharashtra</option>
+        <option value="Manipur">Manipur</option>
+        <option value="Meghalaya">Meghalaya</option>
+        <option value="Mizoram">Mizoram</option>
+        <option value="Nagaland">Nagaland</option>
+        <option value="Odisha">Odisha</option>
+        <option value="Punjab">Punjab</option>
+        <option value="Rajasthan">Rajasthan</option>
+        <option value="Sikkim">Sikkim</option>
+        <option value="Tamil Nadu">Tamil Nadu</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Tripura">Tripura</option>
+        <option value="Uttar Pradesh">Uttar Pradesh</option>
+        <option value="Uttarakhand">Uttarakhand</option>
+        <option value="West Bengal">West Bengal</option>
+        <option value="Delhi">Delhi (NCT)</option>
+        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+        <option value="Ladakh">Ladakh</option>
+        <option value="Chandigarh">Chandigarh</option>
+        <option value="Puducherry">Puducherry</option>
+        <option value="Andaman and Nicobar Islands">Andaman & Nicobar Islands</option>
+        <option value="Lakshadweep">Lakshadweep</option>
+      </select>
+
+      <button type="submit">Continue</button>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year"></span> 12kebaad • Helps you to decide your future</small>
+    </div>
+  </footer>
+
+  <script>
+    // Set footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Handle form submission
+    document.getElementById("welcomeForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const stream = document.getElementById("stream").value;
+      const state = document.getElementById("state").value;
+
+      if (!name || !mobile || !stream || !state) {
+        alert("Please fill in all fields before continuing.");
+        return;
+      }
+
+      // Redirect to courses page with query parameters
+      window.location.href = `courses.html?name=${encodeURIComponent(name)}&mobile=${encodeURIComponent(mobile)}&stream=${encodeURIComponent(stream)}&state=${encodeURIComponent(state)}`;
+    });
+  </script>
+</body>
+</html> html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
