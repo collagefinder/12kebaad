@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Science Colleges - 12kebaad</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header><h1>Top Science Colleges</h1></header>
+
+<main class="container" id="collegeList"></main>
+
+<footer>© 2025 12kebaad • Helps you to decide your future</footer>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const state = params.get("state");
+const course = params.get("course");
+
+const colleges = [
+  {name:"IIT Delhi", state:"Delhi", fees:"₹2,10,000", admission:"JEE Advanced", cutoff:"98%", location:"New Delhi"},
+  {name:"Miranda House", state:"Delhi", fees:"₹25,000", admission:"CUET", cutoff:"96%", location:"Delhi"},
+  {name:"St. Xavier’s College", state:"Maharashtra", fees:"₹60,000", admission:"CUET", cutoff:"95%", location:"Mumbai"},
+  {name:"IIT Bombay", state:"Maharashtra", fees:"₹2,20,000", admission:"JEE Advanced", cutoff:"98%", location:"Mumbai"},
+  {name:"Fergusson College", state:"Maharashtra", fees:"₹30,000", admission:"Merit", cutoff:"92%", location:"Pune"},
+  {name:"Christ University", state:"Karnataka", fees:"₹90,000", admission:"Merit", cutoff:"88%", location:"Bangalore"},
+  {name:"Loyola College", state:"Tamil Nadu", fees:"₹45,000", admission:"Merit", cutoff:"87%", location:"Chennai"},
+  {name:"Madras Christian College", state:"Tamil Nadu", fees:"₹40,000", admission:"CUET", cutoff:"85%", location:"Chennai"},
+  {name:"BITS Pilani", state:"Rajasthan", fees:"₹1,95,000", admission:"BITSAT", cutoff:"90%", location:"Pilani"},
+  {name:"University of Rajasthan", state:"Rajasthan", fees:"₹20,000", admission:"Merit", cutoff:"80%", location:"Jaipur"},
+  {name:"IISc Bangalore", state:"Karnataka", fees:"₹40,000", admission:"JEE/NEET", cutoff:"99%", location:"Bangalore"},
+  {name:"Presidency College", state:"West Bengal", fees:"₹25,000", admission:"Merit", cutoff:"85%", location:"Kolkata"},
+  {name:"Banaras Hindu University", state:"Uttar Pradesh", fees:"₹35,000", admission:"CUET", cutoff:"90%", location:"Varanasi"},
+  {name:"Amity University", state:"Uttar Pradesh", fees:"₹1,20,000", admission:"Merit", cutoff:"80%", location:"Noida"},
+  {name:"Lovely Professional University", state:"Punjab", fees:"₹1,10,000", admission:"LPUNEST", cutoff:"75%", location:"Phagwara"},
+  {name:"Delhi University North Campus", state:"Delhi", fees:"₹30,000", admission:"CUET", cutoff:"95%", location:"Delhi"},
+  {name:"SRM University", state:"Tamil Nadu", fees:"₹1,50,000", admission:"SRMJEEE", cutoff:"78%", location:"Chennai"},
+  {name:"Bangalore University", state:"Karnataka", fees:"₹40,000", admission:"Merit", cutoff:"80%", location:"Bangalore"},
+  {name:"Kerala University", state:"Kerala", fees:"₹35,000", admission:"Merit", cutoff:"78%", location:"Thiruvananthapuram"},
+  {name:"Goa University", state:"Goa", fees:"₹30,000", admission:"Merit", cutoff:"75%", location:"Goa"}
+];
+
+const filtered = colleges.filter(c => c.state === state);
+document.getElementById("collegeList").innerHTML = 
+  `<h2>${state} Colleges offering ${course}</h2>` +
+  (filtered.length ? filtered.map(c => `
+    <div class='card'>
+      <h3>${c.name}</h3>
+      <p><b>Location:</b> ${c.location}</p>
+      <p><b>Fees:</b> ${c.fees}</p>
+      <p><b>Admission:</b> ${c.admission}</p>
+      <p><b>Cut-off:</b> ${c.cutoff}</p>
+    </div>
+  `).join('') : `<p>No colleges found in ${state}</p>`);
+</script>
+</body>
+</html>
