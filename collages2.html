@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Commerce Colleges - 12kebaad</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header><h1>Top Commerce Colleges</h1></header>
+
+<main class="container" id="collegeList"></main>
+
+<footer>© 2025 12kebaad</footer>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const state = params.get("state");
+const course = params.get("course");
+
+const colleges = [
+  { name:"Shri Ram College of Commerce", state:"Delhi", fees:"₹45,000", admission:"CUET", cutoff:"97%", location:"Delhi University" },
+  { name:"Hansraj College", state:"Delhi", fees:"₹40,000", admission:"CUET", cutoff:"96%", location:"Delhi" },
+  { name:"St. Xavier’s College", state:"Maharashtra", fees:"₹60,000", admission:"CUET", cutoff:"95%", location:"Mumbai" },
+  { name:"Christ University", state:"Karnataka", fees:"₹90,000", admission:"Merit", cutoff:"85%", location:"Bengaluru" },
+  { name:"Loyola College", state:"Tamil Nadu", fees:"₹50,000", admission:"Merit", cutoff:"88%", location:"Chennai" },
+  { name:"Narsee Monjee College", state:"Maharashtra", fees:"₹70,000", admission:"Merit", cutoff:"90%", location:"Mumbai" },
+  { name:"DAV College", state:"Punjab", fees:"₹35,000", admission:"CUET", cutoff:"85%", location:"Chandigarh" },
+  { name:"Symbiosis College", state:"Maharashtra", fees:"₹80,000", admission:"SET", cutoff:"84%", location:"Pune" },
+  { name:"Amity University", state:"Uttar Pradesh", fees:"₹1,20,000", admission:"Merit", cutoff:"80%", location:"Noida" },
+  { name:"Lovely Professional University", state:"Punjab", fees:"₹1,10,000", admission:"LPUNEST", cutoff:"70%", location:"Phagwara" },
+  { name:"Delhi College of Arts & Commerce", state:"Delhi", fees:"₹38,000", admission:"CUET", cutoff:"90%", location:"Delhi" },
+  { name:"Mount Carmel College", state:"Karnataka", fees:"₹75,000", admission:"Merit", cutoff:"85%", location:"Bangalore" },
+  { name:"NMIMS University", state:"Maharashtra", fees:"₹1,50,000", admission:"NPAT", cutoff:"80%", location:"Mumbai" },
+  { name:"Patna Women’s College", state:"Bihar", fees:"₹45,000", admission:"Merit", cutoff:"82%", location:"Patna" },
+  { name:"Banaras Hindu University", state:"Uttar Pradesh", fees:"₹35,000", admission:"CUET", cutoff:"90%", location:"Varanasi" },
+  { name:"Christ College", state:"Kerala", fees:"₹60,000", admission:"Merit", cutoff:"83%", location:"Irinjalakuda" },
+  { name:"Jain University", state:"Karnataka", fees:"₹95,000", admission:"Merit", cutoff:"80%", location:"Bangalore" },
+  { name:"Chandigarh University", state:"Punjab", fees:"₹1,00,000", admission:"CUCET", cutoff:"75%", location:"Chandigarh" },
+  { name:"Presidency College", state:"Tamil Nadu", fees:"₹50,000", admission:"Merit", cutoff:"85%", location:"Chennai" },
+  { name:"GLA University", state:"Uttar Pradesh", fees:"₹80,000", admission:"Merit", cutoff:"78%", location:"Mathura" }
+];
+
+const filtered = colleges.filter(c => c.state === state);
+document.getElementById("collegeList").innerHTML = 
+  `<h2>${state} Colleges offering ${course}</h2>` +
+  filtered.map(c => `
+    <div class='card'>
+      <h3>${c.name}</h3>
+      <p><b>Location:</b> ${c.location}</p>
+      <p><b>Fees:</b> ${c.fees}</p>
+      <p><b>Admission:</b> ${c.admission}</p>
+      <p><b>Cut-off Trend:</b> ${c.cutoff}</p>
+    </div>
+  `).join('');
+</script>
+</body>
+</html>
