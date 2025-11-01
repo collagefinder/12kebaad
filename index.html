@@ -3,149 +3,237 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome | 12kebaad</title>
+  <title>Welcome — 12kebaad</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
       background: linear-gradient(135deg, #004aad, #0078ff);
-      color: white;
-      height: 100vh;
+      color: #fff;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
-    }
-    .container {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-      max-width: 420px;
-      width: 90%;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
       text-align: center;
+      overflow: hidden;
     }
+
     h1 {
-      font-size: 2rem;
-      margin-bottom: 5px;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      animation: fadeInDown 1s ease;
     }
+
     p {
-      margin-bottom: 25px;
-      opacity: 0.9;
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+      animation: fadeInUp 1s ease;
     }
-    input, select {
+
+    form {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 30px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      width: 90%;
+      max-width: 400px;
+      animation: fadeIn 1s ease-in-out;
+      position: relative;
+    }
+
+    input, select, button {
       width: 100%;
       padding: 12px;
-      margin: 10px 0;
+      margin-top: 12px;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       font-size: 1rem;
       outline: none;
     }
-    button {
-      background: white;
+
+    input, select {
+      background: #fff;
       color: #004aad;
-      border: none;
-      padding: 12px 25px;
-      font-weight: 600;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: 0.3s;
-      width: 100%;
     }
-    button:hover {
+
+    button {
       background: #004aad;
-      color: white;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
     }
-    footer {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 0.9rem;
-      opacity: 0.8;
+
+    button:hover {
+      background: #0078ff;
+      transform: translateY(-2px);
+    }
+
+    /* Clear Button Style */
+    #clearData {
+      background: transparent;
+      border: 2px solid #fff;
+      color: #fff;
+      margin-top: 15px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    #clearData:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Welcome Back Popup */
+    #welcomeBack {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: rgba(255, 255, 255, 0.25);
+      padding: 25px 40px;
+      border-radius: 12px;
+      backdrop-filter: blur(12px);
+      font-size: 1.3rem;
+      font-weight: 600;
+      display: none;
+      opacity: 0;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+      animation: popup 0.6s ease forwards;
+    }
+
+    @keyframes popup {
+      from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+      to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeOutPopup {
+      from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      to { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+    }
+
+    @keyframes fadeInDown {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Welcome to 12kebaad</h1>
-    <p>Helps you to decide your future</p>
-    <form id="welcomeForm">
-      <input type="text" id="name" placeholder="Full Name" required>
-      <input type="tel" id="mobile" placeholder="Mobile Number" pattern="[0-9]{10}" required>
+  <div id="welcomeBack"></div>
 
-      <select id="stream" required>
-        <option value="">Select Your Stream</option>
-        <option value="Science">Science</option>
-        <option value="Commerce">Commerce</option>
-        <option value="Arts">Arts</option>
-        <option value="Other">Other / Interdisciplinary</option>
-      </select>
+  <h1>Welcome to 12kebaad</h1>
+  <p>Helps you decide your future ✨</p>
 
-      <select id="state" required>
-        <option value="">Select Your State or Union Territory</option>
-        <option value="Andhra Pradesh">Andhra Pradesh</option>
-        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-        <option value="Assam">Assam</option>
-        <option value="Bihar">Bihar</option>
-        <option value="Chhattisgarh">Chhattisgarh</option>
-        <option value="Goa">Goa</option>
-        <option value="Gujarat">Gujarat</option>
-        <option value="Haryana">Haryana</option>
-        <option value="Himachal Pradesh">Himachal Pradesh</option>
-        <option value="Jharkhand">Jharkhand</option>
-        <option value="Karnataka">Karnataka</option>
-        <option value="Kerala">Kerala</option>
-        <option value="Madhya Pradesh">Madhya Pradesh</option>
-        <option value="Maharashtra">Maharashtra</option>
-        <option value="Manipur">Manipur</option>
-        <option value="Meghalaya">Meghalaya</option>
-        <option value="Mizoram">Mizoram</option>
-        <option value="Nagaland">Nagaland</option>
-        <option value="Odisha">Odisha</option>
-        <option value="Punjab">Punjab</option>
-        <option value="Rajasthan">Rajasthan</option>
-        <option value="Sikkim">Sikkim</option>
-        <option value="Tamil Nadu">Tamil Nadu</option>
-        <option value="Telangana">Telangana</option>
-        <option value="Tripura">Tripura</option>
-        <option value="Uttar Pradesh">Uttar Pradesh</option>
-        <option value="Uttarakhand">Uttarakhand</option>
-        <option value="West Bengal">West Bengal</option>
-        <option disabled>──────────────</option>
-        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-        <option value="Chandigarh">Chandigarh</option>
-        <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
-        <option value="Delhi">Delhi</option>
-        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-        <option value="Ladakh">Ladakh</option>
-        <option value="Lakshadweep">Lakshadweep</option>
-        <option value="Puducherry">Puducherry</option>
-      </select>
+  <form id="welcomeForm">
+    <input type="text" id="name" placeholder="Enter your name" required />
 
-      <button type="submit">Next →</button>
-    </form>
+    <select id="stream" required>
+      <option value="" disabled selected>Select your stream</option>
+      <option value="Science">Science</option>
+      <option value="Commerce">Commerce</option>
+      <option value="Arts">Arts</option>
+      <option value="Other">Other</option>
+    </select>
 
-    <footer>© 2025 12kebaad | Designed by Pushkar Verma</footer>
-  </div>
+    <select id="state" required>
+      <option value="" disabled selected>Select your State / UT</option>
+      <option value="All India">🌍 All India</option>
+
+      <optgroup label="States">
+        <option>Andhra Pradesh</option><option>Arunachal Pradesh</option>
+        <option>Assam</option><option>Bihar</option><option>Chhattisgarh</option>
+        <option>Goa</option><option>Gujarat</option><option>Haryana</option>
+        <option>Himachal Pradesh</option><option>Jharkhand</option>
+        <option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option>
+        <option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option>
+        <option>Mizoram</option><option>Nagaland</option><option>Odisha</option>
+        <option>Punjab</option><option>Rajasthan</option><option>Sikkim</option>
+        <option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option>
+        <option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option>
+      </optgroup>
+
+      <optgroup label="Union Territories">
+        <option>Andaman and Nicobar Islands</option>
+        <option>Chandigarh</option>
+        <option>Dadra and Nagar Haveli and Daman and Diu</option>
+        <option>Delhi</option>
+        <option>Jammu and Kashmir</option>
+        <option>Ladakh</option>
+        <option>Lakshadweep</option>
+        <option>Puducherry</option>
+      </optgroup>
+    </select>
+
+    <button type="submit">Continue →</button>
+    <button type="button" id="clearData">🧹 Clear My Data</button>
+  </form>
 
   <script>
-    document.getElementById('welcomeForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const mobile = document.getElementById('mobile').value.trim();
-      const stream = document.getElementById('stream').value;
-      const state = document.getElementById('state').value;
+    const form = document.getElementById("welcomeForm");
+    const nameInput = document.getElementById("name");
+    const streamSelect = document.getElementById("stream");
+    const stateSelect = document.getElementById("state");
+    const popup = document.getElementById("welcomeBack");
+    const clearBtn = document.getElementById("clearData");
 
-      if (!name || !mobile || !stream || !state) {
-        alert("Please fill all fields correctly.");
-        return;
+    // Load saved data
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedName = localStorage.getItem("userName");
+      const savedStream = localStorage.getItem("userStream");
+      const savedState = localStorage.getItem("userState");
+
+      if (savedName) nameInput.value = savedName;
+      if (savedStream) streamSelect.value = savedStream;
+      if (savedState) stateSelect.value = savedState;
+
+      if (savedName && savedStream && savedState) {
+        popup.innerHTML = `👋 Welcome back, <b>${savedName}</b>!`;
+        popup.style.display = "block";
+        setTimeout(() => { popup.style.opacity = 1; }, 100);
+
+        setTimeout(() => {
+          popup.style.animation = "fadeOutPopup 0.8s forwards";
+          setTimeout(() => {
+            window.location.href = `courses.html?name=${encodeURIComponent(savedName)}&stream=${encodeURIComponent(savedStream)}&state=${encodeURIComponent(savedState)}`;
+          }, 800);
+        }, 3000);
       }
+    });
 
-      const url = `courses.html?name=${encodeURIComponent(name)}&mobile=${encodeURIComponent(mobile)}&stream=${encodeURIComponent(stream)}&state=${encodeURIComponent(state)}`;
-      window.location.href = url;
+    // Handle form submission
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = nameInput.value.trim();
+      const stream = streamSelect.value;
+      const state = stateSelect.value;
+
+      localStorage.setItem("userName", name);
+      localStorage.setItem("userStream", stream);
+      localStorage.setItem("userState", state);
+
+      window.location.href = `courses.html?name=${encodeURIComponent(name)}&stream=${encodeURIComponent(stream)}&state=${encodeURIComponent(state)}`;
+    });
+
+    // Clear data
+    clearBtn.addEventListener("click", () => {
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userStream");
+      localStorage.removeItem("userState");
+      alert("✅ Your saved details have been cleared!");
+      window.location.reload();
     });
   </script>
 </body>
-</html></html></html></html></html></html>
+</html></html></html></html></html></html></html>
