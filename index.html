@@ -1,13 +1,15 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome – 12kebaad</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+  <!-- Header Section -->
   <header>
     <div class="container header-inner">
       <a class="brand" href="index.html">12kebaad</a>
@@ -19,15 +21,16 @@
     </div>
   </header>
 
+  <!-- Welcome Section -->
   <main class="welcome">
     <h1>Welcome to 12kebaad</h1>
     <p>Helps you to decide your future — explore courses and colleges that match your interests and stream.</p>
 
-    <form id="welcomeForm">
+    <form id="welcomeForm" class="form-box">
       <input type="text" id="name" name="name" placeholder="Enter your full name" required>
       <input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" maxlength="10" required>
 
-      <label for="stream" style="display:block;text-align:left;margin-top:10px;font-weight:500;">Select Stream</label>
+      <label for="stream">Select Stream</label>
       <select id="stream" name="stream" required>
         <option value="">-- Select Stream --</option>
         <option value="Science">Science</option>
@@ -36,7 +39,7 @@
         <option value="Vocational">Vocational / Interdisciplinary</option>
       </select>
 
-      <label for="state" style="display:block;text-align:left;margin-top:10px;font-weight:500;">Select State / Union Territory</label>
+      <label for="state">Select State / Union Territory</label>
       <select id="state" name="state" required>
         <option value="">-- Select State / UT --</option>
         <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -80,18 +83,20 @@
     </form>
   </main>
 
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
       <small>© <span id="year"></span> 12kebaad • Helps you to decide your future</small>
     </div>
   </footer>
 
+  <!-- JavaScript -->
   <script>
-    // Set footer year
+    // 🕒 Automatically update footer year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Handle form submission
-    document.getElementById("welcomeForm").addEventListener("submit", (e) => {
+    // 🚀 Handle form submission
+    document.getElementById("welcomeForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
       const name = document.getElementById("name").value.trim();
@@ -100,200 +105,20 @@
       const state = document.getElementById("state").value;
 
       if (!name || !mobile || !stream || !state) {
-        alert("Please fill in all fields before continuing.");
+        alert("⚠️ Please fill all fields before continuing.");
         return;
       }
 
-      // Redirect to courses page with query parameters
-      window.location.href = `courses.html?name=${encodeURIComponent(name)}&mobile=${encodeURIComponent(mobile)}&stream=${encodeURIComponent(stream)}&state=${encodeURIComponent(state)}`;
+      // Redirect to courses page with user input as query parameters
+      const query = new URLSearchParams({
+        name: name,
+        mobile: mobile,
+        stream: stream,
+        state: state
+      }).toString();
+
+      window.location.href = "courses.html?" + query;
     });
   </script>
 </body>
-</html> html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome — 12kebaad</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    body {
-      background: linear-gradient(135deg, #2563eb, #6d28d9);
-      color: #fff;
-      font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      background: rgba(255,255,255,0.15);
-      padding: 1rem 0;
-      text-align: center;
-      backdrop-filter: blur(8px);
-    }
-    header h1 {
-      font-weight: 600;
-      margin: 0;
-    }
-    main {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-    }
-    .welcome-card {
-      background: #fff;
-      color: #333;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      padding: 2rem 2.5rem;
-      width: 100%;
-      max-width: 550px;
-      text-align: center;
-    }
-    .welcome-card h2 {
-      color: #1e3a8a;
-      margin-bottom: 1rem;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    label {
-      font-weight: 500;
-      text-align: left;
-    }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-    button {
-      background: linear-gradient(90deg,#2563eb,#6d28d9);
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    button:hover {
-      transform: translateY(-2px);
-    }
-    footer {
-      background: rgba(255,255,255,0.15);
-      text-align: center;
-      padding: 0.8rem;
-      font-size: 0.9rem;
-      backdrop-filter: blur(6px);
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>12kebaad</h1>
-    <p>Helps you to decide your future</p>
-  </header>
-
-  <main>
-    <div class="welcome-card">
-      <h2>Welcome, Student!</h2>
-      <p>Please enter your details to explore your future path.</p>
-
-      <form id="welcomeForm" onsubmit="goToCourses(event)">
-        <div>
-          <label for="name">Full Name</label>
-          <input type="text" id="name" name="name" placeholder="Enter your name" required />
-        </div>
-        <div>
-          <label for="mobile">Mobile Number</label>
-          <input type="tel" id="mobile" name="mobile" placeholder="Enter your number" pattern="[0-9]{10}" required />
-        </div>
-        <div>
-          <label for="stream">Select Stream</label>
-          <select id="stream" name="stream" required>
-            <option value="">-- Select Stream --</option>
-            <option value="Science">Science</option>
-            <option value="Commerce">Commerce</option>
-            <option value="Arts">Arts / Humanities</option>
-            <option value="Vocational">Vocational</option>
-            <option value="Interdisciplinary">Interdisciplinary</option>
-          </select>
-        </div>
-        <div>
-          <label for="state">Select State / Union Territory</label>
-          <select id="state" name="state" required>
-            <option value="">-- Select State / UT --</option>
-            <option value="Andhra Pradesh">Andhra Pradesh</option>
-            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-            <option value="Assam">Assam</option>
-            <option value="Bihar">Bihar</option>
-            <option value="Chhattisgarh">Chhattisgarh</option>
-            <option value="Delhi">Delhi</option>
-            <option value="Goa">Goa</option>
-            <option value="Gujarat">Gujarat</option>
-            <option value="Haryana">Haryana</option>
-            <option value="Himachal Pradesh">Himachal Pradesh</option>
-            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-            <option value="Jharkhand">Jharkhand</option>
-            <option value="Karnataka">Karnataka</option>
-            <option value="Kerala">Kerala</option>
-            <option value="Madhya Pradesh">Madhya Pradesh</option>
-            <option value="Maharashtra">Maharashtra</option>
-            <option value="Manipur">Manipur</option>
-            <option value="Meghalaya">Meghalaya</option>
-            <option value="Mizoram">Mizoram</option>
-            <option value="Nagaland">Nagaland</option>
-            <option value="Odisha">Odisha</option>
-            <option value="Punjab">Punjab</option>
-            <option value="Rajasthan">Rajasthan</option>
-            <option value="Sikkim">Sikkim</option>
-            <option value="Tamil Nadu">Tamil Nadu</option>
-            <option value="Telangana">Telangana</option>
-            <option value="Tripura">Tripura</option>
-            <option value="Uttar Pradesh">Uttar Pradesh</option>
-            <option value="Uttarakhand">Uttarakhand</option>
-            <option value="West Bengal">West Bengal</option>
-            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-            <option value="Chandigarh">Chandigarh</option>
-            <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
-            <option value="Lakshadweep">Lakshadweep</option>
-            <option value="Puducherry">Puducherry</option>
-            <option value="Ladakh">Ladakh</option>
-          </select>
-        </div>
-
-        <button type="submit">Get Started</button>
-      </form>
-    </div>
-  </main>
-
-  <footer>
-    <small>© <span id="year"></span> 12kebaad • Helps you to decide your future</small>
-  </footer>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    function goToCourses(e) {
-      e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const mobile = document.getElementById('mobile').value.trim();
-      const stream = document.getElementById('stream').value;
-      const state = document.getElementById('state').value;
-
-      if (name && mobile && stream && state) {
-        window.location.href = `courses.html?name=${encodeURIComponent(name)}&mobile=${encodeURIComponent(mobile)}&stream=${encodeURIComponent(stream)}&state=${encodeURIComponent(state)}`;
-      } else {
-        alert("Please fill all the details!");
-      }
-    }
-  </script>
-</body>
-</html></html></html>
+</html></html></html></html>
