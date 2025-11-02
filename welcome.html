@@ -1,148 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome | 12kebaad</title>
-  <link rel="icon" type="image/png" href="https://collagefinder.github.io/12kebaad/Favicon.PNG">
-
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f9f9fb;
-      margin: 0;
-      padding: 0;
-      color: #222;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    header {
-      background-color: #002b5c;
-      color: white;
-      text-align: center;
-      padding: 20px 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.9em;
-    }
-
-    .tagline {
-      font-size: 0.9em;
-      color: #b0d0ff;
-    }
-
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 30px 15px;
-    }
-
-    .form-container {
-      background: white;
-      padding: 30px 40px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 450px;
-      text-align: center;
-    }
-
-    .form-container h2 {
-      color: #002b5c;
-      margin-bottom: 15px;
-      font-size: 1.5em;
-    }
-
-    .personal-message {
-      color: #004aad;
-      font-weight: 600;
-      margin-bottom: 20px;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    label {
-      display: block;
-      text-align: left;
-      margin-bottom: 5px;
-      font-weight: 600;
-      color: #002b5c;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1em;
-    }
-
-    button {
-      width: 100%;
-      background-color: #002b5c;
-      color: white;
-      border: none;
-      padding: 12px 0;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s;
-      font-size: 1em;
-    }
-
-    button:hover {
-      background-color: #004aad;
-    }
-
-    footer {
-      background-color: #002b5c;
-      color: white;
-      text-align: center;
-      padding: 15px 0;
-      font-size: 0.9em;
-      margin-top: auto;
-    }
-
-    @media (max-width: 600px) {
-      .form-container {
-        padding: 20px;
-      }
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Welcome — 12kebaad</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="Favicon.PNG" type="image/png">
 </head>
-
 <body>
-  <header>
-    <h1>12kebaad</h1>
-    <p class="tagline">Helps you decide your future</p>
+  <header class="site-header small">
+    <div class="container">
+      <h1 class="brand">12kebaad</h1>
+      <p class="tagline">Helping you choose your future</p>
+    </div>
   </header>
 
-  <main>
-    <div class="form-container">
-      <h2>Welcome, Student 👋</h2>
-      <p id="personal-message" class="personal-message" style="display: none;"></p>
-
+  <main class="main container">
+    <section class="form-panel">
+      <h2 id="welcomeTitle">Welcome 👋</h2>
+      <p id="personalMsg" class="personal" style="display:none;"></p>
       <form id="welcomeForm">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" placeholder="Enter your name" required>
+        <label>Full Name</label>
+        <input type="text" id="name" required placeholder="Enter full name" />
 
-        <label for="phone">Mobile Number</label>
-        <input type="tel" id="phone" placeholder="Enter your mobile number" required>
+        <label>Mobile Number</label>
+        <input type="tel" id="phone" pattern="[0-9]{10}" required placeholder="Enter 10-digit mobile" />
 
-        <label for="stream">Choose Your Stream</label>
+        <label>Stream</label>
         <select id="stream" required>
           <option value="">Select Stream</option>
           <option value="Science">Science</option>
@@ -151,93 +35,79 @@
           <option value="Professional/Others">Professional / Others</option>
         </select>
 
-        <label for="state">Select Your State / Union Territory</label>
+        <label>State / Union Territory</label>
         <select id="state" required>
           <option value="">Select State / UT</option>
           <option value="All India">All India</option>
-          <option value="Andhra Pradesh">Andhra Pradesh</option>
-          <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-          <option value="Assam">Assam</option>
-          <option value="Bihar">Bihar</option>
-          <option value="Chandigarh">Chandigarh</option>
-          <option value="Chhattisgarh">Chhattisgarh</option>
-          <option value="Delhi">Delhi</option>
-          <option value="Goa">Goa</option>
-          <option value="Gujarat">Gujarat</option>
-          <option value="Haryana">Haryana</option>
-          <option value="Himachal Pradesh">Himachal Pradesh</option>
-          <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-          <option value="Jharkhand">Jharkhand</option>
-          <option value="Karnataka">Karnataka</option>
-          <option value="Kerala">Kerala</option>
-          <option value="Madhya Pradesh">Madhya Pradesh</option>
-          <option value="Maharashtra">Maharashtra</option>
-          <option value="Manipur">Manipur</option>
-          <option value="Meghalaya">Meghalaya</option>
-          <option value="Mizoram">Mizoram</option>
-          <option value="Nagaland">Nagaland</option>
-          <option value="Odisha">Odisha</option>
-          <option value="Punjab">Punjab</option>
-          <option value="Rajasthan">Rajasthan</option>
-          <option value="Sikkim">Sikkim</option>
-          <option value="Tamil Nadu">Tamil Nadu</option>
-          <option value="Telangana">Telangana</option>
-          <option value="Tripura">Tripura</option>
-          <option value="Uttar Pradesh">Uttar Pradesh</option>
-          <option value="Uttarakhand">Uttarakhand</option>
-          <option value="West Bengal">West Bengal</option>
-          <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-          <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
-          <option value="Lakshadweep">Lakshadweep</option>
-          <option value="Puducherry">Puducherry</option>
-          <option value="Ladakh">Ladakh</option>
+          <option>Andhra Pradesh</option>
+          <option>Arunachal Pradesh</option>
+          <option>Assam</option>
+          <option>Bihar</option>
+          <option>Chandigarh</option>
+          <option>Chhattisgarh</option>
+          <option>Delhi</option>
+          <option>Goa</option>
+          <option>Gujarat</option>
+          <option>Haryana</option>
+          <option>Himachal Pradesh</option>
+          <option>Jammu and Kashmir</option>
+          <option>Jharkhand</option>
+          <option>Karnataka</option>
+          <option>Kerala</option>
+          <option>Madhya Pradesh</option>
+          <option>Maharashtra</option>
+          <option>Manipur</option>
+          <option>Meghalaya</option>
+          <option>Mizoram</option>
+          <option>Nagaland</option>
+          <option>Odisha</option>
+          <option>Punjab</option>
+          <option>Rajasthan</option>
+          <option>Sikkim</option>
+          <option>Tamil Nadu</option>
+          <option>Telangana</option>
+          <option>Tripura</option>
+          <option>Uttar Pradesh</option>
+          <option>Uttarakhand</option>
+          <option>West Bengal</option>
+          <option>Andaman and Nicobar Islands</option>
+          <option>Dadra and Nagar Haveli and Daman and Diu</option>
+          <option>Lakshadweep</option>
+          <option>Puducherry</option>
+          <option>Ladakh</option>
         </select>
 
         <button type="submit">Continue</button>
       </form>
-    </div>
+    </section>
   </main>
 
-  <footer>
-    <p>© 2025 12kebaad | Founder: Pushkar Verma | Contact: 12kebaad.team@gmail.com</p>
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 12kebaad | Contact: 12kebaad.team@gmail.com</p>
+    </div>
   </footer>
 
-  <script>
-    const form = document.getElementById("welcomeForm");
-    const message = document.getElementById("personal-message");
+<script>
+window.addEventListener('load', () => {
+  const name = localStorage.getItem('name');
+  const phone = localStorage.getItem('phone');
+  const stream = localStorage.getItem('stream');
+  const state = localStorage.getItem('state');
+  if(name){ document.getElementById('name').value=name; document.getElementById('personalMsg').textContent=`Welcome back, ${name}! Ready to explore your future again?`; document.getElementById('personalMsg').style.display='block'; }
+  if(phone) document.getElementById('phone').value=phone;
+  if(stream) document.getElementById('stream').value=stream;
+  if(state) document.getElementById('state').value=state;
+});
 
-    // Auto-fill and greet if user data exists
-    window.onload = () => {
-      const savedName = localStorage.getItem("name");
-      const savedPhone = localStorage.getItem("phone");
-      const savedStream = localStorage.getItem("stream");
-      const savedState = localStorage.getItem("state");
-
-      if (savedName) {
-        document.getElementById("name").value = savedName;
-        message.textContent = `Welcome back, ${savedName}! 👋 Ready to explore your future again?`;
-        message.style.display = "block";
-      }
-      if (savedPhone) document.getElementById("phone").value = savedPhone;
-      if (savedStream) document.getElementById("stream").value = savedStream;
-      if (savedState) document.getElementById("state").value = savedState;
-    };
-
-    // Save and redirect
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const name = document.getElementById("name").value;
-      const phone = document.getElementById("phone").value;
-      const stream = document.getElementById("stream").value;
-      const state = document.getElementById("state").value;
-
-      localStorage.setItem("name", name);
-      localStorage.setItem("phone", phone);
-      localStorage.setItem("stream", stream);
-      localStorage.setItem("state", state);
-
-      window.location.href = "courses.html";
-    });
-  </script>
+document.getElementById('welcomeForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  localStorage.setItem('name', document.getElementById('name').value.trim());
+  localStorage.setItem('phone', document.getElementById('phone').value.trim());
+  localStorage.setItem('stream', document.getElementById('stream').value);
+  localStorage.setItem('state', document.getElementById('state').value);
+  window.location.href='courses.html';
+});
+</script>
 </body>
-</html>
+</html></html>
