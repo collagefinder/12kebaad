@@ -1,248 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Colleges | 12kebaad</title>
-
-  <link rel="icon" type="image/png" href="Favicon.PNG" />
-  <link rel="apple-touch-icon" href="Favicon.PNG" />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>12kebaad | Colleges</title>
+  <link rel="icon" type="image/png" href="https://collagefinder.github.io/12kebaad/Favicon.PNG">
+  <link rel="stylesheet" href="style.css">
   <style>
+    /* Inline essential styles */
     body {
+      font-family: 'Poppins', sans-serif;
       margin: 0;
-      background: #f8f9fb;
+      padding: 0;
+      background-color: #f9f9fb;
       color: #222;
-      font-family: "Poppins", sans-serif;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     header {
-      background: #004aad;
+      background-color: #002b5c;
       color: white;
-      padding: 20px;
-      border-radius: 0 0 15px 15px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-      animation: slideIn 1s ease;
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h1 span.wave {
-      display: inline-block;
-      animation: wave 1.5s infinite;
-      transform-origin: 70% 70%;
-    }
-
-    @keyframes wave {
-      0% { transform: rotate(0deg); }
-      10% { transform: rotate(14deg); }
-      20% { transform: rotate(-8deg); }
-      30% { transform: rotate(14deg); }
-      40% { transform: rotate(-4deg); }
-      50% { transform: rotate(10deg); }
-      60%, 100% { transform: rotate(0deg); }
-    }
-
-    .colleges-container {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-      animation: fadeUp 0.7s ease;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .college-card {
-      background: white;
-      padding: 25px;
-      margin: 20px 0;
-      border-radius: 12px;
-      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
-      text-align: left;
-    }
-
-    .college-card h3 {
-      color: #004aad;
-      margin-bottom: 10px;
-    }
-
-    .college-card p {
-      color: #555;
-      margin-bottom: 10px;
-      line-height: 1.5;
-    }
-
-    footer {
-      background: #004aad;
-      color: white;
-      padding: 15px;
-      margin-top: 40px;
       text-align: center;
+      padding: 15px 0;
     }
 
-    .site-logo {
-      width: 38px;
-      vertical-align: middle;
-      margin-right: 8px;
+    header h1 {
+      margin: 0;
+      font-size: 1.8em;
+      letter-spacing: 1px;
     }
 
     .tagline {
-      font-size: 14px;
-      margin-top: -8px;
-      opacity: 0.8;
+      font-size: 0.9em;
+      color: #b0d0ff;
+    }
+
+    main {
+      flex: 1;
+      padding: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #002b5c;
+      margin-bottom: 25px;
+    }
+
+    .college-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    .college-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .college-card a {
+      display: inline-block;
+      margin-top: 8px;
+      color: #004aad;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    footer {
+      background-color: #002b5c;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      .college-card {
+        padding: 12px;
+      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <img src="Favicon.PNG" alt="12kebaad Logo" class="site-logo" />
     <h1>12kebaad</h1>
-    <p class="tagline">Guiding you after Class 12</p>
+    <p class="tagline">Helps you decide your future</p>
   </header>
 
-  <div class="colleges-container">
-    <h1 id="greeting"></h1>
-    <p id="info-text"></p>
-
-    <div id="collegeList"></div>
-  </div>
+  <main id="college-list-container">
+    <h1>Colleges Matching Your Stream</h1>
+    <div id="college-list">Loading colleges...</div>
+  </main>
 
   <footer>
     <p>© 2025 12kebaad | Founder: Pushkar Verma | Contact: 12kebaad.team@gmail.com</p>
   </footer>
 
   <script>
-    const name = localStorage.getItem("name");
-    const stream = localStorage.getItem("stream");
-    const state = localStorage.getItem("state");
+    // Get selected stream from localStorage
+    const selectedStream = localStorage.getItem("stream");
+    const container = document.getElementById("college-list");
 
-    const greeting = document.getElementById("greeting");
-    greeting.innerHTML = `Hey ${name || "Student"} <span class="wave">👋</span>`;
-    document.getElementById("info-text").textContent = 
-      `Here are some top colleges for ${stream} stream in ${state}.`;
+    if (selectedStream) {
+      fetch("Chandigarh_Colleges_By_Stream.html")
+        .then(response => response.text())
+        .then(data => {
+          const temp = document.createElement("div");
+          temp.innerHTML = data;
 
-    const collegeList = document.getElementById("collegeList");
-
-    const colleges = {
-      Science: {
-        "All India": [
-          "IIT Delhi – Delhi",
-          "IIT Bombay – Mumbai",
-          "BITS Pilani – Rajasthan",
-          "VIT – Vellore",
-          "SRM Institute – Chennai"
-        ],
-        "Delhi": [
-          "Hansraj College",
-          "Miranda House",
-          "Hindu College",
-          "Deen Dayal Upadhyaya College"
-        ],
-        "Maharashtra": [
-          "Fergusson College – Pune",
-          "St. Xavier’s College – Mumbai",
-          "MIT-WPU – Pune"
-        ],
-        "Uttar Pradesh": [
-          "Amity University – Noida",
-          "IET Lucknow",
-          "SRM NCR Campus"
-        ]
-      },
-      Commerce: {
-        "All India": [
-          "Shri Ram College of Commerce – Delhi",
-          "Christ University – Bangalore",
-          "Loyola College – Chennai",
-          "Narsee Monjee College – Mumbai",
-          "Symbiosis College – Pune"
-        ],
-        "Delhi": [
-          "Shaheed Bhagat Singh College",
-          "SRCC",
-          "Hansraj College"
-        ],
-        "Maharashtra": [
-          "NM College – Mumbai",
-          "H.R. College of Commerce",
-          "Symbiosis – Pune"
-        ],
-        "Uttar Pradesh": [
-          "Amity University – Noida",
-          "IMS Ghaziabad",
-          "Galgotias University"
-        ]
-      },
-      Arts: {
-        "All India": [
-          "Lady Shri Ram College – Delhi",
-          "St. Xavier’s College – Mumbai",
-          "Presidency University – Kolkata",
-          "Miranda House – Delhi",
-          "Christ University – Bangalore"
-        ],
-        "Delhi": [
-          "Lady Shri Ram College",
-          "Hindu College",
-          "Ramjas College"
-        ],
-        "Maharashtra": [
-          "St. Xavier’s College – Mumbai",
-          "Sophia College for Women – Mumbai"
-        ],
-        "Uttar Pradesh": [
-          "Amity University – Lucknow",
-          "Allahabad University"
-        ]
-      },
-      Vocational: {
-        "All India": [
-          "Lovely Professional University – Punjab",
-          "YMCA Institute – Faridabad",
-          "MIT Polytechnic – Pune",
-          "IHM Delhi",
-          "Pearl Academy – Delhi"
-        ],
-        "Delhi": [
-          "IHM Pusa",
-          "Pearl Academy",
-          "Delhi Skill & Entrepreneurship University"
-        ],
-        "Maharashtra": [
-          "MIT Polytechnic – Pune",
-          "Yashwantrao Chavan Polytechnic – Nashik"
-        ],
-        "Uttar Pradesh": [
-          "IHM Lucknow",
-          "Integral University – Lucknow"
-        ]
-      }
-    };
-
-    const streamData = colleges[stream] || {};
-    const selectedColleges = streamData[state] || streamData["All India"] || [];
-
-    if (selectedColleges.length === 0) {
-      collegeList.innerHTML = `<p style="color:#777;">No colleges found for your selection. Try 'All India'.</p>`;
+          // Match section by stream ID
+          const section = temp.querySelector(`#${selectedStream.toLowerCase()}`);
+          if (section) {
+            container.innerHTML = section.innerHTML;
+          } else {
+            container.innerHTML = `<p>No colleges found for stream: <strong>${selectedStream}</strong>.</p>`;
+          }
+        })
+        .catch(err => {
+          console.error("Error loading college data:", err);
+          container.innerHTML = "<p>Unable to load college information right now.</p>";
+        });
     } else {
-      selectedColleges.forEach((college) => {
-        const card = document.createElement("div");
-        card.classList.add("college-card");
-        card.innerHTML = `
-          <h3>${college}</h3>
-          <p>Known for excellence in ${stream} education and student life.</p>
-        `;
-        collegeList.appendChild(card);
-      });
+      container.innerHTML = "<p>Please go back and select your stream first.</p>";
     }
   </script>
 </body>
-</html></html></html>
+</html></html></html></html>
