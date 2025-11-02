@@ -1,0 +1,101 @@
+Name,State,Stream,Type,Fees (₹ per year),Location,Cutoff (%),Admission Based
+IIT Bombay,Maharashtra,"Engineering,Science",Government,200000,Mumbai,95-99,JEE Advanced
+IIT Delhi,Delhi,"Engineering,Science",Government,200000,New Delhi,95-99,JEE Advanced
+IIT Madras,Tamil Nadu,"Engineering,Science",Government,200000,Chennai,95-99,JEE Advanced
+IIT Kanpur,Uttar Pradesh,"Engineering,Science",Government,200000,Kanpur,94-98,JEE Advanced
+IIT Kharagpur,West Bengal,"Engineering,Science",Government,200000,Kharagpur,94-98,JEE Advanced
+IIT Roorkee,Uttarakhand,"Engineering,Science",Government,200000,Roorkee,94-98,JEE Advanced
+IIT Guwahati,Assam,"Engineering,Science",Government,200000,Guwahati,93-97,JEE Advanced
+IIT Hyderabad,Telangana,"Engineering,Science",Government,200000,Hyderabad,94-98,JEE Advanced
+IISc Bangalore,Karnataka,"Science,Research",Government,150000,Bengaluru,93-97,Entrance/Interview
+AIIMS Delhi,Delhi,Medical,Government,5000,New Delhi,99-100,NEET
+Christian Medical College Vellore,Tamil Nadu,Medical,Private,150000,Vellore,94-98,NEET
+JIPMER Puducherry,Puducherry,Medical,Government,8000,Puducherry,95-99,NEET
+All India Institute of Medical Sciences Rishikesh,Uttarakhand,Medical,Government,8000,Rishikesh,92-97,NEET
+NIT Trichy,Tamil Nadu,Engineering,Government,180000,Tiruchirappalli,88-92,JEE Main/Advanced
+NIT Surathkal,Karnataka,Engineering,Government,180000,Surathkal,87-91,JEE Main/Advanced
+NIT Warangal,Telangana,Engineering,Government,180000,Warangal,86-91,JEE Main/Advanced
+BITS Pilani,Rajasthan,"Engineering,Science",Private,200000,Pilani,90-95,BITSAT
+IIM Ahmedabad,Gujarat,Management,Government,2500000,Ahmedabad,98-100,CAT/PI
+IIM Bangalore,Karnataka,Management,Government,2500000,Bengaluru,98-100,CAT/PI
+IIM Calcutta,West Bengal,Management,Government,2500000,Kolkata,98-100,CAT/PI
+XLRI Jamshedpur,Jharkhand,Management,Private,1000000,Jamshedpur,95-98,XAT/PI
+Delhi University - SRCC,Delhi,Commerce,Government,40000,New Delhi,90-95,CUET
+Lady Shri Ram College (DU),Delhi,Arts,Government,25000,New Delhi,88-92,CUET
+St. Stephen's College (DU),Delhi,Arts,Government,30000,New Delhi,89-93,CUET
+Jawaharlal Nehru University,Delhi,"Arts,Science",Government,10000,New Delhi,80-88,CUET
+Christ University,Karnataka,"Commerce,Arts",Private,160000,Bengaluru,80-88,University Entrance
+Manipal Academy of Higher Education,Karnataka,Multi,Private,180000,Manipal,78-85,Entrance
+VIT Vellore,Tamil Nadu,Engineering,Private,160000,Vellore,85-90,VITEEE
+SRM Institute of Science and Technology,Tamil Nadu,Engineering,Private,150000,Chennai,82-88,SRMJEEE
+Amity University Noida,Uttar Pradesh,Multi,Private,120000,Noida,70-80,Entrance/Direct
+Lovely Professional University,Punjab,Multi,Private,80000,Jalandhar,65-75,Entrance
+Jadavpur University,West Bengal,"Engineering,Arts",Government,30000,Kolkata,82-90,Entrance/Merit
+Banaras Hindu University (BHU),Uttar Pradesh,Multi,Government,20000,Varanasi,80-88,Entrance
+Aligarh Muslim University (AMU),Uttar Pradesh,Multi,Government,18000,Aligarh,70-80,Entrance
+University of Calcutta,West Bengal,"Arts,Science",Government,15000,Kolkata,70-80,CUET/Merit
+University of Mumbai,Maharashtra,Multi,Government,25000,Mumbai,65-75,Merit
+Savitribai Phule Pune University,Maharashtra,Multi,Government,20000,Pune,65-75,Merit
+Panjab University,Chandigarh,Multi,Government,30000,Chandigarh,75-85,CUET
+Chandigarh University,Punjab,Multi,Private,90000,Mohali,72-80,Entrance/Direct
+Punjab Engineering College (PEC),Chandigarh,Engineering,Government,70000,Chandigarh,75-82,State Entrance
+Government Medical College Chandigarh,Chandigarh,Medical,Government,10000,Chandigarh,90-95,NEET
+DTU (Delhi Technological University),Delhi,Engineering,Government,100000,New Delhi,82-88,JAC/JEE
+Jamia Millia Islamia,Delhi,"Arts,Science",Government,20000,New Delhi,75-85,CUET
+Ambedkar University Delhi,Delhi,Arts,Government,15000,New Delhi,70-80,Entrance/CUET
+Annamalai University,Tamil Nadu,Multi,Government,22000,Annamalai,60-70,Entrance
+Anna University,Tamil Nadu,Engineering,Government,60000,Chennai,80-88,TNEA/State
+Madras Medical College,Tamil Nadu,Medical,Government,20000,Chennai,92-96,NEET
+SRCC (Commerce) duplicate avoided - using 'Narsee Monjee Institute' instead,Maharashtra,Commerce,Private,120000,Mumbai,78-85,Entrance
+Narsee Monjee Institute of Management Studies (NMIMS),Maharashtra,"Management,Commerce",Private,120000,Mumbai,78-85,Entrance
+Tata Institute of Social Sciences (TISS),Maharashtra,Social Sciences,Deemed,150000,Mumbai,85-92,TISSNET
+National Law School of India University (NLSIU),Karnataka,Law,Government,100000,Bengaluru,92-96,CLAT
+"National Law University, Jodhpur",Rajasthan,Law,Government,90000,Jodhpur,88-94,CLAT
+NIT Rourkela,Odisha,Engineering,Government,180000,Rourkela,82-88,JEE Main/Advanced
+KIIT Bhubaneswar,Odisha,Multi,Private,100000,Bhubaneswar,70-80,Entrance
+Xavier University Bhubaneswar,Odisha,Multi,Private,75000,Bhubaneswar,65-74,Entrance
+IIT Bhubaneswar,Odisha,Engineering,Government,180000,Bhubaneswar,88-92,JEE Advanced
+IIT(ISM) Dhanbad,Jharkhand,"Engineering,Science",Government,180000,Dhanbad,86-90,JEE Advanced
+IIT(ISM) - alternative naming fixed,Jharkhand,Engineering,Government,180000,Dhanbad,86-90,JEE Advanced
+"National Institute of Technology, Jamshedpur",Jharkhand,Engineering,Government,140000,Jamshedpur,78-85,JEE Main/Advanced
+IIM Indore,Madhya Pradesh,Management,Government,2000000,Indore,97-99,CAT/PI
+IIM Kozhikode,Kerala,Management,Government,2000000,Kozhikode,96-99,CAT/PI
+Cochin University of Science and Technology (CUSAT),Kerala,"Engineering,Science",Government,50000,Kochi,72-80,CUSAT/Entrance
+University of Kerala,Kerala,Multi,Government,15000,Thiruvananthapuram,60-70,Merit/Entrance
+Mahindra University,Telangana,Multi,Private,100000,Hyderabad,70-78,Entrance
+Osmania University,Telangana,Multi,Government,16000,Hyderabad,62-72,Entrance
+University of Hyderabad,Telangana,"Arts,Science",Government,25000,Hyderabad,75-83,Entrance
+IIIT Hyderabad,Telangana,Engineering,Deemed,200000,Hyderabad,90-94,JEE/IIIT
+NALSAR University of Law,Telangana,Law,Government,90000,Hyderabad,88-95,CLAT
+Pune Institute of Computer Technology (PICT),Maharashtra,Engineering,Private,120000,Pune,80-86,Entrance
+Symbiosis International University,Maharashtra,Multi,Private,150000,Pune,78-85,SLAT/CUET
+Bangalore University,Karnataka,Multi,Government,15000,Bengaluru,60-70,Merit
+BMS College of Engineering,Karnataka,Engineering,Private,90000,Bengaluru,75-82,Entrance
+Ramaiah Institute of Technology (MSRIT),Karnataka,Engineering,Private,120000,Bengaluru,75-82,Entrance
+Manipal University (different campus),Karnataka,Multi,Private,180000,Manipal,78-85,Entrance
+Alagappa University,Tamil Nadu,"Arts,Science",Government,12000,Karaikudi,55-65,Merit
+Madurai Kamaraj University,Tamil Nadu,Multi,Government,14000,Madurai,55-65,Merit/Entrance
+Pondicherry University,Puducherry,Multi,Government,12000,Pondicherry,60-70,Entrance
+Andaman & Nicobar Islands - 'Andaman & Nicobar College' (using 'Andaman Nicobar College' as example),Andaman and Nicobar Islands,Multi,Government,10000,Port Blair,50-60,Merit
+Goa University,Goa,Multi,Government,12000,Goa,55-65,Merit
+NIT Goa,Goa,Engineering,Government,140000,Ponda,70-78,JEE Main/Advanced
+University of Jammu,Jammu and Kashmir,Multi,Government,15000,Jammu,55-65,Merit
+Central University of Kashmir,Jammu and Kashmir,Multi,Government,12000,Srinagar,50-60,Entrance
+University of Kashmir,Jammu and Kashmir,Multi,Government,14000,Srinagar,55-65,Entrance
+Govt. Medical College Srinagar,Jammu and Kashmir,Medical,Government,9000,Srinagar,85-92,NEET
+University of North Bengal,West Bengal,Multi,Government,12000,Siliguri,55-65,Merit
+Tezpur University,Assam,Multi,Government,12000,Tezpur,55-65,Entrance
+Dibrugarh University,Assam,Multi,Government,10000,Dibrugarh,50-60,Merit/Entrance
+"National Institute of Technology, Silchar",Assam,Engineering,Government,140000,Silchar,70-78,JEE Main/Advanced
+Gauhati University,Assam,Multi,Government,9000,Guwahati,50-60,Merit
+Nagaland University,Nagaland,Multi,Government,8000,Nagaland,45-55,Entrance
+Manipur University,Manipur,Multi,Government,9000,Imphal,50-60,Entrance
+Mizoram University,Mizoram,Multi,Government,9000,Aizawl,50-60,Entrance
+Tripura University,Tripura,Multi,Government,9000,Agartala,50-60,Entrance
+North-Eastern Hill University (NEHU),Meghalaya,Multi,Government,10000,Shillong,50-60,Entrance
+Assam Engineering College,Assam,Engineering,Government,30000,Guwahati,60-70,Entrance
+Central University of Tamil Nadu,Tamil Nadu,Multi,Government,12000,Tiruvarur,55-65,Entrance
+Dr. Babasaheb Ambedkar Marathwada University,Maharashtra,Multi,Government,12000,Aurangabad,55-65,Merit
+University of Mysore,Karnataka,Multi,Government,14000,Mysuru,60-70,Merit
+"National Institute of Fashion Technology, Mumbai",Maharashtra,Design,Government,120000,Mumbai,78-85,NIFT
+"National Institute of Design, Ahmedabad",Gujarat,Design,Government,110000,Ahmedabad,75-82,NID Entrance
