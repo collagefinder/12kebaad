@@ -1,221 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Courses | 12kebaad</title>
-
-  <link rel="icon" type="image/png" href="Favicon.PNG" />
-  <link rel="apple-touch-icon" href="Favicon.PNG" />
-  <link rel="stylesheet" href="style.css" />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>12kebaad | Courses</title>
+  <link rel="icon" type="image/png" href="https://collagefinder.github.io/12kebaad/Favicon.PNG">
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
-      background: #f8f9fb;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9f9fb;
+      margin: 0;
+      padding: 0;
       color: #222;
-      font-family: "Poppins", sans-serif;
-      text-align: center;
-      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    .header {
-      background: #004aad;
+    header {
+      background-color: #002b5c;
       color: white;
+      text-align: center;
+      padding: 15px 0;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8em;
+    }
+
+    .tagline {
+      font-size: 0.9em;
+      color: #b0d0ff;
+    }
+
+    main {
+      flex: 1;
+      max-width: 1000px;
+      margin: 0 auto;
       padding: 20px;
-      border-radius: 0 0 15px 15px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-      animation: slideIn 1s ease;
     }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h1 span.wave {
-      display: inline-block;
-      animation: wave 1.5s infinite;
-      transform-origin: 70% 70%;
-    }
-
-    @keyframes wave {
-      0% { transform: rotate(0deg); }
-      10% { transform: rotate(14deg); }
-      20% { transform: rotate(-8deg); }
-      30% { transform: rotate(14deg); }
-      40% { transform: rotate(-4deg); }
-      50% { transform: rotate(10deg); }
-      60%, 100% { transform: rotate(0deg); }
-    }
-
-    .courses-container {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
+    h1 {
+      text-align: center;
+      color: #002b5c;
     }
 
     .course-card {
       background: white;
-      padding: 25px;
-      margin: 20px 0;
-      border-radius: 12px;
-      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
-      text-align: left;
-      animation: fadeUp 0.6s ease;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .course-card h3 {
-      color: #004aad;
-      margin-bottom: 10px;
-    }
-
-    .course-card p {
-      color: #555;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px 20px;
       margin-bottom: 15px;
-      line-height: 1.5;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     }
 
-    .btn-view {
-      display: inline-block;
-      background: #004aad;
+    .course-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .course-card button {
+      background-color: #002b5c;
       color: white;
-      text-decoration: none;
-      padding: 10px 20px;
+      border: none;
+      padding: 10px 15px;
       border-radius: 6px;
-      transition: 0.3s;
+      cursor: pointer;
       font-weight: 600;
+      transition: background-color 0.3s;
     }
 
-    .btn-view:hover {
-      background: #005ef7;
-      transform: scale(1.05);
+    .course-card button:hover {
+      background-color: #004aad;
     }
 
     footer {
-      background: #004aad;
+      background-color: #002b5c;
       color: white;
-      width: 100%;
       text-align: center;
-      padding: 15px;
-      margin-top: 40px;
+      padding: 15px 0;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      .course-card {
+        padding: 12px;
+      }
     }
   </style>
-<link rel="icon" type="image/png" href="https://collagefinder.github.io/12kebaad/Favicon.PNG">
 </head>
 
 <body>
-  <header class="navbar">
-    <div class="logo-container">
-      <img src="Favicon.PNG" alt="12kebaad Logo" class="site-logo" />
-      <h1>12kebaad</h1>
-    </div>
+  <header>
+    <h1>12kebaad</h1>
     <p class="tagline">Helps you decide your future</p>
   </header>
 
-  <div class="header">
-    <h1 id="greeting"></h1>
-    <p id="subtext"></p>
-  </div>
-
-  <main class="courses-container" id="coursesContainer"></main>
+  <main>
+    <h1>Courses Available</h1>
+    <div id="course-list"></div>
+  </main>
 
   <footer>
-    <p>© 2025 12kebaad. All rights reserved.</p>
+    <p>© 2025 12kebaad | Founder: Pushkar Verma | Contact: 12kebaad.team@gmail.com</p>
   </footer>
 
   <script>
-    const name = localStorage.getItem("name");
-    const stream = localStorage.getItem("stream");
-    const state = localStorage.getItem("state");
+    // Get selected stream from localStorage
+    const selectedStream = localStorage.getItem("stream");
+    const courseList = document.getElementById("course-list");
 
-    // Personalized greeting
-    const greeting = document.getElementById("greeting");
-    greeting.innerHTML = `Hi ${name || "there"} <span class="wave">👋</span>`;
-    document.getElementById("subtext").textContent = `Here are the best courses and diplomas for your ${stream} stream.`;
-
-    const coursesContainer = document.getElementById("coursesContainer");
-
-    // Stream-specific courses
     const courses = {
-      Science: [
-        { title: "B.Sc. (Physics / Chemistry / Biology / Maths)", desc: "Undergraduate degree focusing on core science subjects." },
-        { title: "B.Tech / B.E.", desc: "Engineering programs in multiple disciplines." },
-        { title: "MBBS", desc: "Bachelor of Medicine, Bachelor of Surgery." },
-        { title: "BDS", desc: "Bachelor of Dental Surgery." },
-        { title: "BCA", desc: "Bachelor of Computer Applications." },
-        { title: "B.Pharm", desc: "Bachelor of Pharmacy." },
-        { title: "Nursing (B.Sc Nursing)", desc: "Course in nursing and health sciences." },
-        { title: "Biotechnology", desc: "Interdisciplinary science course combining biology and technology." },
-        { title: "Agriculture (B.Sc Agriculture)", desc: "Study of agricultural practices and food sciences." },
-        { title: "DMLT / Paramedical Diploma", desc: "Diploma in Medical Laboratory Technology and other paramedical fields." }
+      "science": [
+        "B.Sc in Physics", "B.Sc in Chemistry", "B.Sc in Biology", "B.Tech", "MBBS", "BDS", "BCA", "B.Pharm", "Nursing", "Biotechnology"
       ],
-      Commerce: [
-        { title: "B.Com / B.Com (Hons)", desc: "Undergraduate course in Commerce, Accounting, and Business." },
-        { title: "BBA / BBM", desc: "Bachelor of Business Administration or Management." },
-        { title: "CA (Chartered Accountancy)", desc: "Professional accounting qualification." },
-        { title: "CS (Company Secretary)", desc: "Corporate and legal professional course." },
-        { title: "CMA (Cost & Management Accounting)", desc: "Specialized course in cost accounting." },
-        { title: "BMS (Bachelor of Management Studies)", desc: "Focus on management and leadership training." },
-        { title: "BCA", desc: "Bachelor of Computer Applications (for business + tech fields)." },
-        { title: "Diploma in Banking and Finance", desc: "Career in banking, finance, and investment sectors." },
-        { title: "Digital Marketing Diploma", desc: "Hands-on marketing course focusing on online business." },
-        { title: "LLB (Law)", desc: "Integrated or regular law program open to all streams." }
+      "commerce": [
+        "B.Com", "BBA", "BMS", "CA (Chartered Accountancy)", "CMA (Cost Management Accounting)", "CS (Company Secretary)", "BCA", "MBA", "B.Com (Hons)"
       ],
-      Arts: [
-        { title: "BA (Humanities / Social Science / Psychology)", desc: "Bachelor of Arts in diverse humanities subjects." },
-        { title: "BFA (Fine Arts)", desc: "Bachelor of Fine Arts — painting, sculpture, design." },
-        { title: "B.Ed", desc: "Bachelor of Education (teaching career)." },
-        { title: "BJMC", desc: "Bachelor of Journalism and Mass Communication." },
-        { title: "BA (Political Science / History / English)", desc: "Specialized degree programs in liberal arts." },
-        { title: "Fashion Designing", desc: "Courses in textile and apparel design." },
-        { title: "Hotel Management", desc: "Hospitality, tourism, and management courses." },
-        { title: "LLB (Law)", desc: "Bachelor of Law degree for arts students too." },
-        { title: "Foreign Languages", desc: "Certificate and degree courses in global languages." },
-        { title: "Social Work (BSW)", desc: "Bachelor of Social Work and related diplomas." }
+      "arts": [
+        "BA in History", "BA in Psychology", "BA in Sociology", "BA in Political Science", "BA in English Literature", "BFA", "B.Ed", "Mass Communication"
       ],
-      Vocational: [
-        { title: "Diploma in Electrical / Mechanical / Civil Engineering", desc: "Technical diploma programs after class 12." },
-        { title: "ITI Programs", desc: "Vocational and trade training programs." },
-        { title: "Fashion Technology Diploma", desc: "Practical design and textile-based vocational courses." },
-        { title: "Hotel Management Diploma", desc: "Training in hospitality and catering." },
-        { title: "Event Management Diploma", desc: "Career-oriented course for event planning." },
-        { title: "Digital Marketing Certificate", desc: "Modern marketing and social media skills." },
-        { title: "Photography and Film Studies", desc: "Vocational creative course." },
-        { title: "Beauty & Wellness Diploma", desc: "Career in cosmetology and wellness." },
-        { title: "Animation & VFX Diploma", desc: "3D design and digital effects." },
-        { title: "Interior Design Diploma", desc: "Creative design and planning training." }
-      ],
-      Other: [
-        { title: "LLB (Law)", desc: "Bachelor of Legislative Law available to all streams." },
-        { title: "BA + LLB Integrated", desc: "5-year integrated law degree." },
-        { title: "Hotel Management", desc: "Career in hospitality and tourism." },
-        { title: "Animation & Multimedia", desc: "Creative visual design programs." },
-        { title: "Game Design", desc: "Interactive media and development courses." },
-        { title: "Foreign Language Diploma", desc: "Specialized language skill programs." },
-        { title: "Culinary Arts", desc: "Professional chef training programs." },
-        { title: "Performing Arts", desc: "Music, drama, and dance courses." },
-        { title: "Travel & Tourism Management", desc: "Careers in travel and hospitality." },
-        { title: "Entrepreneurship Programs", desc: "Business startup and innovation diplomas." }
+      "professional/others": [
+        "LLB", "B.Des (Design)", "Hotel Management", "Event Management", "Animation", "Teacher Training", "PG Diploma Courses"
       ]
     };
 
-    // Render relevant courses
-    const streamCourses = courses[stream] || [];
-    streamCourses.forEach((course) => {
-      const card = document.createElement("div");
-      card.classList.add("course-card");
-      card.innerHTML = `
-        <h3>${course.title}</h3>
-        <p>${course.desc}</p>
-        <a href="colleges.html" class="btn-view">View Colleges</a>
-      `;
-      coursesContainer.appendChild(card);
-    });
+    function displayCourses(stream) {
+      const streamKey = stream ? stream.toLowerCase() : null;
+      const list = courses[streamKey] || [];
+
+      if (list.length > 0) {
+        courseList.innerHTML = list.map(course => `
+          <div class="course-card">
+            <h3>${course}</h3>
+            <button onclick="viewColleges('${stream}')">View Colleges</button>
+          </div>
+        `).join('');
+      } else {
+        courseList.innerHTML = "<p>No courses found. Please go back and select a stream.</p>";
+      }
+    }
+
+    function viewColleges(stream) {
+      localStorage.setItem("stream", stream);
+      window.location.href = "colleges.html";
+    }
+
+    displayCourses(selectedStream);
   </script>
 </body>
-</html>
+</html></html>
