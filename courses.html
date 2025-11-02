@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Courses — 12kebaad</title>
+  <title>Colleges — 12kebaad</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="Favicon.PNG" type="image/png">
 </head>
@@ -16,11 +16,8 @@
   </header>
 
   <main class="main container">
-    <div id="greeting" class="greeting">Loading...</div>
-    <section class="course-panel" id="coursePanel">
-      <h2>Courses & Government Exams</h2>
-      <div id="coursesList">Loading courses...</div>
-    </section>
+    <h2 id="title">Colleges</h2>
+    <div id="tableWrap">Loading...</div>
   </main>
 
   <footer class="site-footer">
@@ -30,24 +27,42 @@
   </footer>
 
 <script>
-const name = localStorage.getItem('name') || '';
-const stream = localStorage.getItem('stream') || '';
-document.getElementById('greeting').textContent = name ? `Hi ${name} 👋 — Courses for ${stream}` : `Courses for ${stream || 'your stream'}`;
-
-const courseMap = {
-  "Science": ["B.Sc (Physics)", "B.Sc (Chemistry)", "B.Sc (Biology)", "B.Tech / BE", "MBBS", "BDS", "B.Pharm", "BCA", "Nursing", "Biotechnology"],
-  "Commerce": ["B.Com", "B.Com (Hons)", "BBA", "BMS", "CA (Chartered Accountancy)", "CMA", "CS", "MBA", "Digital Marketing"],
-  "Arts": ["BA (History)", "BA (Psychology)", "BA (Sociology)", "BA (Political Science)", "BA (English)", "BFA", "BJMC", "B.Ed"],
-  "Professional/Others": ["LLB", "B.Des (Design)", "Hotel Management", "Event Management", "Animation & Multimedia", "Teacher Training", "Government Exams (UPSC/SSC/Banking)"]
-};
-
-const list = courseMap[stream] || [];
-const container = document.getElementById('coursesList');
-if(list.length === 0) { container.innerHTML = '<p>Please select your stream on the welcome page.</p>'; }
-else {
-  container.innerHTML = list.map(c => `<div class="card"><h3>${c}</h3><p><button onclick="viewColleges()">View Colleges</button></p></div>`).join('');
+async function loadTable(){
+  const state = localStorage.getItem('state') || 'All India';
+  const stream = localStorage.getItem('stream') || '';
+  document.getElementById('title').textContent = `Colleges for ${stream || 'All Streams'} in ${state}`;
+  const res = await fetch('data/colleges_allindia.csv');
+  const txt = await res.text();
+  const rows = txt.split('\\n').slice(1);
+  const filtered = [];
+  rows.forEach(r => {
+    if(!r.trim()) return;
+    // split CSV row safely (this CSV uses no extra commas in fields)
+    const cols = r.split(',');
+    const name = cols[0] || '';
+    const st = cols[1] || '';
+    const strm = cols[2] || '';
+    const typ = cols[3] || '';
+    const fees = cols[4] || '';
+    const loc = cols[5] || '';
+    const cutoff = cols[6] || '';
+    const adm = cols[7] || '';
+    if((state === 'All India' || st.trim() === state.trim()) && (stream === '' || strm.toLowerCase().includes(stream.toLowerCase()))) {
+      filtered.push({name,st,strm,typ,fees,loc,cutoff,adm});
+    }
+  });
+  if(filtered.length === 0) {
+    document.getElementById('tableWrap').innerHTML = '<p>No colleges found for your selection.</p>';
+    return;
+  }
+  let html = '<table class="college-table"><thead><tr><th>Name</th><th>State</th><th>Stream</th><th>Type</th><th>Fees</th><th>Location</th><th>Cutoff%</th><th>Admission</th></tr></thead><tbody>';
+  filtered.forEach(c => {
+    html += `<tr><td>${c.name}</td><td>${c.st}</td><td>${c.strm}</td><td>${c.typ}</td><td>${c.fees}</td><td>${c.loc}</td><td>${c.cutoff}</td><td>${c.adm}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  document.getElementById('tableWrap').innerHTML = html;
 }
-function viewColleges(){ if(!stream){ alert('Please select your stream on the welcome page.'); return; } localStorage.setItem('stream', stream); window.location.href='colleges.html'; }
+loadTable();
 </script>
 </body>
-</html></html></html></html></html>
+</html></html></html></html></html></html>
