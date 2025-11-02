@@ -1,44 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>12kebaad — Helping you choose your future</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="Favicon.PNG" type="image/png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>12kebaad | Helps You Decide Your Future</title>
+  <link rel="icon" type="image/png" href="logo.PNG">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #007bff, #00d4ff);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px 50px;
+      background: rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 400;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #ffeb3b;
+    }
+
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .hero h2 {
+      font-size: 50px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .hero p {
+      font-size: 20px;
+      max-width: 700px;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .hero button {
+      padding: 15px 40px;
+      border: none;
+      border-radius: 30px;
+      background: #fff;
+      color: #007bff;
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .hero button:hover {
+      background: #ffeb3b;
+      color: #000;
+      transform: translateY(-3px);
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px 0;
+      background: rgba(0, 0, 0, 0.2);
+      font-size: 14px;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .hero h2 {
+        font-size: 36px;
+      }
+      .hero p {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <h1 class="brand">12kebaad</h1>
-      <p class="tagline">Helping you choose your future</p>
-      <nav class="nav">
-        <a href="welcome.html">Get Started</a>
-        <a href="courses.html">Courses</a>
-        <a href="colleges.html">Colleges</a>
-        <a href="about.html">About</a>
-      </nav>
-    </div>
+
+  <header>
+    <h1>12kebaad 🎓</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="welcome.html">Get Started</a>
+      <a href="courses.html">Courses</a>
+      <a href="colleges.html">Colleges</a>
+      <a href="about.html">About</a>
+    </nav>
   </header>
 
-  <main class="main container">
-    <section class="intro">
-      <h2>Find courses, diplomas and colleges across India</h2>
-      <p>Tailored suggestions based on your stream and state.</p>
-      <a class="cta" href="welcome.html">Start Now</a>
-    </section>
+  <section class="hero">
+    <h2>Helps You Decide Your Future</h2>
+    <p>
+      Explore courses, diplomas, and universities across India.  
+      Get personalized recommendations based on your stream and state —  
+      and take your first step towards a brighter future with <strong>12kebaad</strong>.
+    </p>
+    <button onclick="window.location.href='welcome.html'">Get Started</button>
+  </section>
 
-    <section class="features">
-      <div class="feature"><h3>Courses</h3><p>Explore stream-specific courses and government exam guides.</p></div>
-      <div class="feature"><h3>Colleges</h3><p>Discover government, private and online universities across India.</p></div>
-      <div class="feature"><h3>Guidance</h3><p>Personalized assistance to help you decide your future.</p></div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>© 2025 12kebaad | Contact: 12kebaad.team@gmail.com</p>
-    </div>
+  <footer>
+    © 2025 12kebaad | All Rights Reserved
   </footer>
+
 </body>
-</html></html></html></html></html></html></html></html></html></html></html></html></html></html></html>
+</html></html></html></html></html></html></html></html></html></html></html></html></html></html></html></html>
