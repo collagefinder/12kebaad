@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>12kebaad | Courses</title>
+  <title>Courses | 12kebaad</title>
   <link rel="icon" type="image/png" href="https://collagefinder.github.io/12kebaad/Favicon.PNG">
-  <link rel="stylesheet" href="style.css">
-
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -17,14 +15,13 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      overflow-x: hidden;
     }
 
     header {
       background-color: #002b5c;
       color: white;
       text-align: center;
-      padding: 15px 0;
+      padding: 20px 0;
       box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     }
 
@@ -40,63 +37,59 @@
 
     main {
       flex: 1;
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 25px 15px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
     }
 
-    h1 {
-      text-align: center;
+    .greeting {
+      font-size: 1.3em;
       color: #002b5c;
-      margin-bottom: 10px;
-    }
-
-    .wave {
-      font-size: 2em;
-      display: inline-block;
-      animation: wave 1.5s infinite;
-      transform-origin: 70% 70%;
-    }
-
-    @keyframes wave {
-      0% { transform: rotate(0deg); }
-      10% { transform: rotate(14deg); }
-      20% { transform: rotate(-8deg); }
-      30% { transform: rotate(14deg); }
-      40% { transform: rotate(-4deg); }
-      50% { transform: rotate(10deg); }
-      60% { transform: rotate(0deg); }
-      100% { transform: rotate(0deg); }
-    }
-
-    .course-card {
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 15px 20px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    }
-
-    .course-card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
-
-    .course-card button {
-      background-color: #002b5c;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 6px;
-      cursor: pointer;
+      margin-bottom: 25px;
       font-weight: 600;
-      transition: background-color 0.3s;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
     }
 
-    .course-card button:hover {
-      background-color: #004aad;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .course-section {
+      background: white;
+      padding: 25px 35px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 30px;
+    }
+
+    .course-section h2 {
+      color: #002b5c;
+      border-bottom: 2px solid #004aad;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    ul li {
+      background: #eef4ff;
+      margin: 6px 0;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    ul li:hover {
+      background: #dce9ff;
+      transform: translateX(4px);
     }
 
     footer {
@@ -109,8 +102,8 @@
     }
 
     @media (max-width: 600px) {
-      .course-card {
-        padding: 12px;
+      .course-section {
+        padding: 20px;
       }
     }
   </style>
@@ -119,12 +112,25 @@
 <body>
   <header>
     <h1>12kebaad</h1>
-    <p class="tagline">Helps you decide your future</p>
+    <p class="tagline">Helping you choose your perfect path</p>
   </header>
 
   <main>
-    <h1><span class="wave">👋</span> Explore Your Stream</h1>
-    <div id="course-list"></div>
+    <div id="greeting" class="greeting"></div>
+
+    <div class="course-section">
+      <h2>Popular Courses After Class 12</h2>
+      <ul id="course-list">
+        <li>Loading recommended courses...</li>
+      </ul>
+    </div>
+
+    <div class="course-section">
+      <h2>Government Exams You Can Appear For</h2>
+      <ul id="exam-list">
+        <li>Loading exams...</li>
+      </ul>
+    </div>
   </main>
 
   <footer>
@@ -132,55 +138,63 @@
   </footer>
 
   <script>
-    const selectedStream = localStorage.getItem("stream");
-    const courseList = document.getElementById("course-list");
+    const greeting = document.getElementById("greeting");
+    const name = localStorage.getItem("name");
+    const stream = localStorage.getItem("stream");
 
-    const courses = {
-      "science": [
-        "B.Sc in Physics", "B.Sc in Chemistry", "B.Sc in Biology", "B.Tech",
-        "MBBS", "BDS", "BCA", "B.Pharm", "Nursing", "Biotechnology",
-        "B.Sc in Computer Science", "B.Sc in Mathematics", "Agriculture", "Environmental Science"
+    if (name) {
+      greeting.textContent = `Hi ${name} 👋, explore courses for your stream${stream ? " (" + stream + ")" : ""}.`;
+    } else {
+      greeting.textContent = "Explore courses after 12th 👇";
+    }
+
+    const coursesByStream = {
+      "Science": [
+        "B.Tech / BE",
+        "MBBS / BDS",
+        "B.Sc (Pure Science)",
+        "BCA (Computer Applications)",
+        "B.Pharm / D.Pharm"
       ],
-      "commerce": [
-        "B.Com", "BBA", "BMS", "CA (Chartered Accountancy)", "CMA (Cost Management Accounting)",
-        "CS (Company Secretary)", "BCA", "MBA", "B.Com (Hons)", "Digital Marketing",
-        "Finance & Banking Diploma", "International Business Management"
+      "Commerce": [
+        "B.Com (Hons.)",
+        "BBA / BBM",
+        "CA Foundation",
+        "CMA Foundation",
+        "CS Executive"
       ],
-      "arts": [
-        "BA in History", "BA in Psychology", "BA in Sociology", "BA in Political Science",
-        "BA in English Literature", "BFA (Fine Arts)", "B.Ed", "Mass Communication",
-        "BA in Economics", "BA in Philosophy", "BA in Journalism"
+      "Arts": [
+        "BA (Humanities / Economics / Psychology)",
+        "BFA (Fine Arts)",
+        "BJMC (Journalism and Mass Communication)",
+        "B.Ed (Teacher Training)",
+        "Law (BA LLB)"
       ],
-      "professional/others": [
-        "LLB", "B.Des (Design)", "Hotel Management", "Event Management",
-        "Animation & Multimedia", "Teacher Training", "Interior Designing", "Fashion Designing",
-        "Aviation & Cabin Crew Diploma", "Public Administration",
-        "Government Exams Preparation (UPSC, SSC, Banking, Defence, Railways, State PSC)"
+      "Professional/Others": [
+        "Hotel Management",
+        "Fashion Design / Interior Design",
+        "Animation & VFX",
+        "Culinary Arts",
+        "Digital Marketing"
       ]
     };
 
-    function displayCourses(stream) {
-      const streamKey = stream ? stream.toLowerCase() : null;
-      const list = courses[streamKey] || [];
+    const examsByStream = {
+      "Science": ["JEE", "NEET", "BITSAT", "CUET", "NDA"],
+      "Commerce": ["CUET", "IPMAT", "CPT (CA Entry)", "NDA", "CLAT"],
+      "Arts": ["CUET", "NIFT", "NID", "DU Entrance", "SSC CHSL"],
+      "Professional/Others": ["CUET", "NDA", "SSC Exams", "Banking Exams"]
+    };
 
-      if (list.length > 0) {
-        courseList.innerHTML = list.map(course => `
-          <div class="course-card">
-            <h3>${course}</h3>
-            <button onclick="viewColleges('${stream}')">View Colleges</button>
-          </div>
-        `).join('');
-      } else {
-        courseList.innerHTML = "<p>No courses found. Please go back and select a stream.</p>";
-      }
-    }
+    const courseList = document.getElementById("course-list");
+    const examList = document.getElementById("exam-list");
 
-    function viewColleges(stream) {
-      localStorage.setItem("stream", stream);
-      window.location.href = "colleges.html";
-    }
+    const selectedStream = stream || "Science";
+    const courses = coursesByStream[selectedStream] || [];
+    const exams = examsByStream[selectedStream] || [];
 
-    displayCourses(selectedStream);
+    courseList.innerHTML = courses.map(course => `<li>${course}</li>`).join("");
+    examList.innerHTML = exams.map(exam => `<li>${exam}</li>`).join("");
   </script>
 </body>
-</html></html></html>
+</html></html></html></html>
