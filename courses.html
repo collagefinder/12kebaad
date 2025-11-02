@@ -1,200 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Courses | 12kebaad</title>
-  <link rel="icon" type="image/png" href="https://collagefinder.github.io/12kebaad/Favicon.PNG">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f9f9fb;
-      margin: 0;
-      padding: 0;
-      color: #222;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    header {
-      background-color: #002b5c;
-      color: white;
-      text-align: center;
-      padding: 20px 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.9em;
-    }
-
-    .tagline {
-      font-size: 0.9em;
-      color: #b0d0ff;
-    }
-
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px 15px;
-    }
-
-    .greeting {
-      font-size: 1.3em;
-      color: #002b5c;
-      margin-bottom: 25px;
-      font-weight: 600;
-      text-align: center;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .course-section {
-      background: white;
-      padding: 25px 35px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 800px;
-      margin-bottom: 30px;
-    }
-
-    .course-section h2 {
-      color: #002b5c;
-      border-bottom: 2px solid #004aad;
-      padding-bottom: 5px;
-      margin-bottom: 15px;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    ul li {
-      background: #eef4ff;
-      margin: 6px 0;
-      padding: 10px 15px;
-      border-radius: 8px;
-      transition: 0.3s;
-    }
-
-    ul li:hover {
-      background: #dce9ff;
-      transform: translateX(4px);
-    }
-
-    footer {
-      background-color: #002b5c;
-      color: white;
-      text-align: center;
-      padding: 15px 0;
-      font-size: 0.9em;
-      margin-top: auto;
-    }
-
-    @media (max-width: 600px) {
-      .course-section {
-        padding: 20px;
-      }
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Courses — 12kebaad</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="Favicon.PNG" type="image/png">
 </head>
-
 <body>
-  <header>
-    <h1>12kebaad</h1>
-    <p class="tagline">Helping you choose your perfect path</p>
+  <header class="site-header small">
+    <div class="container">
+      <h1 class="brand">12kebaad</h1>
+      <p class="tagline">Helping you choose your future</p>
+    </div>
   </header>
 
-  <main>
-    <div id="greeting" class="greeting"></div>
-
-    <div class="course-section">
-      <h2>Popular Courses After Class 12</h2>
-      <ul id="course-list">
-        <li>Loading recommended courses...</li>
-      </ul>
-    </div>
-
-    <div class="course-section">
-      <h2>Government Exams You Can Appear For</h2>
-      <ul id="exam-list">
-        <li>Loading exams...</li>
-      </ul>
-    </div>
+  <main class="main container">
+    <div id="greeting" class="greeting">Loading...</div>
+    <section class="course-panel" id="coursePanel">
+      <h2>Courses & Government Exams</h2>
+      <div id="coursesList">Loading courses...</div>
+    </section>
   </main>
 
-  <footer>
-    <p>© 2025 12kebaad | Founder: Pushkar Verma | Contact: 12kebaad.team@gmail.com</p>
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 12kebaad | Contact: 12kebaad.team@gmail.com</p>
+    </div>
   </footer>
 
-  <script>
-    const greeting = document.getElementById("greeting");
-    const name = localStorage.getItem("name");
-    const stream = localStorage.getItem("stream");
+<script>
+const name = localStorage.getItem('name') || '';
+const stream = localStorage.getItem('stream') || '';
+document.getElementById('greeting').textContent = name ? `Hi ${name} 👋 — Courses for ${stream}` : `Courses for ${stream || 'your stream'}`;
 
-    if (name) {
-      greeting.textContent = `Hi ${name} 👋, explore courses for your stream${stream ? " (" + stream + ")" : ""}.`;
-    } else {
-      greeting.textContent = "Explore courses after 12th 👇";
-    }
+const courseMap = {
+  "Science": ["B.Sc (Physics)", "B.Sc (Chemistry)", "B.Sc (Biology)", "B.Tech / BE", "MBBS", "BDS", "B.Pharm", "BCA", "Nursing", "Biotechnology"],
+  "Commerce": ["B.Com", "B.Com (Hons)", "BBA", "BMS", "CA (Chartered Accountancy)", "CMA", "CS", "MBA", "Digital Marketing"],
+  "Arts": ["BA (History)", "BA (Psychology)", "BA (Sociology)", "BA (Political Science)", "BA (English)", "BFA", "BJMC", "B.Ed"],
+  "Professional/Others": ["LLB", "B.Des (Design)", "Hotel Management", "Event Management", "Animation & Multimedia", "Teacher Training", "Government Exams (UPSC/SSC/Banking)"]
+};
 
-    const coursesByStream = {
-      "Science": [
-        "B.Tech / BE",
-        "MBBS / BDS",
-        "B.Sc (Pure Science)",
-        "BCA (Computer Applications)",
-        "B.Pharm / D.Pharm"
-      ],
-      "Commerce": [
-        "B.Com (Hons.)",
-        "BBA / BBM",
-        "CA Foundation",
-        "CMA Foundation",
-        "CS Executive"
-      ],
-      "Arts": [
-        "BA (Humanities / Economics / Psychology)",
-        "BFA (Fine Arts)",
-        "BJMC (Journalism and Mass Communication)",
-        "B.Ed (Teacher Training)",
-        "Law (BA LLB)"
-      ],
-      "Professional/Others": [
-        "Hotel Management",
-        "Fashion Design / Interior Design",
-        "Animation & VFX",
-        "Culinary Arts",
-        "Digital Marketing"
-      ]
-    };
-
-    const examsByStream = {
-      "Science": ["JEE", "NEET", "BITSAT", "CUET", "NDA"],
-      "Commerce": ["CUET", "IPMAT", "CPT (CA Entry)", "NDA", "CLAT"],
-      "Arts": ["CUET", "NIFT", "NID", "DU Entrance", "SSC CHSL"],
-      "Professional/Others": ["CUET", "NDA", "SSC Exams", "Banking Exams"]
-    };
-
-    const courseList = document.getElementById("course-list");
-    const examList = document.getElementById("exam-list");
-
-    const selectedStream = stream || "Science";
-    const courses = coursesByStream[selectedStream] || [];
-    const exams = examsByStream[selectedStream] || [];
-
-    courseList.innerHTML = courses.map(course => `<li>${course}</li>`).join("");
-    examList.innerHTML = exams.map(exam => `<li>${exam}</li>`).join("");
-  </script>
+const list = courseMap[stream] || [];
+const container = document.getElementById('coursesList');
+if(list.length === 0) { container.innerHTML = '<p>Please select your stream on the welcome page.</p>'; }
+else {
+  container.innerHTML = list.map(c => `<div class="card"><h3>${c}</h3><p><button onclick="viewColleges()">View Colleges</button></p></div>`).join('');
+}
+function viewColleges(){ if(!stream){ alert('Please select your stream on the welcome page.'); return; } localStorage.setItem('stream', stream); window.location.href='colleges.html'; }
+</script>
 </body>
-</html></html></html></html>
+</html></html></html></html></html>
